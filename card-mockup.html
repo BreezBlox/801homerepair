@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>801 Home Repair | Digital Card Mockup</title>
+  <meta name="description" content="Mobile-first digital business card mockup for 801 Home Repair.">
+  <style>
+    :root {
+      --bg-1: #f4f8ff;
+      --bg-2: #eef6ff;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #334155;
+      --line: #d9e2ef;
+      --primary: #1d4ed8;
+      --secondary: #f97316;
+      --ok: #059669;
+      --shadow: 0 20px 50px rgba(15, 23, 42, 0.14);
+      --radius: 22px;
+      --radius-sm: 13px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI Variable", "Trebuchet MS", "Tahoma", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 10% 0%, rgba(29, 78, 216, 0.18), transparent 34%),
+        radial-gradient(circle at 95% 8%, rgba(249, 115, 22, 0.18), transparent 30%),
+        linear-gradient(180deg, var(--bg-1), var(--bg-2));
+      display: grid;
+      place-items: center;
+      padding: 22px;
+    }
+
+    .mockup-wrap {
+      width: min(100%, 430px);
+    }
+
+    .mockup-label {
+      margin: 0 0 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 6px 10px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .section {
+      padding: 16px;
+      border-top: 1px solid var(--line);
+    }
+
+    .section:first-child {
+      border-top: 0;
+    }
+
+    .brand-row {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+
+    .mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary), #2563eb);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+    }
+
+    .name {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+    .byline {
+      margin: 2px 0 0;
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 600;
+    }
+
+    .kicker {
+      margin: 10px 0 0;
+      display: inline-flex;
+      color: var(--ok);
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.42rem;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+    }
+
+    .sub {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-weight: 600;
+      line-height: 1.45;
+    }
+
+    .areas {
+      margin: 12px 0 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .areas span {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--muted);
+      background: #f8fbff;
+    }
+
+    .cta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid transparent;
+      border-radius: var(--radius-sm);
+      text-align: center;
+      text-decoration: none;
+      font-weight: 800;
+      padding: 12px 10px;
+      line-height: 1.2;
+      color: #fff;
+      font-size: 0.95rem;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+    }
+
+    .btn-secondary {
+      background: var(--secondary);
+    }
+
+    .btn-quote {
+      background: #0f766e;
+    }
+
+    .btn-save {
+      background: #111827;
+    }
+
+    .why-title,
+    .jobs-title {
+      margin: 0 0 10px;
+      font-size: 0.92rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+    }
+
+    .why-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 8px;
+    }
+
+    .why-list li {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-weight: 700;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--secondary);
+      flex-shrink: 0;
+    }
+
+    .jobs {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .jobs li {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      background: #f8fbff;
+    }
+
+    .mini-links {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      font-size: 0.79rem;
+      font-weight: 700;
+    }
+
+    .mini-links a {
+      color: var(--muted);
+      text-decoration-thickness: 0.08em;
+      text-underline-offset: 0.16em;
+    }
+
+    .mini-links a:focus-visible,
+    .btn:focus-visible {
+      outline: 3px solid #111827;
+      outline-offset: 2px;
+    }
+
+    @media (min-width: 620px) {
+      body {
+        padding: 40px 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="mockup-wrap">
+    <p class="mockup-label">Visual Mockup • Digital Business Card</p>
+
+    <article class="card" aria-label="801 Home Repair digital card mockup">
+      <section class="section">
+        <div class="brand-row">
+          <div class="mark" aria-hidden="true">801</div>
+          <div>
+            <p class="name">801 Home Repair</p>
+            <p class="byline">by Rob K.</p>
+          </div>
+        </div>
+        <p class="kicker">Independent handyman</p>
+      </section>
+
+      <section class="section">
+        <h1>Handyman-tier pricing. Pro results. No nonsense.</h1>
+        <p class="sub">Fast local help for floors, doors, deck/stair repairs, and tenant turnover fixes.</p>
+        <div class="areas">
+          <span>Midvale</span>
+          <span>Salt Lake County</span>
+          <span>Park City</span>
+          <span>Utah County</span>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="cta-grid" aria-label="Primary actions">
+          <a class="btn btn-primary" href="tel:+18015550123">Call Rob</a>
+          <a class="btn btn-secondary" href="sms:+18015550123">Text Rob</a>
+          <a class="btn btn-quote" href="#quote">Get Quote</a>
+          <a class="btn btn-save" href="/801-home-repair.vcf">Save Contact</a>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2 class="why-title">Why People Keep This Card</h2>
+        <ul class="why-list">
+          <li><span class="dot" aria-hidden="true"></span>Fast response</li>
+          <li><span class="dot" aria-hidden="true"></span>Clean work</li>
+          <li><span class="dot" aria-hidden="true"></span>Clear estimates</li>
+          <li><span class="dot" aria-hidden="true"></span>Photos on request</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2 class="jobs-title">Popular Jobs</h2>
+        <ul class="jobs">
+          <li>Vinyl Plank</li>
+          <li>Door Installs</li>
+          <li>Deck/Stair Repairs</li>
+          <li>Drywall Touchups</li>
+          <li>Turnover Work</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <nav class="mini-links" aria-label="Secondary links">
+          <a href="#areas">Service Areas</a>
+          <a href="#faq">FAQ</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </section>
+    </article>
+  </main>
+</body>
+</html>

@@ -1,0 +1,103 @@
+# 801 Home Repair Landing Page
+
+Production-ready static landing page for **801 Home Repair** with:
+- No build step
+- Mobile-first responsive design
+- Netlify Forms support
+- Local SEO metadata and schema
+- Sticky mobile call/text/get-quote CTA
+- Shareable digital business card with 1-2 tap actions
+
+## File Structure
+
+- `index.html` main landing page
+- `styles.css` site styles and responsive layout
+- `script.js` business placeholders + light UI behavior
+- `card/index.html` production digital card page (`/card/`)
+- `card/card.css` digital card styles
+- `card/card.js` tracked link handling for card page
+- `801-home-repair.vcf` downloadable contact card
+- `thank-you.html` post-submit confirmation page
+- `robots.txt` crawler rules
+- `sitemap.xml` XML sitemap
+- `netlify.toml` Netlify deploy + headers + redirects
+
+## Edit Your Business Details
+
+Update placeholders at the top of `script.js`:
+
+- `BUSINESS_NAME`
+- `SECONDARY_NAME`
+- `OWNER_NAME`
+- `PHONE`
+- `SMS`
+- `EMAIL`
+- `SERVICE_AREAS`
+- `LICENSED_INSURED_TOGGLE`
+- `PRIMARY_ACCENT`
+- `SECONDARY_ACCENT`
+- `SITE_URL`
+
+`LICENSED_INSURED_TOGGLE` defaults to `false`.  
+Set to `true` only when you want licensed/insured language displayed.
+
+## Netlify Form Setup
+
+The quote form is already configured for Netlify Forms:
+- form name: `quote-request`
+- method: `POST`
+- `data-netlify="true"`
+- honeypot: `netlify-honeypot="bot-field"`
+- success redirect: `/thank-you.html`
+- includes hidden source field: `source`
+
+After first deploy, submit one test form on production so Netlify detects the form.
+
+## Digital Card + Tracked Links
+
+Live card path:
+- `/card/`
+
+Recommended text share links:
+- Homeowner: `https://yourdomain.com/card/?src=text-homeowner`
+- Landlord: `https://yourdomain.com/card/?src=text-landlord`
+- QR code: `https://yourdomain.com/card/?src=qr`
+
+Tracking behavior:
+- `src` is stored and forwarded into the quote form hidden field (`source`)
+- quote requests from card links land in Netlify submissions with source attribution
+- `Save Contact` points to `/801-home-repair.vcf`
+
+## Deploy (Zero Build Step)
+
+1. Push this repo to GitHub/GitLab/Bitbucket.
+2. In Netlify, choose **Add new site** -> **Import an existing project**.
+3. Select the repo.
+4. Build settings:
+   - Build command: *(leave blank)*
+   - Publish directory: `.`
+5. Deploy.
+
+Or drag/drop the project folder to Netlify Drop for quick hosting.
+
+## Important SEO Placeholders To Update
+
+Replace `https://example.com` with your real domain in:
+- `script.js` (`SITE_URL`)
+- `index.html` canonical + OG/Twitter tags
+- `card/index.html` canonical + OG/Twitter tags
+- `801-home-repair.vcf` URL field
+- `robots.txt`
+- `sitemap.xml`
+
+Also replace social profile placeholders in the JSON-LD `sameAs` list in `index.html`.
+
+## Local Preview
+
+Use any static server. Example with Python:
+
+```bash
+python -m http.server 8080
+```
+
+Then open `http://localhost:8080`.

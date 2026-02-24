@@ -1,0 +1,13 @@
+BEGIN:VCARD
+VERSION:3.0
+N:K.;Rob;;;
+FN:Rob K. | 801 Home Repair
+ORG:801 Home Repair
+TITLE:Independent Handyman
+TEL;TYPE=CELL:+1-801-555-0123
+EMAIL;TYPE=INTERNET:hello@example.com
+URL:https://example.com/card/
+ADR;TYPE=WORK:;;Wasatch Front;UT;;;United States
+NOTE:Independent handyman serving Midvale\, Salt Lake County\, Park City\, and Utah County. Flooring install\, door replacement\, deck/stair repairs\, drywall touchups\, and tenant turnover punch-lists.
+REV:20260223T000000Z
+END:VCARD
