@@ -21,8 +21,8 @@ const CONFIG = {
   BUSINESS_NAME: "801 Home Repair",
   SECONDARY_NAME: "801TechniCA",
   OWNER_NAME: "Rob K.",
-  PHONE: "+18015550123",
-  SMS: "+18015550123",
+  PHONE: "+13854399031",
+  SMS: "+13854399031",
   EMAIL: "hello@example.com",
   SERVICE_AREAS: [
     "Midvale",
