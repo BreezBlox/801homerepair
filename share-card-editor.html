@@ -1,0 +1,84 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Template Card Editor</title>
+  <style>
+    :root{--line:#d3deef;--ink:#112247;--muted:#4b5d81;--bg:#edf3ff;--ok:#0f766e}
+    *{box-sizing:border-box}body{margin:0;font-family:"Segoe UI Variable","Segoe UI",Tahoma,sans-serif;color:var(--ink);background:linear-gradient(#f4f8ff,var(--bg))}
+    .wrap{min-height:100vh;display:grid;grid-template-columns:360px 1fr}.panel{border-right:1px solid var(--line);background:#f8fbff;padding:12px;overflow:auto}.stage{padding:14px;display:grid;place-items:center}
+    .canvas-shell{width:min(100%,760px);background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px;box-shadow:0 16px 34px rgba(16,33,63,.14)}
+    canvas{width:100%;height:auto;display:block;border-radius:8px;background:#f4f8ff;touch-action:none;cursor:grab}canvas:active{cursor:grabbing}
+    h1{margin:0 0 6px;font-size:1.06rem}.sub{margin:0 0 11px;color:var(--muted);font-size:.82rem;line-height:1.35}
+    .box{border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px;margin-bottom:9px}.box h2{margin:0 0 8px;font-size:.76rem;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+    .row,.actions{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:7px}.row1{display:grid;grid-template-columns:1fr;gap:7px;margin-bottom:7px}
+    label{display:grid;gap:3px;font-size:.73rem;color:var(--muted);font-weight:700}input,textarea,select,button{font:inherit}
+    input,textarea,select{width:100%;border:1px solid #c9d6ec;border-radius:7px;padding:7px 8px;font-size:.84rem;color:var(--ink);background:#fff}textarea{min-height:66px;resize:vertical;line-height:1.32}input[type=color]{height:35px;padding:2px}
+    button{border:1px solid transparent;border-radius:9px;padding:8px 9px;font-size:.82rem;font-weight:800;cursor:pointer}.b-outline{border-color:#9db1dd;background:#fff;color:var(--ink)}.b-ok{background:var(--ok);color:#fff}
+    .note{margin:6px 0 0;font-size:.74rem;color:#556686;line-height:1.35}.status{margin:8px 0 0;font-size:.74rem;color:#35527a;font-weight:700;line-height:1.35}.small{font-size:.72rem;color:#6a7c9d;line-height:1.3}
+    @media(max-width:1020px){.wrap{grid-template-columns:1fr}.panel{border-right:0;border-bottom:1px solid var(--line);max-height:55vh}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <aside class="panel">
+      <h1>Template Card Editor</h1>
+      <p class="sub">Canva-style control: drag and resize blocks, then tune spacing/font for service lines.</p>
+
+      <section class="box">
+        <h2>Photo</h2>
+        <div class="row1"><label>Upload Portrait<input id="photoUpload" type="file" accept="image/*"></label></div>
+        <div class="actions"><button id="useMeBtn" class="b-outline" type="button">Use Me.png</button><button id="resetPhotoBtn" class="b-outline" type="button">Reset Photo</button></div>
+      </section>
+
+      <section class="box">
+        <h2>Content</h2>
+        <div class="row1"><label>Kicker<input id="kickerIn" type="text"></label></div>
+        <div class="row"><label>Title 1<input id="title1In" type="text"></label><label>Title 2<input id="title2In" type="text"></label></div>
+        <div class="row1"><label>Brand Line<input id="brandIn" type="text"></label></div>
+        <div class="row1"><label>Tagline<input id="tagIn" type="text"></label></div>
+        <div class="row1"><label>Services Header<input id="servicesTitleIn" type="text"></label></div>
+        <div class="row1"><label>Services (one per line)<textarea id="servicesLinesIn"></textarea></label></div>
+        <div class="row"><label>CTA Button<input id="ctaIn" type="text"></label><label>Phone<input id="phoneIn" type="text"></label></div>
+      </section>
+
+      <section class="box">
+        <h2>Services Styling</h2>
+        <div class="row"><label>Item Font<input id="svcFontIn" type="number" min="16" max="72" step="1"></label><label>Line Spacing<input id="svcLineIn" type="number" min="28" max="120" step="1"></label></div>
+        <div class="row"><label>Check Size<input id="svcCheckIn" type="number" min="8" max="40" step="1"></label><label>Check Gap<input id="svcGapIn" type="number" min="14" max="90" step="1"></label></div>
+        <div class="row"><label>Panel Cut<input id="panelCutIn" type="number" min="30" max="360" step="1"></label><label>Button Font<input id="ctaFontIn" type="number" min="12" max="40" step="1"></label></div>
+        <div class="row"><label>Blue<input id="blueIn" type="color"></label><label>Dark<input id="darkIn" type="color"></label></div>
+        <div class="row"><label>Service Text<input id="svcTextColorIn" type="color"></label><label>Title Blue<input id="titleBlueIn" type="color"></label></div>
+      </section>
+
+      <section class="box">
+        <h2>Selected Element</h2>
+        <div class="row1"><label>Element<select id="elSel"><option value="headerBand">Header Band</option><option value="topText">Top Text</option><option value="servicesPanel">Blue Panel</option><option value="servicesBlock">Services Text Block</option><option value="photo">Photo Block</option><option value="ctaButton">CTA Button</option><option value="phoneLine">Phone Line</option><option value="decor">Decor Group</option></select></label></div>
+        <div class="row"><label>X<input id="xIn" type="number" step="1"></label><label>Y<input id="yIn" type="number" step="1"></label></div>
+        <div class="row"><label id="scaleWrap">Scale<input id="scaleIn" type="number" min="0.4" max="2.8" step="0.02"></label><label id="wWrap">Width<input id="wIn" type="number" min="20" max="1200" step="1"></label></div>
+        <div class="row"><label id="hWrap">Height<input id="hIn" type="number" min="20" max="1200" step="1"></label><span></span></div>
+        <p class="note">Arrow keys nudge selected block. Hold Shift for 10px nudges.</p>
+      </section>
+
+      <section class="box">
+        <h2>Export</h2>
+        <div class="row"><label>JPG Quality<input id="qIn" type="number" min="0.45" max="0.95" step="0.01" value="0.72"></label><label>Target KB<input id="kbIn" type="number" min="40" max="1000" step="1" value="120"></label></div>
+        <div class="actions"><button id="saveBtn" class="b-ok" type="button">Download JPG</button><button id="resetBtn" class="b-outline" type="button">Reset Layout</button></div>
+        <div class="actions" style="margin-top:7px"><button id="backupBtn" class="b-outline" type="button">Copy Backup JSON</button><button id="restoreBtn" class="b-outline" type="button">Restore JSON</button></div>
+        <p class="small">Backup/restore keeps your progress safe.</p>
+        <p id="status" class="status">Ready</p>
+      </section>
+    </aside>
+
+    <main class="stage">
+      <div class="canvas-shell">
+        <canvas id="c" width="860" height="1100"></canvas>
+        <p class="note">Green frame is selected element. Drag frame to move. Drag green square to resize.</p>
+      </div>
+    </main>
+  </div>
+
+  <script src="./share-card-editor.js" defer></script>
+</body>
+</html>

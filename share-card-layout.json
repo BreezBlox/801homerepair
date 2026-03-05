@@ -1,0 +1,69 @@
+{
+  "t": {
+    "name": "801 Home Repair",
+    "sub": "Rob  |  Independent handyman",
+    "head": "",
+    "head2": "",
+    "phLabel": "                             CALL OR TEXT",
+    "ph": "      (385) 439-9031",
+    "whyTitle": "Why people keep this card",
+    "why": [
+      "Fast response",
+      "Clean work",
+      "Clear estimates",
+      "Focused on quality"
+    ],
+    "jobsTitle": "Popular jobs",
+    "jobs": [
+      "Vinyl Plank",
+      "Door Installs",
+      "Deck/Stair Repairs",
+      "Drywall Touchups",
+      "Painting",
+      "Custom Organization",
+      "Turnover Work",
+      "Small to Medium Jobs",
+      "On-Call Service"
+    ],
+    "foot": ""
+  },
+  "e": {
+    "brand": {
+      "x": 61.987499624890006,
+      "y": 152.4280290095865,
+      "s": 1
+    },
+    "photo": {
+      "x": 467.7004912381335,
+      "y": 64.00859759691556,
+      "z": 334.59945677780706
+    },
+    "hero": {
+      "x": 69.77164877397144,
+      "y": 206.7984166821763,
+      "s": 1
+    },
+    "phone": {
+      "x": 111.99276518214947,
+      "y": 661.9003227562579,
+      "w": 634.9149197009718,
+      "h": 130.87960750421422,
+      "r": 22
+    },
+    "why": {
+      "x": 86.8823630206441,
+      "y": 405.80944839063307,
+      "s": 1
+    },
+    "jobs": {
+      "x": 81.82308323522375,
+      "y": 833.3124216609184,
+      "s": 1
+    },
+    "foot": {
+      "x": 494.3326592425625,
+      "y": 1015.3311300058157,
+      "s": 1
+    }
+  }
+}

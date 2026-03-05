@@ -1,0 +1,960 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quote Generator | 801 Home Repair</title>
+  <style>
+    :root {
+      --bg: #eef2f6;
+      --card: #ffffff;
+      --ink: #1b2430;
+      --muted: #5a6878;
+      --line: #d8e0ea;
+      --accent: #1a5f90;
+      --accent-dark: #11466a;
+      --ok: #1f6d4f;
+      --danger: #a52f2f;
+      --shadow: 0 18px 42px rgba(16, 28, 43, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background:
+        linear-gradient(130deg, rgba(26, 95, 144, 0.08) 0%, rgba(26, 95, 144, 0) 45%),
+        linear-gradient(310deg, rgba(31, 109, 79, 0.08) 0%, rgba(31, 109, 79, 0) 50%),
+        var(--bg);
+    }
+
+    .shell {
+      max-width: 1400px;
+      margin: 30px auto 72px;
+      padding: 0 18px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .topbar {
+      padding: 18px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, #f8fbff 0%, #f5f9fc 100%);
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .title {
+      margin: 0;
+      font-size: 1.2rem;
+      letter-spacing: 0.01em;
+    }
+
+    .top-links {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      font-size: 0.9rem;
+    }
+
+    .top-links a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .top-links a:hover { text-decoration: underline; }
+
+    .status {
+      color: #4b5f73;
+      font-size: 0.82rem;
+    }
+
+    .toolbar {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      background: #fcfdff;
+    }
+
+    .toolbar .grow {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .btn {
+      border: 1px solid #bfd2df;
+      background: #f0f7fc;
+      color: #1b5073;
+      border-radius: 9px;
+      padding: 8px 12px;
+      font: inherit;
+      font-size: 0.9rem;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn:hover { background: #e6f1f8; }
+    .btn.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .btn.primary:hover { background: var(--accent-dark); }
+    .btn.ok {
+      background: #ebf7f1;
+      border-color: #b6dbc9;
+      color: #15533d;
+    }
+    .btn.ok:hover { background: #e1f2e9; }
+    .btn.danger {
+      border-color: #ebcaca;
+      background: #fff5f5;
+      color: var(--danger);
+    }
+    .btn.danger:hover { background: #ffecec; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(170px, 1fr));
+      gap: 12px;
+      padding: 18px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .field label {
+      display: block;
+      font-size: 0.76rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="date"],
+    input[type="number"],
+    textarea,
+    select {
+      width: 100%;
+      border: 1px solid #c7d2de;
+      border-radius: 9px;
+      padding: 8px 10px;
+      font: inherit;
+      color: inherit;
+      background: #fff;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: 2px solid rgba(26, 95, 144, 0.23);
+      border-color: #93b7d1;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 90px;
+    }
+
+    .quote-layout {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 14px;
+      padding: 18px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .panel {
+      border: 1px solid #d8e0ea;
+      border-radius: 10px;
+      padding: 12px;
+      background: #fdfefe;
+    }
+
+    .panel-title {
+      margin: 0 0 10px;
+      font-size: 0.86rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: #4e6377;
+    }
+
+    .table-wrap {
+      overflow: auto;
+      background: #fff;
+      padding-bottom: 6px;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      min-width: 1050px;
+    }
+
+    th, td {
+      border-bottom: 1px solid #e5ebf1;
+      vertical-align: top;
+      padding: 8px 8px;
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      text-align: left;
+      background: #f7fafd;
+      color: #4e6075;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      border-bottom: 1px solid #d8e0ea;
+    }
+
+    td input, td textarea, td select {
+      min-width: 100%;
+    }
+
+    td textarea {
+      min-height: 38px;
+    }
+
+    .totals {
+      padding: 16px 18px 20px;
+      border-top: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: 1.2fr 320px;
+      gap: 16px;
+    }
+
+    .summary {
+      border: 1px solid #d8e0ea;
+      border-radius: 10px;
+      padding: 10px;
+      background: #f9fcff;
+    }
+
+    .sum-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 7px 4px;
+      border-bottom: 1px dashed #d7e1ec;
+      font-size: 0.94rem;
+    }
+
+    .sum-row:last-child {
+      border-bottom: none;
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: #11344e;
+      padding-top: 10px;
+    }
+
+    .sum-label {
+      color: #486076;
+    }
+
+    .cell-delete {
+      width: 70px;
+      text-align: center;
+    }
+
+    .print-header {
+      display: none;
+      padding: 0 18px 10px;
+      color: #4b5f73;
+      font-size: 0.86rem;
+    }
+
+    .mono {
+      font-family: Consolas, "Courier New", monospace;
+      letter-spacing: 0.03em;
+    }
+
+    @media (max-width: 1080px) {
+      .grid { grid-template-columns: repeat(2, minmax(180px, 1fr)); }
+      .quote-layout { grid-template-columns: 1fr; }
+      .totals { grid-template-columns: 1fr; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .shell {
+        margin: 0;
+        padding: 0;
+        max-width: none;
+      }
+      .card {
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+      }
+      .toolbar, .top-links, .status, .cell-delete, .no-print { display: none !important; }
+      .print-header { display: block; }
+      input, textarea, select {
+        border: none !important;
+        background: transparent !important;
+        padding: 0 !important;
+      }
+      th, td {
+        font-size: 11px;
+        padding: 4px;
+      }
+      .table-wrap { overflow: visible; }
+      table { min-width: 0; }
+      .panel, .summary {
+        border-color: #d7dbe1;
+        background: #fff;
+      }
+      .sum-row {
+        border-bottom-color: #dce1e7;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="card">
+      <header class="topbar">
+        <h1 class="title">Quote Generator</h1>
+        <div class="top-links">
+          <a href="master-price-list.html">Open Master Price List</a>
+          <span class="status" id="statusText">Not saved yet</span>
+        </div>
+      </header>
+
+      <div class="toolbar no-print">
+        <button class="btn" type="button" id="addLineBtn">Add Line</button>
+        <button class="btn ok" type="button" id="addFromMasterBtn">Add Selected Master Item</button>
+        <button class="btn" type="button" id="reloadMasterBtn">Refresh Master List</button>
+        <select id="masterPick" class="grow">
+          <option value="">Select item from master price list...</option>
+        </select>
+        <button class="btn primary" type="button" id="saveBtn">Save Quote</button>
+        <button class="btn" type="button" id="loadBtn">Load Saved</button>
+        <button class="btn" type="button" id="downloadBtn">Export JSON</button>
+        <label class="btn" for="importFile">Import JSON</label>
+        <input id="importFile" type="file" accept=".json,application/json" hidden>
+        <button class="btn" type="button" id="printBtn">Print / Save PDF</button>
+        <button class="btn danger" type="button" id="clearBtn">Clear</button>
+      </div>
+
+      <div class="grid">
+        <div class="field">
+          <label for="companyName">Company Name</label>
+          <input id="companyName" type="text" placeholder="801 Home Repair">
+        </div>
+        <div class="field">
+          <label for="companyPhone">Company Phone</label>
+          <input id="companyPhone" type="tel" placeholder="(801) 000-0000">
+        </div>
+        <div class="field">
+          <label for="companyEmail">Company Email</label>
+          <input id="companyEmail" type="email" placeholder="you@example.com">
+        </div>
+        <div class="field">
+          <label for="companyAddress">Company Address</label>
+          <input id="companyAddress" type="text" placeholder="City, State ZIP">
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="field">
+          <label for="quoteNumber">Quote #</label>
+          <input id="quoteNumber" type="text" class="mono" placeholder="Q-20260225-001">
+        </div>
+        <div class="field">
+          <label for="quoteDate">Quote Date</label>
+          <input id="quoteDate" type="date">
+        </div>
+        <div class="field">
+          <label for="validUntil">Valid Until</label>
+          <input id="validUntil" type="date">
+        </div>
+        <div class="field">
+          <label for="jobName">Job Name</label>
+          <input id="jobName" type="text" placeholder="Bathroom drywall repair">
+        </div>
+      </div>
+
+      <section class="quote-layout">
+        <article class="panel">
+          <h2 class="panel-title">Bill To</h2>
+          <div class="field">
+            <label for="clientName">Client Name</label>
+            <input id="clientName" type="text" placeholder="Customer name">
+          </div>
+          <div class="field">
+            <label for="clientPhone">Client Phone</label>
+            <input id="clientPhone" type="tel" placeholder="(000) 000-0000">
+          </div>
+          <div class="field">
+            <label for="clientEmail">Client Email</label>
+            <input id="clientEmail" type="email" placeholder="client@example.com">
+          </div>
+          <div class="field">
+            <label for="clientAddress">Client Address</label>
+            <textarea id="clientAddress" placeholder="Street, city, state, ZIP"></textarea>
+          </div>
+        </article>
+        <article class="panel">
+          <h2 class="panel-title">Quote Notes</h2>
+          <div class="field">
+            <label for="scopeText">Scope / Inclusions</label>
+            <textarea id="scopeText" placeholder="Describe what is included in this quote..."></textarea>
+          </div>
+          <div class="field">
+            <label for="termsText">Terms</label>
+            <textarea id="termsText" placeholder="Deposit, payment timing, exclusions, warranty..."></textarea>
+          </div>
+        </article>
+      </section>
+
+      <div class="print-header">
+        Printed from editable quote generator. Saved at: <span id="printSavedAt">Never</span>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 160px;">Item Code</th>
+              <th style="width: 250px;">Description</th>
+              <th style="width: 100px;">Unit</th>
+              <th style="width: 100px;">Qty</th>
+              <th style="width: 130px;">Unit Price ($)</th>
+              <th style="width: 95px;">Taxable</th>
+              <th style="width: 130px;">Line Total ($)</th>
+              <th class="cell-delete no-print">Delete</th>
+            </tr>
+          </thead>
+          <tbody id="linesBody"></tbody>
+        </table>
+      </div>
+
+      <section class="totals">
+        <article class="panel">
+          <h2 class="panel-title">Totals Settings</h2>
+          <div class="grid" style="padding:0;border:none;grid-template-columns:repeat(3,minmax(120px,1fr));">
+            <div class="field">
+              <label for="discountAmount">Discount ($)</label>
+              <input id="discountAmount" type="number" min="0" step="0.01" value="0">
+            </div>
+            <div class="field">
+              <label for="taxRate">Tax Rate (%)</label>
+              <input id="taxRate" type="number" min="0" step="0.01" value="0">
+            </div>
+            <div class="field">
+              <label for="depositAmount">Requested Deposit ($)</label>
+              <input id="depositAmount" type="number" min="0" step="0.01" value="0">
+            </div>
+          </div>
+        </article>
+
+        <article class="summary">
+          <div class="sum-row"><span class="sum-label">Subtotal</span><strong id="subtotalText">$0.00</strong></div>
+          <div class="sum-row"><span class="sum-label">Discount</span><strong id="discountText">$0.00</strong></div>
+          <div class="sum-row"><span class="sum-label">Tax</span><strong id="taxText">$0.00</strong></div>
+          <div class="sum-row"><span class="sum-label">Total Quote</span><strong id="totalText">$0.00</strong></div>
+          <div class="sum-row"><span class="sum-label">Balance After Deposit</span><strong id="balanceText">$0.00</strong></div>
+        </article>
+      </section>
+    </section>
+  </main>
+
+  <template id="lineTemplate">
+    <tr>
+      <td><input data-field="code" type="text" placeholder="PL-001"></td>
+      <td><textarea data-field="description" placeholder="Labor/material detail"></textarea></td>
+      <td>
+        <select data-field="unit">
+          <option value="ea">ea</option>
+          <option value="hr">hr</option>
+          <option value="sqft">sqft</option>
+          <option value="lf">lf</option>
+          <option value="job">job</option>
+          <option value="day">day</option>
+        </select>
+      </td>
+      <td><input data-field="qty" type="number" min="0" step="0.01" value="1"></td>
+      <td><input data-field="price" type="number" min="0" step="0.01" value="0"></td>
+      <td style="text-align:center;"><input data-field="taxable" type="checkbox" checked></td>
+      <td><input data-field="lineTotal" type="text" value="$0.00" readonly></td>
+      <td class="cell-delete no-print"><button type="button" class="btn danger" data-action="delete">X</button></td>
+    </tr>
+  </template>
+
+  <script>
+    const QUOTE_STORAGE_KEY = "801homeRepair.quoteDraft.v1";
+    const MASTER_STORAGE_KEY = "801homeRepair.masterPriceList.v1";
+    const START_ROWS = 2;
+
+    const refs = {
+      addLineBtn: document.getElementById("addLineBtn"),
+      addFromMasterBtn: document.getElementById("addFromMasterBtn"),
+      reloadMasterBtn: document.getElementById("reloadMasterBtn"),
+      masterPick: document.getElementById("masterPick"),
+      saveBtn: document.getElementById("saveBtn"),
+      loadBtn: document.getElementById("loadBtn"),
+      downloadBtn: document.getElementById("downloadBtn"),
+      importFile: document.getElementById("importFile"),
+      printBtn: document.getElementById("printBtn"),
+      clearBtn: document.getElementById("clearBtn"),
+      lineTemplate: document.getElementById("lineTemplate"),
+      linesBody: document.getElementById("linesBody"),
+      statusText: document.getElementById("statusText"),
+      printSavedAt: document.getElementById("printSavedAt"),
+      companyName: document.getElementById("companyName"),
+      companyPhone: document.getElementById("companyPhone"),
+      companyEmail: document.getElementById("companyEmail"),
+      companyAddress: document.getElementById("companyAddress"),
+      quoteNumber: document.getElementById("quoteNumber"),
+      quoteDate: document.getElementById("quoteDate"),
+      validUntil: document.getElementById("validUntil"),
+      jobName: document.getElementById("jobName"),
+      clientName: document.getElementById("clientName"),
+      clientPhone: document.getElementById("clientPhone"),
+      clientEmail: document.getElementById("clientEmail"),
+      clientAddress: document.getElementById("clientAddress"),
+      scopeText: document.getElementById("scopeText"),
+      termsText: document.getElementById("termsText"),
+      discountAmount: document.getElementById("discountAmount"),
+      taxRate: document.getElementById("taxRate"),
+      depositAmount: document.getElementById("depositAmount"),
+      subtotalText: document.getElementById("subtotalText"),
+      discountText: document.getElementById("discountText"),
+      taxText: document.getElementById("taxText"),
+      totalText: document.getElementById("totalText"),
+      balanceText: document.getElementById("balanceText")
+    };
+
+    let masterItems = [];
+
+    function formatMoney(value) {
+      return `$${Number(value || 0).toFixed(2)}`;
+    }
+
+    function todayISO() {
+      const date = new Date();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${date.getFullYear()}-${month}-${day}`;
+    }
+
+    function plusDaysISO(days) {
+      const date = new Date();
+      date.setDate(date.getDate() + days);
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${date.getFullYear()}-${month}-${day}`;
+    }
+
+    function createQuoteNumber() {
+      const now = new Date();
+      const stamp = [
+        now.getFullYear(),
+        String(now.getMonth() + 1).padStart(2, "0"),
+        String(now.getDate()).padStart(2, "0")
+      ].join("");
+      return `Q-${stamp}-001`;
+    }
+
+    function getSavedLabel() {
+      return new Date().toLocaleString();
+    }
+
+    function createEmptyLine() {
+      return {
+        code: "",
+        description: "",
+        unit: "ea",
+        qty: 1,
+        price: 0,
+        taxable: true
+      };
+    }
+
+    function normalizeLine(raw) {
+      return {
+        code: String(raw.code || "").trim(),
+        description: String(raw.description || "").trim(),
+        unit: String(raw.unit || "ea").trim(),
+        qty: Number(raw.qty || 0),
+        price: Number(raw.price || 0),
+        taxable: Boolean(raw.taxable)
+      };
+    }
+
+    function createLine(lineData = createEmptyLine()) {
+      const fragment = refs.lineTemplate.content.cloneNode(true);
+      const tr = fragment.querySelector("tr");
+      const line = normalizeLine(lineData);
+      tr.querySelector('[data-field="code"]').value = line.code;
+      tr.querySelector('[data-field="description"]').value = line.description;
+      tr.querySelector('[data-field="unit"]').value = line.unit || "ea";
+      tr.querySelector('[data-field="qty"]').value = line.qty || 0;
+      tr.querySelector('[data-field="price"]').value = line.price || 0;
+      tr.querySelector('[data-field="taxable"]').checked = line.taxable !== false;
+      bindLineEvents(tr);
+      refs.linesBody.appendChild(tr);
+      updateLineTotal(tr);
+      return tr;
+    }
+
+    function bindLineEvents(tr) {
+      tr.addEventListener("input", () => {
+        updateLineTotal(tr);
+        updateTotals();
+        refs.statusText.textContent = "Unsaved changes";
+      });
+      tr.addEventListener("change", () => {
+        updateLineTotal(tr);
+        updateTotals();
+        refs.statusText.textContent = "Unsaved changes";
+      });
+      tr.querySelector('[data-action="delete"]').addEventListener("click", () => {
+        tr.remove();
+        if (!refs.linesBody.querySelector("tr")) {
+          for (let i = 0; i < START_ROWS; i += 1) createLine();
+        }
+        updateTotals();
+        refs.statusText.textContent = "Unsaved changes";
+      });
+    }
+
+    function lineAmount(tr) {
+      const qty = Number(tr.querySelector('[data-field="qty"]').value || 0);
+      const price = Number(tr.querySelector('[data-field="price"]').value || 0);
+      return qty * price;
+    }
+
+    function updateLineTotal(tr) {
+      tr.querySelector('[data-field="lineTotal"]').value = formatMoney(lineAmount(tr));
+    }
+
+    function collectLines() {
+      const lines = [];
+      refs.linesBody.querySelectorAll("tr").forEach((tr) => {
+        lines.push({
+          code: tr.querySelector('[data-field="code"]').value,
+          description: tr.querySelector('[data-field="description"]').value,
+          unit: tr.querySelector('[data-field="unit"]').value,
+          qty: tr.querySelector('[data-field="qty"]').value,
+          price: tr.querySelector('[data-field="price"]').value,
+          taxable: tr.querySelector('[data-field="taxable"]').checked
+        });
+      });
+      return lines.map(normalizeLine);
+    }
+
+    function updateTotals() {
+      const lines = collectLines().filter((line) => line.code || line.description || line.qty || line.price);
+      const subtotal = lines.reduce((sum, line) => sum + (line.qty * line.price), 0);
+      const discount = Number(refs.discountAmount.value || 0);
+      const taxableSum = lines.filter((line) => line.taxable).reduce((sum, line) => sum + (line.qty * line.price), 0);
+      const taxRate = Number(refs.taxRate.value || 0) / 100;
+      const tax = Math.max(0, taxableSum - discount) * taxRate;
+      const total = Math.max(0, subtotal - discount) + tax;
+      const deposit = Number(refs.depositAmount.value || 0);
+      const balance = total - deposit;
+
+      refs.subtotalText.textContent = formatMoney(subtotal);
+      refs.discountText.textContent = formatMoney(discount);
+      refs.taxText.textContent = formatMoney(tax);
+      refs.totalText.textContent = formatMoney(total);
+      refs.balanceText.textContent = formatMoney(balance);
+    }
+
+    function toPayload() {
+      return {
+        savedAt: getSavedLabel(),
+        company: {
+          name: refs.companyName.value.trim(),
+          phone: refs.companyPhone.value.trim(),
+          email: refs.companyEmail.value.trim(),
+          address: refs.companyAddress.value.trim()
+        },
+        quote: {
+          number: refs.quoteNumber.value.trim(),
+          quoteDate: refs.quoteDate.value,
+          validUntil: refs.validUntil.value,
+          jobName: refs.jobName.value.trim()
+        },
+        client: {
+          name: refs.clientName.value.trim(),
+          phone: refs.clientPhone.value.trim(),
+          email: refs.clientEmail.value.trim(),
+          address: refs.clientAddress.value.trim()
+        },
+        notes: {
+          scope: refs.scopeText.value.trim(),
+          terms: refs.termsText.value.trim()
+        },
+        settings: {
+          discountAmount: Number(refs.discountAmount.value || 0),
+          taxRate: Number(refs.taxRate.value || 0),
+          depositAmount: Number(refs.depositAmount.value || 0)
+        },
+        lines: collectLines()
+      };
+    }
+
+    function fillFromPayload(payload) {
+      refs.companyName.value = payload.company?.name || refs.companyName.value;
+      refs.companyPhone.value = payload.company?.phone || "";
+      refs.companyEmail.value = payload.company?.email || "";
+      refs.companyAddress.value = payload.company?.address || "";
+
+      refs.quoteNumber.value = payload.quote?.number || createQuoteNumber();
+      refs.quoteDate.value = payload.quote?.quoteDate || todayISO();
+      refs.validUntil.value = payload.quote?.validUntil || plusDaysISO(30);
+      refs.jobName.value = payload.quote?.jobName || "";
+
+      refs.clientName.value = payload.client?.name || "";
+      refs.clientPhone.value = payload.client?.phone || "";
+      refs.clientEmail.value = payload.client?.email || "";
+      refs.clientAddress.value = payload.client?.address || "";
+
+      refs.scopeText.value = payload.notes?.scope || "";
+      refs.termsText.value = payload.notes?.terms || "";
+
+      refs.discountAmount.value = payload.settings?.discountAmount ?? 0;
+      refs.taxRate.value = payload.settings?.taxRate ?? 0;
+      refs.depositAmount.value = payload.settings?.depositAmount ?? 0;
+
+      refs.linesBody.innerHTML = "";
+      const lines = Array.isArray(payload.lines) ? payload.lines : [];
+      if (lines.length) {
+        lines.forEach((line) => createLine(line));
+      } else {
+        for (let i = 0; i < START_ROWS; i += 1) createLine();
+      }
+
+      refs.statusText.textContent = lines.length ? "Loaded from saved data" : "Ready";
+      const stamp = payload.savedAt || "Never";
+      refs.printSavedAt.textContent = stamp;
+      updateTotals();
+    }
+
+    function saveDraft() {
+      const payload = toPayload();
+      localStorage.setItem(QUOTE_STORAGE_KEY, JSON.stringify(payload));
+      refs.printSavedAt.textContent = payload.savedAt;
+      refs.statusText.textContent = "Saved";
+    }
+
+    function loadDraft() {
+      const raw = localStorage.getItem(QUOTE_STORAGE_KEY);
+      if (!raw) {
+        alert("No saved quote draft found yet.");
+        return;
+      }
+      try {
+        fillFromPayload(JSON.parse(raw));
+      } catch {
+        alert("Saved quote draft could not be read.");
+      }
+    }
+
+    function exportJSON() {
+      const payload = toPayload();
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      const quoteNo = (refs.quoteNumber.value || "quote").replace(/[^\w-]+/g, "-");
+      a.href = url;
+      a.download = `${quoteNo}.json`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function importJSON(file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const parsed = JSON.parse(String(reader.result || "{}"));
+          if (!Array.isArray(parsed.lines)) {
+            alert("Invalid quote JSON format.");
+            return;
+          }
+          fillFromPayload(parsed);
+          refs.statusText.textContent = "Imported (save to keep)";
+        } catch {
+          alert("File is not valid JSON.");
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function clearQuote() {
+      if (!confirm("Clear this quote on the page?")) return;
+      fillFromPayload({
+        company: {
+          name: refs.companyName.value || "801 Home Repair"
+        },
+        quote: {
+          number: createQuoteNumber(),
+          quoteDate: todayISO(),
+          validUntil: plusDaysISO(30)
+        },
+        lines: []
+      });
+      refs.statusText.textContent = "Cleared (not saved)";
+    }
+
+    function loadMasterItems() {
+      refs.masterPick.innerHTML = '<option value="">Select item from master price list...</option>';
+      masterItems = [];
+      const raw = localStorage.getItem(MASTER_STORAGE_KEY);
+      if (!raw) return;
+      try {
+        const parsed = JSON.parse(raw);
+        const items = Array.isArray(parsed.items) ? parsed.items : [];
+        masterItems = items
+          .map((it) => ({
+            code: String(it.code || ""),
+            category: String(it.category || ""),
+            description: String(it.description || ""),
+            unit: String(it.unit || "ea"),
+            price: Number(it.price || 0),
+            taxable: it.taxable !== false
+          }))
+          .filter((it) => it.code || it.description);
+
+        masterItems.forEach((item, idx) => {
+          const opt = document.createElement("option");
+          opt.value = String(idx);
+          const code = item.code ? `${item.code} - ` : "";
+          const category = item.category ? ` (${item.category})` : "";
+          opt.textContent = `${code}${item.description}${category} | ${formatMoney(item.price)}/${item.unit}`;
+          refs.masterPick.appendChild(opt);
+        });
+
+        if (!refs.companyName.value) {
+          refs.companyName.value = parsed.meta?.companyName || "801 Home Repair";
+        }
+        if (!refs.companyPhone.value) refs.companyPhone.value = parsed.meta?.phone || "";
+        if (!refs.companyEmail.value) refs.companyEmail.value = parsed.meta?.email || "";
+      } catch {
+        masterItems = [];
+      }
+    }
+
+    function addSelectedMasterItem() {
+      const selected = refs.masterPick.value;
+      if (selected === "") {
+        alert("Pick an item from the master list first.");
+        return;
+      }
+      const idx = Number(selected);
+      if (!Number.isInteger(idx) || idx < 0 || idx >= masterItems.length) {
+        alert("Pick an item from the master list first.");
+        return;
+      }
+      const item = masterItems[idx];
+      createLine({
+        code: item.code,
+        description: item.description,
+        unit: item.unit,
+        qty: 1,
+        price: item.price,
+        taxable: item.taxable
+      });
+      updateTotals();
+      refs.statusText.textContent = "Unsaved changes";
+    }
+
+    function wireFormChangeStatus() {
+      [
+        refs.companyName, refs.companyPhone, refs.companyEmail, refs.companyAddress,
+        refs.quoteNumber, refs.quoteDate, refs.validUntil, refs.jobName,
+        refs.clientName, refs.clientPhone, refs.clientEmail, refs.clientAddress,
+        refs.scopeText, refs.termsText, refs.discountAmount, refs.taxRate, refs.depositAmount
+      ].forEach((el) => {
+        el.addEventListener("input", () => {
+          if (el === refs.discountAmount || el === refs.taxRate || el === refs.depositAmount) {
+            updateTotals();
+          }
+          refs.statusText.textContent = "Unsaved changes";
+        });
+      });
+    }
+
+    function wireButtons() {
+      refs.addLineBtn.addEventListener("click", () => {
+        createLine();
+        refs.statusText.textContent = "Unsaved changes";
+      });
+      refs.addFromMasterBtn.addEventListener("click", addSelectedMasterItem);
+      refs.reloadMasterBtn.addEventListener("click", () => {
+        loadMasterItems();
+        refs.statusText.textContent = "Master list refreshed";
+      });
+      refs.masterPick.addEventListener("focus", loadMasterItems);
+      refs.saveBtn.addEventListener("click", saveDraft);
+      refs.loadBtn.addEventListener("click", loadDraft);
+      refs.downloadBtn.addEventListener("click", exportJSON);
+      refs.importFile.addEventListener("change", (ev) => {
+        const file = ev.target.files && ev.target.files[0];
+        if (file) importJSON(file);
+        ev.target.value = "";
+      });
+      refs.printBtn.addEventListener("click", () => window.print());
+      refs.clearBtn.addEventListener("click", clearQuote);
+    }
+
+    function boot() {
+      loadMasterItems();
+      wireButtons();
+      wireFormChangeStatus();
+
+      const raw = localStorage.getItem(QUOTE_STORAGE_KEY);
+      if (raw) {
+        try {
+          fillFromPayload(JSON.parse(raw));
+          return;
+        } catch {
+          // Fall through to default payload.
+        }
+      }
+
+      fillFromPayload({
+        company: { name: "801 Home Repair" },
+        quote: {
+          number: createQuoteNumber(),
+          quoteDate: todayISO(),
+          validUntil: plusDaysISO(30)
+        },
+        settings: {
+          discountAmount: 0,
+          taxRate: 0,
+          depositAmount: 0
+        },
+        lines: []
+      });
+      refs.statusText.textContent = "Ready";
+    }
+
+    boot();
+  </script>
+</body>
+</html>

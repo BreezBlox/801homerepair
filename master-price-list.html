@@ -1,0 +1,677 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Master Price List | 801 Home Repair</title>
+  <style>
+    :root {
+      --bg: #f3f5f7;
+      --card: #ffffff;
+      --ink: #1d252f;
+      --muted: #5a6775;
+      --line: #d8dee6;
+      --accent: #1a6f52;
+      --accent-dark: #12513b;
+      --danger: #aa2f2f;
+      --shadow: 0 14px 40px rgba(13, 25, 38, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 10% 10%, #edf4f1 0%, rgba(237, 244, 241, 0) 45%),
+        radial-gradient(circle at 90% 90%, #eaf1f8 0%, rgba(234, 241, 248, 0) 52%),
+        var(--bg);
+    }
+
+    .shell {
+      max-width: 1400px;
+      margin: 32px auto 72px;
+      padding: 0 18px;
+    }
+
+    .app-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .topbar {
+      padding: 18px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, #f8fbfd 0%, #f5f8fa 100%);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .topbar h1 {
+      margin: 0;
+      font-size: 1.2rem;
+      letter-spacing: 0.01em;
+    }
+
+    .top-links {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .top-links a {
+      font-size: 0.92rem;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .top-links a:hover { text-decoration: underline; }
+
+    .toolbar {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      background: #fcfdff;
+    }
+
+    .toolbar .grow {
+      flex: 1;
+      min-width: 220px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="email"],
+    input[type="tel"],
+    textarea,
+    select {
+      width: 100%;
+      border: 1px solid #c7d1dc;
+      border-radius: 9px;
+      padding: 8px 10px;
+      font: inherit;
+      color: inherit;
+      background: #fff;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: 2px solid rgba(26, 111, 82, 0.25);
+      border-color: #8bb8a7;
+    }
+
+    .btn {
+      border: 1px solid #bfd2ca;
+      background: #f4faf7;
+      color: #184f3d;
+      border-radius: 9px;
+      padding: 8px 12px;
+      font: inherit;
+      font-size: 0.9rem;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn:hover { background: #e9f5ef; }
+    .btn.primary {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn.primary:hover { background: var(--accent-dark); }
+    .btn.danger {
+      border-color: #e7c3c3;
+      background: #fff5f5;
+      color: var(--danger);
+    }
+    .btn.danger:hover { background: #ffecec; }
+
+    .meta-grid {
+      padding: 18px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(160px, 1fr));
+      gap: 12px;
+      border-bottom: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .field label {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .table-wrap {
+      overflow: auto;
+      padding: 0 0 6px;
+      background: #fff;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      min-width: 1050px;
+    }
+
+    th, td {
+      border-bottom: 1px solid #e5ebf1;
+      vertical-align: middle;
+      padding: 8px 8px;
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      background: #f7fafc;
+      z-index: 2;
+      text-align: left;
+      font-size: 0.79rem;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: #4f5f71;
+      border-bottom: 1px solid #d9e2ec;
+    }
+
+    td input,
+    td select,
+    td textarea {
+      min-width: 100%;
+    }
+
+    td textarea { min-height: 38px; }
+
+    .cell-delete {
+      width: 70px;
+      text-align: center;
+    }
+
+    .table-footer {
+      padding: 12px 18px 18px;
+      border-top: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: repeat(3, minmax(180px, 1fr));
+      gap: 10px;
+      background: #fff;
+    }
+
+    .stat {
+      background: #f8fafc;
+      border: 1px solid #dbe5ef;
+      border-radius: 10px;
+      padding: 10px 12px;
+    }
+
+    .stat .label {
+      font-size: 0.76rem;
+      color: #5c6d7e;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 3px;
+    }
+
+    .stat .value {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .status {
+      margin-left: auto;
+      font-size: 0.82rem;
+      color: #44617a;
+    }
+
+    .print-only { display: none; }
+
+    @media (max-width: 1020px) {
+      .meta-grid {
+        grid-template-columns: repeat(2, minmax(180px, 1fr));
+      }
+      .table-footer {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .shell {
+        max-width: none;
+        margin: 0;
+        padding: 0;
+      }
+      .app-card {
+        border: none;
+        box-shadow: none;
+        border-radius: 0;
+      }
+      .toolbar, .top-links, .status, .cell-delete, .no-print { display: none !important; }
+      th, td {
+        font-size: 11px;
+        padding: 4px;
+      }
+      input, textarea, select {
+        border: none !important;
+        padding: 0 !important;
+        background: transparent !important;
+      }
+      .print-only {
+        display: block;
+        padding: 0 18px 12px;
+        color: #4f5f71;
+        font-size: 0.85rem;
+      }
+      .table-wrap {
+        overflow: visible;
+      }
+      table { min-width: 0; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="app-card">
+      <header class="topbar">
+        <h1>Master Price List</h1>
+        <div class="top-links">
+          <a href="quote-generator.html">Open Quote Generator</a>
+          <span class="status" id="statusText">Not saved yet</span>
+        </div>
+      </header>
+
+      <div class="toolbar no-print">
+        <button class="btn" type="button" id="addRowBtn">Add Item</button>
+        <button class="btn primary" type="button" id="saveBtn">Save</button>
+        <button class="btn" type="button" id="loadBtn">Load</button>
+        <button class="btn" type="button" id="downloadBtn">Export JSON</button>
+        <label class="btn" for="importFile">Import JSON</label>
+        <input id="importFile" type="file" accept=".json,application/json" hidden>
+        <button class="btn" type="button" id="printBtn">Print / Save PDF</button>
+        <button class="btn danger" type="button" id="clearBtn">Clear All</button>
+        <div class="grow">
+          <input type="text" id="searchInput" placeholder="Search code, category, description, notes...">
+        </div>
+      </div>
+
+      <section class="meta-grid">
+        <div class="field">
+          <label for="companyName">Company Name</label>
+          <input id="companyName" type="text" placeholder="801 Home Repair">
+        </div>
+        <div class="field">
+          <label for="phone">Phone</label>
+          <input id="phone" type="tel" placeholder="(801) 000-0000">
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" type="email" placeholder="you@example.com">
+        </div>
+        <div class="field">
+          <label for="updatedBy">Updated By</label>
+          <input id="updatedBy" type="text" placeholder="Your name">
+        </div>
+      </section>
+
+      <div class="print-only">
+        This document is your editable master price list. Last saved:
+        <span id="printSavedAt">Never</span>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 120px;">Item Code</th>
+              <th style="width: 160px;">Category</th>
+              <th style="width: 260px;">Description</th>
+              <th style="width: 95px;">Unit</th>
+              <th style="width: 120px;">Unit Price ($)</th>
+              <th style="width: 95px;">Taxable</th>
+              <th>Notes</th>
+              <th class="cell-delete no-print">Delete</th>
+            </tr>
+          </thead>
+          <tbody id="rowsBody"></tbody>
+        </table>
+      </div>
+
+      <footer class="table-footer">
+        <div class="stat">
+          <div class="label">Total Items</div>
+          <div class="value" id="totalItems">0</div>
+        </div>
+        <div class="stat">
+          <div class="label">Average Price</div>
+          <div class="value" id="avgPrice">$0.00</div>
+        </div>
+        <div class="stat">
+          <div class="label">Last Saved</div>
+          <div class="value" id="lastSaved">Never</div>
+        </div>
+      </footer>
+    </section>
+  </main>
+
+  <template id="rowTemplate">
+    <tr>
+      <td><input data-field="code" type="text" placeholder="PL-001"></td>
+      <td><input data-field="category" type="text" placeholder="Drywall"></td>
+      <td><input data-field="description" type="text" placeholder="Patch small hole"></td>
+      <td>
+        <select data-field="unit">
+          <option value="ea">ea</option>
+          <option value="hr">hr</option>
+          <option value="sqft">sqft</option>
+          <option value="lf">lf</option>
+          <option value="job">job</option>
+          <option value="day">day</option>
+        </select>
+      </td>
+      <td><input data-field="price" type="number" step="0.01" min="0" placeholder="0.00"></td>
+      <td style="text-align:center;"><input data-field="taxable" type="checkbox" checked></td>
+      <td><textarea data-field="notes" placeholder="Materials, assumptions, limits..."></textarea></td>
+      <td class="cell-delete no-print"><button type="button" class="btn danger" data-action="delete">X</button></td>
+    </tr>
+  </template>
+
+  <script>
+    const STORAGE_KEY = "801homeRepair.masterPriceList.v1";
+    const MAX_AUTO_ROWS = 2;
+
+    const refs = {
+      rowsBody: document.getElementById("rowsBody"),
+      rowTemplate: document.getElementById("rowTemplate"),
+      addRowBtn: document.getElementById("addRowBtn"),
+      saveBtn: document.getElementById("saveBtn"),
+      loadBtn: document.getElementById("loadBtn"),
+      clearBtn: document.getElementById("clearBtn"),
+      printBtn: document.getElementById("printBtn"),
+      downloadBtn: document.getElementById("downloadBtn"),
+      importFile: document.getElementById("importFile"),
+      searchInput: document.getElementById("searchInput"),
+      companyName: document.getElementById("companyName"),
+      phone: document.getElementById("phone"),
+      email: document.getElementById("email"),
+      updatedBy: document.getElementById("updatedBy"),
+      totalItems: document.getElementById("totalItems"),
+      avgPrice: document.getElementById("avgPrice"),
+      lastSaved: document.getElementById("lastSaved"),
+      printSavedAt: document.getElementById("printSavedAt"),
+      statusText: document.getElementById("statusText")
+    };
+
+    function getNowLabel() {
+      return new Date().toLocaleString();
+    }
+
+    function createEmptyRowData() {
+      return {
+        code: "",
+        category: "",
+        description: "",
+        unit: "ea",
+        price: "",
+        taxable: true,
+        notes: ""
+      };
+    }
+
+    function normalizeRow(input) {
+      return {
+        code: String(input.code || "").trim(),
+        category: String(input.category || "").trim(),
+        description: String(input.description || "").trim(),
+        unit: String(input.unit || "ea").trim(),
+        price: input.price === "" || input.price === null || input.price === undefined ? "" : Number(input.price),
+        taxable: Boolean(input.taxable),
+        notes: String(input.notes || "").trim()
+      };
+    }
+
+    function escapeText(value) {
+      return String(value || "").toLowerCase();
+    }
+
+    function collectRows() {
+      const rows = [];
+      refs.rowsBody.querySelectorAll("tr").forEach((tr) => {
+        rows.push({
+          code: tr.querySelector('[data-field="code"]').value,
+          category: tr.querySelector('[data-field="category"]').value,
+          description: tr.querySelector('[data-field="description"]').value,
+          unit: tr.querySelector('[data-field="unit"]').value,
+          price: tr.querySelector('[data-field="price"]').value,
+          taxable: tr.querySelector('[data-field="taxable"]').checked,
+          notes: tr.querySelector('[data-field="notes"]').value
+        });
+      });
+      return rows.map(normalizeRow);
+    }
+
+    function getPayload() {
+      return {
+        meta: {
+          companyName: refs.companyName.value.trim(),
+          phone: refs.phone.value.trim(),
+          email: refs.email.value.trim(),
+          updatedBy: refs.updatedBy.value.trim(),
+          updatedAt: getNowLabel()
+        },
+        items: collectRows()
+      };
+    }
+
+    function fillRow(tr, row) {
+      tr.querySelector('[data-field="code"]').value = row.code || "";
+      tr.querySelector('[data-field="category"]').value = row.category || "";
+      tr.querySelector('[data-field="description"]').value = row.description || "";
+      tr.querySelector('[data-field="unit"]').value = row.unit || "ea";
+      tr.querySelector('[data-field="price"]').value = row.price === "" ? "" : Number(row.price || 0).toFixed(2);
+      tr.querySelector('[data-field="taxable"]').checked = row.taxable !== false;
+      tr.querySelector('[data-field="notes"]').value = row.notes || "";
+    }
+
+    function createRow(rowData = createEmptyRowData()) {
+      const fragment = refs.rowTemplate.content.cloneNode(true);
+      const tr = fragment.querySelector("tr");
+      fillRow(tr, normalizeRow(rowData));
+      bindRowEvents(tr);
+      refs.rowsBody.appendChild(tr);
+    }
+
+    function bindRowEvents(tr) {
+      tr.addEventListener("input", () => {
+        updateStats();
+        refs.statusText.textContent = "Unsaved changes";
+        applySearch();
+      });
+      tr.addEventListener("change", () => {
+        updateStats();
+        refs.statusText.textContent = "Unsaved changes";
+      });
+      tr.querySelector('[data-action="delete"]').addEventListener("click", () => {
+        tr.remove();
+        if (refs.rowsBody.children.length === 0) {
+          for (let i = 0; i < MAX_AUTO_ROWS; i += 1) {
+            createRow();
+          }
+        }
+        updateStats();
+        refs.statusText.textContent = "Unsaved changes";
+      });
+    }
+
+    function populateFromPayload(payload) {
+      refs.companyName.value = payload.meta?.companyName || "";
+      refs.phone.value = payload.meta?.phone || "";
+      refs.email.value = payload.meta?.email || "";
+      refs.updatedBy.value = payload.meta?.updatedBy || "";
+
+      refs.rowsBody.innerHTML = "";
+      const rows = Array.isArray(payload.items) ? payload.items : [];
+      if (rows.length) {
+        rows.forEach((row) => createRow(row));
+      } else {
+        for (let i = 0; i < MAX_AUTO_ROWS; i += 1) {
+          createRow();
+        }
+      }
+      const updatedAt = payload.meta?.updatedAt || "Never";
+      refs.lastSaved.textContent = updatedAt;
+      refs.printSavedAt.textContent = updatedAt;
+      refs.statusText.textContent = rows.length ? "Loaded from saved data" : "Ready";
+      updateStats();
+      applySearch();
+    }
+
+    function updateStats() {
+      const rows = collectRows();
+      const activeRows = rows.filter((r) => r.code || r.category || r.description || r.notes || r.price !== "");
+      refs.totalItems.textContent = String(activeRows.length);
+      if (!activeRows.length) {
+        refs.avgPrice.textContent = "$0.00";
+        return;
+      }
+      const sum = activeRows.reduce((acc, r) => acc + (Number(r.price) || 0), 0);
+      const avg = sum / activeRows.length;
+      refs.avgPrice.textContent = `$${avg.toFixed(2)}`;
+    }
+
+    function saveToStorage() {
+      const payload = getPayload();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+      const time = payload.meta.updatedAt;
+      refs.lastSaved.textContent = time;
+      refs.printSavedAt.textContent = time;
+      refs.statusText.textContent = "Saved";
+    }
+
+    function loadFromStorage() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) {
+        alert("No saved master price list found yet.");
+        return;
+      }
+      try {
+        const parsed = JSON.parse(raw);
+        populateFromPayload(parsed);
+      } catch {
+        alert("Saved data could not be read.");
+      }
+    }
+
+    function downloadJSON() {
+      const payload = getPayload();
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      const date = new Date().toISOString().slice(0, 10);
+      a.href = url;
+      a.download = `master-price-list-${date}.json`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function importJSON(file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const parsed = JSON.parse(String(reader.result || "{}"));
+          if (!Array.isArray(parsed.items)) {
+            alert("Invalid file format. Expected an object with an items array.");
+            return;
+          }
+          populateFromPayload(parsed);
+          refs.statusText.textContent = "Imported (save to keep)";
+        } catch {
+          alert("File is not valid JSON.");
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function clearAll() {
+      if (!confirm("Clear the entire master list on this page?")) return;
+      populateFromPayload({ meta: {}, items: [] });
+      refs.statusText.textContent = "Cleared (not saved)";
+    }
+
+    function applySearch() {
+      const term = escapeText(refs.searchInput.value.trim());
+      refs.rowsBody.querySelectorAll("tr").forEach((tr) => {
+        if (!term) {
+          tr.style.display = "";
+          return;
+        }
+        const text = [
+          tr.querySelector('[data-field="code"]').value,
+          tr.querySelector('[data-field="category"]').value,
+          tr.querySelector('[data-field="description"]').value,
+          tr.querySelector('[data-field="notes"]').value
+        ].join(" ").toLowerCase();
+        tr.style.display = text.includes(term) ? "" : "none";
+      });
+    }
+
+    function wireEvents() {
+      refs.addRowBtn.addEventListener("click", () => createRow());
+      refs.saveBtn.addEventListener("click", saveToStorage);
+      refs.loadBtn.addEventListener("click", loadFromStorage);
+      refs.clearBtn.addEventListener("click", clearAll);
+      refs.printBtn.addEventListener("click", () => window.print());
+      refs.downloadBtn.addEventListener("click", downloadJSON);
+      refs.importFile.addEventListener("change", (ev) => {
+        const file = ev.target.files && ev.target.files[0];
+        if (file) importJSON(file);
+        ev.target.value = "";
+      });
+      refs.searchInput.addEventListener("input", applySearch);
+      [refs.companyName, refs.phone, refs.email, refs.updatedBy].forEach((el) => {
+        el.addEventListener("input", () => {
+          refs.statusText.textContent = "Unsaved changes";
+        });
+      });
+    }
+
+    function boot() {
+      wireEvents();
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) {
+        populateFromPayload({
+          meta: { companyName: "801 Home Repair" },
+          items: []
+        });
+        refs.statusText.textContent = "Ready";
+        return;
+      }
+      try {
+        populateFromPayload(JSON.parse(raw));
+      } catch {
+        populateFromPayload({ meta: {}, items: [] });
+      }
+    }
+
+    boot();
+  </script>
+</body>
+</html>
