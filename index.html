@@ -9,6 +9,9 @@
   <meta name="robots" content="index,follow">
   <meta name="theme-color" content="#1d4ed8">
   <link rel="canonical" href="https://example.com/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./styles.css">
 
   <meta property="og:type" content="website">
@@ -62,93 +65,40 @@
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <header class="site-header" id="top">
-    <div class="container header-inner">
-      <a href="#top" class="brand" aria-label="801 Home Repair home">
-        <span class="brand-mark" aria-hidden="true">801</span>
-        <span>
-          <span class="brand-name" data-business-name>801 Home Repair</span>
-          <span class="brand-sub" data-secondary-name>801TechniCA</span>
-        </span>
-      </a>
-
-      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">
-        <span class="sr-only">Toggle navigation</span>
-        <span aria-hidden="true">Menu</span>
-      </button>
-
-      <nav id="primary-nav" class="nav-links" aria-label="Primary">
-        <a href="#services">Services</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#areas">Service Areas</a>
-        <a href="#faq">FAQ</a>
-        <a href="#contact" class="btn btn-small">Get Quote</a>
-      </nav>
-    </div>
-  </header>
-
   <main id="main">
     <section class="hero section">
-      <div class="container hero-shell">
-        <div class="hero-copy">
-          <p class="eyebrow">Independent handyman serving Utah's Wasatch Front</p>
-          <h1>Handyman-tier pricing. Pro results. No nonsense.</h1>
-          <p class="lead">
-            Flooring installs, door replacement, deck and stair repairs, drywall touchups, and turnover punch-lists for homeowners and landlords.
-            Fast response across Midvale, Salt Lake County, Park City, and Utah County.
-          </p>
-
-          <div class="hero-actions">
-            <a class="btn btn-primary" data-phone-link href="tel:+18015550123">
-              Call / Text <span data-phone-display>(801) 555-0123</span>
-            </a>
-            <a class="btn btn-outline" href="#contact">Get Quote</a>
-            <button class="btn btn-ghost" id="copyPhoneBtn" type="button">Copy Phone</button>
+      <div class="container">
+        <article class="hero-stage" aria-label="801 Home Repair highlights">
+          <div class="hero-title-wrap">
+            <span class="hero-line" aria-hidden="true"></span>
+            <h1>project-ready<br>home repair</h1>
+            <span class="hero-line" aria-hidden="true"></span>
           </div>
 
-          <p class="hero-note">Fast response. Clear communication. On-site quote.</p>
-          <p class="hero-note hero-note-strong">Most jobs are small-to-mid projects, generally under $5,000.</p>
-        </div>
+          <p class="lead hero-lead">
+            Flooring installs, doors, deck and stair repairs, drywall touchups, and turnover punch-lists
+            for homeowners and rental properties.
+          </p>
 
-        <aside class="hero-card" aria-label="Why choose 801 Home Repair">
-          <h2>What you can expect</h2>
-          <ul class="check-list">
-            <li>Punctual scheduling windows</li>
-            <li>Clean work zones and daily cleanup</li>
-            <li>Shoe covers on request</li>
-            <li>Progress photos available on request</li>
-            <li>Plain-language scope and pricing</li>
-          </ul>
-          <p class="owner-line">Owner-operator: <span data-owner-name>Rob K.</span></p>
+          <div class="hero-strip" aria-label="Recent project preview photos">
+            <img src="./selected_pics/kew.flooring.after.JPEG" alt="Finished flooring installation in a living area">
+            <img src="./selected_pics/arthur.deck.after.JPEG" alt="Completed deck repair and finishing">
+            <img class="hero-exterior" src="./selected_pics/exterior_door.JPEG" alt="Completed exterior door installation and trim detail">
+            <img src="./selected_pics/wvcbath_before.JPEG" alt="Bathroom before repair and update">
+            <img src="./selected_pics/wvcbat_after.JPEG" alt="Bathroom after repair and update">
+          </div>
+
+          <div class="hero-bottom">
+            <p class="hero-note">Fast response, clear communication, and clean finishes. Most jobs are small-to-mid projects.</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" data-phone-link href="tel:+18015550123">
+                Call or Text <span data-phone-display>(801) 555-0123</span>
+              </a>
+            </div>
+          </div>
+
           <p id="legalBadge" class="legal-badge is-hidden">Licensed / insured status enabled on this page</p>
-        </aside>
-      </div>
-    </section>
-
-    <section class="section section-alt" id="how-it-works">
-      <div class="container">
-        <div class="section-head">
-          <p class="eyebrow">How it works</p>
-          <h2>Simple process. No runaround.</h2>
-        </div>
-
-        <div class="steps-grid">
-          <article class="step-card">
-            <span class="step-number">1</span>
-            <h3>Tell me what you need</h3>
-            <p>Call, text, or submit the form with photos, measurements, and your city/zip.</p>
-          </article>
-          <article class="step-card">
-            <span class="step-number">2</span>
-            <h3>Get a fast estimate</h3>
-            <p>You get a clear labor estimate and scope. If needed, I schedule an on-site walkthrough.</p>
-          </article>
-          <article class="step-card">
-            <span class="step-number">3</span>
-            <h3>Schedule and get it done right</h3>
-            <p>Work is completed cleanly and efficiently with practical updates from start to finish.</p>
-          </article>
-        </div>
+        </article>
       </div>
     </section>
 
@@ -258,318 +208,37 @@
           </article>
         </div>
 
-        <p class="section-cta">
-          <a class="btn btn-primary" href="#contact">Tell me about your project</a>
-        </p>
       </div>
     </section>
 
-    <section class="section section-alt" id="pricing">
+    <section class="section contact-section" id="contact">
       <div class="container">
-        <div class="section-head">
-          <p class="eyebrow">Pricing transparency</p>
-          <h2>Labor-only starting points</h2>
-          <p>Useful for planning. Final pricing varies by job conditions and is confirmed after an on-site quote.</p>
-        </div>
-
-        <div class="pricing-grid">
-          <article class="pricing-card">
-            <h3>Flooring labor starts at</h3>
-            <ul class="price-list">
-              <li><span>Vinyl plank install</span><strong>$2.00 / sq ft</strong></li>
-              <li><span>Carpet/pad/tack strip removal</span><strong>$0.50 / sq ft</strong></li>
-              <li><span>Floor leveling (as-needed)</span><strong>$0.50 / sq ft</strong></li>
-              <li><span>Subfloor prep (as-needed)</span><strong>$0.15 / sq ft</strong></li>
-              <li><span>Trim install</span><strong>$1.00 / linear ft</strong></li>
-              <li><span>Doorways/openings/transitions</span><strong>$25 each</strong></li>
-            </ul>
-          </article>
-
-          <article class="pricing-card">
-            <h3>Small-job planning costs</h3>
-            <ul class="price-list">
-              <li><span>Trip/setup/planning</span><strong>$150 one-time</strong></li>
-              <li><span>Consumables</span><strong>$25 one-time</strong></li>
-              <li><span>Scope walk + estimate</span><strong>Quoted by job</strong></li>
-            </ul>
-          </article>
-
-          <article class="pricing-card">
-            <h3>Door install typical range</h3>
-            <ul class="price-list">
-              <li><span>Standard homeowner exterior door install (labor)</span><strong>Around $150 / door</strong></li>
-              <li><span>Weatherstripping add-on</span><strong>Quoted per door</strong></li>
-              <li><span>Bulk turnover pricing</span><strong>Discussed after walkthrough</strong></li>
-            </ul>
-          </article>
-        </div>
-
-        <p class="disclaimer">
-          Pricing varies by material condition, access, complexity, and existing site issues. All prices are examples, not fixed bids.
-          Final pricing is provided with an on-site quote.
-        </p>
-      </div>
-    </section>
-
-    <section class="section" id="trust">
-      <div class="container">
-        <div class="section-head">
-          <p class="eyebrow">Trust and process</p>
-          <h2>Built for busy homeowners and property managers</h2>
-        </div>
-
-        <div class="trust-grid">
-          <article class="trust-card">
-            <h3>Work standards</h3>
-            <ul>
-              <li>Show up on schedule and communicate delays early</li>
-              <li>Protect the work area and clean up before leaving</li>
-              <li>Use practical solutions that hold up</li>
-              <li>Share progress photos when requested</li>
-            </ul>
-          </article>
-
-          <article class="trust-card">
-            <h3>Independent handyman</h3>
-            <p>
-              <span data-business-name>801 Home Repair</span> is an independent handyman service run by
-              <span data-owner-name>Rob K.</span>.
+        <div class="contact-shell">
+          <div>
+            <p class="eyebrow">Direct Contact</p>
+            <h2>Call or text to get on the schedule</h2>
+            <p class="contact-note">
+              Share your scope, timeline, and photos. You will get a clear next step quickly.
             </p>
-            <p id="licenseBlock" class="notice is-hidden" aria-live="polite">
-              Licensed/insured mode is enabled. Documentation can be provided upon request.
-            </p>
-            <p>No hype. Clear scope, clear labor pricing, and clean finishes.</p>
-          </article>
-        </div>
+          </div>
 
-        <div class="section-head compact">
-          <h3>Review placeholders (replace with real customer reviews)</h3>
-        </div>
-        <div class="reviews-grid" aria-label="Reviews placeholders">
-          <article class="review-card">
-            <p>"[Add your Google review here] Fast communication, clean flooring install, and no mess left behind."</p>
-            <p class="review-meta">Homeowner, Midvale</p>
-          </article>
-          <article class="review-card">
-            <p>"[Add your Google review here] Tenant turnover was handled quickly and professionally."</p>
-            <p class="review-meta">Property Manager, Salt Lake County</p>
-          </article>
-          <article class="review-card">
-            <p>"[Add your Google review here] Door replacement and weatherstripping made a big difference immediately."</p>
-            <p class="review-meta">Homeowner, Park City</p>
-          </article>
-        </div>
-
-        <div class="section-head compact">
-          <h3>Before/After placeholders</h3>
-          <p>Swap these with your real project photos.</p>
-        </div>
-        <div class="gallery-grid" aria-label="Before and after project placeholders">
-          <figure class="gallery-item">
-            <div class="gallery-visual before">Before</div>
-            <figcaption>Worn hallway carpet removal</figcaption>
-          </figure>
-          <figure class="gallery-item">
-            <div class="gallery-visual after">After</div>
-            <figcaption>Vinyl plank install + transitions</figcaption>
-          </figure>
-          <figure class="gallery-item">
-            <div class="gallery-visual before">Before</div>
-            <figcaption>Drafty exterior door gap</figcaption>
-          </figure>
-          <figure class="gallery-item">
-            <div class="gallery-visual after">After</div>
-            <figcaption>Door reset + weatherstripping</figcaption>
-          </figure>
-          <figure class="gallery-item">
-            <div class="gallery-visual before">Before</div>
-            <figcaption>Damaged stair tread and trim</figcaption>
-          </figure>
-          <figure class="gallery-item">
-            <div class="gallery-visual after">After</div>
-            <figcaption>Repaired stair with clean finish</figcaption>
-          </figure>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section-alt" id="areas">
-      <div class="container">
-        <div class="section-head">
-          <p class="eyebrow">Service areas</p>
-          <h2>Local handyman service across the Wasatch Front</h2>
-          <p>
-            Looking for a <strong>Handyman Midvale</strong>, <strong>Salt Lake County handyman</strong>,
-            <strong>Park City handyman</strong>, or <strong>Utah County handyman</strong>?
-            <span data-business-name>801 Home Repair</span> handles flooring installs, door replacement, and tenant turnover repairs with fast response and straightforward estimates.
-          </p>
-        </div>
-
-        <ul class="areas-list">
-          <li>Midvale</li>
-          <li>Murray</li>
-          <li>Sandy</li>
-          <li>Draper</li>
-          <li>West Jordan</li>
-          <li>South Jordan</li>
-          <li>Salt Lake City</li>
-          <li>Park City</li>
-          <li>Lehi</li>
-          <li>American Fork</li>
-          <li>Orem</li>
-          <li>Provo</li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="section" id="faq">
-      <div class="container">
-        <div class="section-head">
-          <p class="eyebrow">FAQ</p>
-          <h2>Common questions</h2>
-        </div>
-
-        <div class="faq-list">
-          <details>
-            <summary>Do you do small jobs?</summary>
-            <p>Yes. Small-to-mid projects are the focus, including punch-list work and single-room repairs.</p>
-          </details>
-          <details>
-            <summary>How fast can you come out?</summary>
-            <p>Response is typically fast, based on current schedule and project scope. Reach out with your city/zip and details for availability.</p>
-          </details>
-          <details>
-            <summary>Do you haul away old flooring?</summary>
-            <p>Yes. Carpet, pad, and tack strip removal plus haul-away can be included in your quote.</p>
-          </details>
-          <details>
-            <summary>Do you work with landlords and property managers?</summary>
-            <p>Yes. Tenant turnover scope is a core service, including doors, flooring, touchups, and punch-list items.</p>
-          </details>
-          <details>
-            <summary>How do estimates work?</summary>
-            <p>Share your scope, photos, dimensions, and location. You will get a labor estimate and, when needed, an on-site walkthrough for final pricing.</p>
-          </details>
-          <details>
-            <summary>What do you need to quote accurately?</summary>
-            <p>City/zip, job type, rough dimensions, target timeframe, and photos of the current condition.</p>
-          </details>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section-alt" id="contact">
-      <div class="container">
-        <div class="section-head">
-          <p class="eyebrow">Contact</p>
-          <h2>Request your quote</h2>
-          <p>Call, text, or send the form. Include photos and details for a faster estimate.</p>
-        </div>
-
-        <div class="contact-grid">
-          <aside class="contact-card">
-            <h3>Quick contact</h3>
-            <p><strong>Call:</strong> <a data-phone-link href="tel:+18015550123" data-phone-display>(801) 555-0123</a></p>
-            <p><strong>Text:</strong> <a data-sms-link href="sms:+18015550123" data-phone-display>(801) 555-0123</a></p>
-            <p><strong>Email:</strong> <a data-email-link href="mailto:hello@example.com" data-email-display>hello@example.com</a></p>
-            <p><strong>Service areas:</strong> <span data-service-areas>Midvale, Salt Lake County, Park City, Utah County</span></p>
-            <p><strong>Hours:</strong> Mon-Sat 7:30 AM-6:30 PM (update as needed)</p>
-          </aside>
-
-          <form class="contact-form" id="quoteForm" name="quote-request" method="POST" action="/thank-you.html" data-netlify="true" netlify-honeypot="bot-field">
-            <input type="hidden" name="form-name" value="quote-request">
-            <input type="hidden" id="leadSource" name="source" value="direct">
-            <p class="hidden-honeypot">
-              <label>Do not fill this out: <input name="bot-field"></label>
-            </p>
-
-            <div class="form-row">
-              <label for="name">Name</label>
-              <input id="name" name="name" type="text" autocomplete="name" required>
-            </div>
-
-            <div class="form-row">
-              <label for="phone">Phone</label>
-              <input id="phone" name="phone" type="tel" autocomplete="tel" required>
-            </div>
-
-            <div class="form-row">
-              <label for="email">Email</label>
-              <input id="email" name="email" type="email" autocomplete="email">
-            </div>
-
-            <div class="form-row">
-              <label for="cityzip">City / ZIP</label>
-              <input id="cityzip" name="city_zip" type="text" autocomplete="postal-code" required>
-            </div>
-
-            <div class="form-row">
-              <label for="jobtype">Job type</label>
-              <select id="jobtype" name="job_type" required>
-                <option value="">Select one</option>
-                <option>Flooring install</option>
-                <option>Carpet removal / haul away</option>
-                <option>Door install / weatherstripping</option>
-                <option>Deck / stair repair</option>
-                <option>Drywall patch + paint touchup</option>
-                <option>Tenant turnover punch-list</option>
-                <option>General handyman fixes</option>
-              </select>
-            </div>
-
-            <div class="form-row">
-              <label for="timeframe">Preferred timeframe</label>
-              <select id="timeframe" name="timeframe">
-                <option>As soon as available</option>
-                <option>Within 1 week</option>
-                <option>Within 2-3 weeks</option>
-                <option>Flexible / planning stage</option>
-              </select>
-            </div>
-
-            <div class="form-row">
-              <label for="details">Project details</label>
-              <textarea id="details" name="details" rows="5" placeholder="Room sizes, current condition, materials on site, and anything else that helps with quoting." required></textarea>
-            </div>
-
-            <button class="btn btn-primary" type="submit">Send Quote Request</button>
-            <p class="form-note">By submitting, you agree to be contacted about your project by phone, text, or email.</p>
-          </form>
+          <div class="contact-actions">
+            <a class="btn btn-primary" data-phone-link href="tel:+18015550123">Call <span data-phone-display>(801) 555-0123</span></a>
+            <a class="btn btn-outline" data-sms-link href="sms:+18015550123">Text <span data-phone-display>(801) 555-0123</span></a>
+            <a class="btn btn-ghost" data-email-link href="mailto:hello@example.com"><span data-email-display>hello@example.com</span></a>
+          </div>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container footer-grid">
-      <div>
-        <p class="footer-brand"><span data-business-name>801 Home Repair</span> <span data-secondary-name>801TechniCA</span></p>
-        <p>Independent handyman service for homeowners and rental turnovers.</p>
-      </div>
-      <div>
-        <p><strong>Service area:</strong> Midvale, Salt Lake County, Park City, Utah County</p>
-        <p><strong>Hours:</strong> Mon-Sat 7:30 AM-6:30 PM (placeholder)</p>
-      </div>
-      <div class="footer-links">
-        <a href="#services">Services</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#areas">Service Areas</a>
-        <a href="#contact">Get Quote</a>
-      </div>
-    </div>
-    <div class="container footer-bottom">
-      <small>&copy; <span data-current-year>2026</span> <span data-business-name>801 Home Repair</span>. All rights reserved.</small>
-    </div>
-  </footer>
-
   <div class="mobile-cta" aria-label="Quick mobile contact">
     <a class="btn-cta" data-phone-link href="tel:+18015550123">Call</a>
     <a class="btn-cta" data-sms-link href="sms:+18015550123">Text</a>
-    <a class="btn-cta btn-cta-accent" href="#contact">Get Quote</a>
   </div>
 
   <noscript>
-    <div class="noscript-note">JavaScript is disabled. You can still call or submit the form.</div>
+    <div class="noscript-note">JavaScript is disabled. You can still call or text.</div>
   </noscript>
 
   <script src="./script.js" defer></script>
