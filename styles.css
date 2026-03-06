@@ -353,7 +353,7 @@ summary:focus-visible {
 .hero-strip {
   margin-top: 1rem;
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0.45rem;
 }
 
@@ -368,6 +368,41 @@ summary:focus-visible {
 
 .hero-strip .hero-exterior {
   object-position: center 34%;
+}
+
+.hero-strip .hero-tile {
+  margin: 0;
+  position: relative;
+}
+
+.hero-strip .hero-tile figcaption {
+  position: absolute;
+  left: 0.45rem;
+  right: auto;
+  bottom: 0.42rem;
+  padding: 0.22rem 0.52rem;
+  border-radius: 999px;
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  background: rgba(15, 23, 42, 0.72);
+  font-size: 0.72rem;
+  line-height: 1.2;
+  letter-spacing: 0.04em;
+}
+
+.hero-strip .hero-tile figcaption strong {
+  text-transform: uppercase;
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+}
+
+.hero-strip .hero-tile-before figcaption {
+  background: rgba(51, 65, 85, 0.78);
+}
+
+.hero-strip .hero-tile-after figcaption {
+  background: rgba(7, 89, 133, 0.78);
 }
 
 .hero-bottom {
@@ -609,6 +644,11 @@ summary:focus-visible {
 
 .section-cta {
   margin: 1.4rem 0 0;
+}
+
+.section-cta-centered {
+  display: flex;
+  justify-content: center;
 }
 
 .pricing-grid {
