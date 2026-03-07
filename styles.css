@@ -515,46 +515,23 @@ summary:focus-visible {
   color: var(--muted);
 }
 
-.services-grid {
-  display: grid;
-  gap: 0.9rem;
-}
-
 #services.section {
   padding-top: clamp(1.4rem, 2.8vw, 2.2rem);
 }
 
-.service-card {
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  background: var(--surface);
-  box-shadow: var(--shadow-sm);
-  padding: 1rem;
-}
-
-.service-card h3 {
-  margin: 0.8rem 0 0;
-  line-height: 1.25;
-}
-
-.service-icon {
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 0.8rem;
+.services-list {
+  margin: 0;
+  padding-left: 1.25rem;
   display: grid;
-  place-items: center;
-  background: rgba(29, 78, 216, 0.1);
-  color: var(--primary);
+  gap: 0.55rem;
 }
 
-.service-icon svg {
-  width: 1.45rem;
-  height: 1.45rem;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+.services-list li {
+  line-height: 1.35;
+}
+
+.services-list li::marker {
+  color: var(--primary);
 }
 
 .work-grid {
@@ -1074,10 +1051,6 @@ summary:focus-visible {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .services-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .work-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1115,10 +1088,6 @@ summary:focus-visible {
 }
 
 @media (min-width: 980px) {
-  .services-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
   .work-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
