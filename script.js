@@ -33,7 +33,7 @@ const CONFIG = {
   LICENSED_INSURED_TOGGLE: false,
   PRIMARY_ACCENT: "#1d4ed8",
   SECONDARY_ACCENT: "#f97316",
-  SITE_URL: "https://example.com"
+  SITE_URL: "https://www.homerepairslc.com"
 };
 
 function normalizeDigits(value) {
