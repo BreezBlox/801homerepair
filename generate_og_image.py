@@ -6,7 +6,7 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 
 ROOT = Path(__file__).resolve().parent
-OUTPUT_PATH = ROOT / "og-home-repair-slc.jpg"
+OUTPUT_PATH = ROOT / "og-home-repair-slc-v2.jpg"
 WIDTH = 1200
 HEIGHT = 630
 
@@ -100,10 +100,9 @@ def draw_text_block(canvas: Image.Image) -> None:
     draw = ImageDraw.Draw(overlay)
     panel_box = (72, 320, 720, 554)
     draw.rounded_rectangle(panel_box, radius=34, fill=(250, 252, 255, 228), outline=(225, 233, 245, 255), width=2)
-    draw.text((108, 356), "801 HOME REPAIR", font=get_font(24, bold=True), fill=(42, 84, 156, 255))
-    draw.rounded_rectangle((108, 396, 240, 404), radius=999, fill=(244, 123, 52, 255))
-    draw.text((108, 430), "Home Repair Services", font=get_font(52, bold=True, serif=True), fill=(17, 31, 58, 255))
-    draw.text((108, 486), "in Salt Lake City", font=get_font(50, bold=False, serif=True), fill=(28, 51, 88, 255))
+    draw.rounded_rectangle((108, 370, 240, 378), radius=999, fill=(244, 123, 52, 255))
+    draw.text((108, 404), "Home Repair Services", font=get_font(52, bold=True, serif=True), fill=(17, 31, 58, 255))
+    draw.text((108, 460), "in Salt Lake City", font=get_font(50, bold=False, serif=True), fill=(28, 51, 88, 255))
     canvas.alpha_composite(overlay)
 
 
