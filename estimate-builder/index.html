@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#173127">
+  <title>Estimate Builder | Local Draft Tool</title>
+  <link rel="stylesheet" href="estimate-builder.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="controls screen-only">
+      <div class="panel-head">
+        <div>
+          <p class="eyebrow">Local Tool</p>
+          <h1>Estimate Builder</h1>
+        </div>
+        <p class="save-status" id="save-status">Saved locally</p>
+      </div>
+
+      <div class="button-row">
+        <button class="primary" id="print-button" type="button">Print Current View</button>
+        <button class="secondary" id="new-button" type="button">New Estimate</button>
+      </div>
+      <div class="button-row">
+        <button class="secondary" id="export-button" type="button">Export Editable Draft (.json)</button>
+        <label class="button-label subtle" for="import-input">Open Editable Draft (.json)</label>
+        <input id="import-input" type="file" accept="application/json" hidden>
+      </div>
+
+      <section>
+        <div class="section-head">
+          <h2>Saved Estimates</h2>
+          <button class="subtle" id="save-estimate-button" type="button">Save Current</button>
+        </div>
+        <p class="inline-note" id="saved-estimate-caption">Current draft stays on this device. Save it here or export the editable draft (.json) to move it to another device.</p>
+        <div class="saved-estimate-list" id="saved-estimates-list"></div>
+      </section>
+
+      <section>
+        <h2>Document</h2>
+        <div class="field-grid">
+          <label>
+            <span>Document Title</span>
+            <input data-path="documentTitle" type="text" placeholder="Estimate">
+          </label>
+          <label>
+            <span>Estimate Number</span>
+            <input data-path="meta.estimateNumber" type="text" placeholder="EST-001">
+          </label>
+          <label>
+            <span>Estimate Date</span>
+            <input data-path="meta.estimateDate" type="date">
+          </label>
+          <label class="wide">
+            <span>Project Title</span>
+            <input data-path="meta.projectTitle" type="text" placeholder="Project name">
+          </label>
+          <label class="wide">
+            <span>Project Location</span>
+            <input data-path="meta.projectLocation" type="text" placeholder="Job address or city">
+          </label>
+        </div>
+      </section>
+
+      <section>
+        <h2>Your Contact Info</h2>
+        <div class="field-grid">
+          <label class="wide">
+            <span>Name</span>
+            <input data-path="seller.name" type="text" placeholder="Your name">
+          </label>
+          <label>
+            <span>Phone</span>
+            <input data-path="seller.phone" type="text" placeholder="(555) 555-5555">
+          </label>
+          <label>
+            <span>Email</span>
+            <input data-path="seller.email" type="email" placeholder="name@email.com">
+          </label>
+          <label class="wide">
+            <span>Address Line 1</span>
+            <input data-path="seller.address1" type="text" placeholder="Street address">
+          </label>
+          <label class="wide">
+            <span>Address Line 2</span>
+            <input data-path="seller.address2" type="text" placeholder="City, State ZIP">
+          </label>
+        </div>
+      </section>
+
+      <section>
+        <h2>Customer</h2>
+        <div class="field-grid">
+          <label class="wide">
+            <span>Customer Name</span>
+            <input data-path="customer.name" type="text" placeholder="Customer name">
+          </label>
+          <label>
+            <span>Phone</span>
+            <input data-path="customer.phone" type="text" placeholder="Phone">
+          </label>
+          <label>
+            <span>Email</span>
+            <input data-path="customer.email" type="email" placeholder="Email">
+          </label>
+          <label class="wide">
+            <span>Address Line 1</span>
+            <input data-path="customer.address1" type="text" placeholder="Street address">
+          </label>
+          <label class="wide">
+            <span>Address Line 2</span>
+            <input data-path="customer.address2" type="text" placeholder="City, State ZIP">
+          </label>
+        </div>
+      </section>
+
+      <section>
+        <h2>Pricing</h2>
+        <div class="field-grid">
+          <label>
+            <span>Currency Symbol</span>
+            <input data-path="financial.currencySymbol" type="text" maxlength="3" placeholder="$">
+          </label>
+          <label>
+            <span>Discount</span>
+            <input data-path="financial.discount" data-number="true" type="number" step="0.01" min="0" placeholder="0.00">
+          </label>
+          <label>
+            <span>Tax Rate (%)</span>
+            <input data-path="financial.taxRate" data-number="true" type="number" step="0.01" min="0" placeholder="0">
+          </label>
+          <label>
+            <span>Deposit Requested (%)</span>
+            <input data-path="financial.depositRate" data-number="true" type="number" step="0.01" min="0" placeholder="0">
+          </label>
+        </div>
+        <p class="inline-note">Tax and deposit are optional. Leave them at 0 if you do not want them shown.</p>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <h2>Line Items</h2>
+          <button class="subtle" id="add-item-button" type="button">Add Line</button>
+        </div>
+        <div class="item-list" id="item-list"></div>
+      </section>
+
+      <section>
+        <h2>Notes</h2>
+        <div class="field-grid single">
+          <label>
+            <span>Estimate Notes / Scope</span>
+            <textarea data-path="notes" placeholder="Describe the scope, exclusions, or assumptions."></textarea>
+          </label>
+          <label>
+            <span>Terms</span>
+            <textarea data-path="terms" placeholder="Add payment terms, validity, and change-order language."></textarea>
+          </label>
+        </div>
+      </section>
+    </aside>
+
+    <main class="preview-wrap">
+      <div class="preview-toolbar screen-only">
+        <p>Use the editable draft (.json) to keep editing later or on another device. Print the current view to PDF to share it.</p>
+        <div class="view-switch">
+          <button class="secondary" id="show-estimate-button" type="button">Estimate View</button>
+          <button class="secondary" id="show-shopping-button" type="button">Shopping View</button>
+          <button class="primary" id="print-button-top" type="button">Print Current View</button>
+        </div>
+      </div>
+
+      <article class="sheet" id="estimate-sheet">
+        <header class="sheet-header estimate-header">
+          <div>
+            <p class="doc-tag" id="preview-document-title">Estimate</p>
+            <h2 id="preview-project-title">Project Title</h2>
+            <p class="sheet-subtitle" id="preview-project-location">Project location</p>
+          </div>
+          <div class="meta-card estimate-meta-card">
+            <div class="meta-summary-row">
+              <div class="meta-summary-item">
+                <span class="meta-summary-label">Estimate No.</span>
+                <span class="meta-summary-value" id="preview-estimate-number">-</span>
+              </div>
+              <div class="meta-summary-item">
+                <span class="meta-summary-label">Estimate Date</span>
+                <span class="meta-summary-value" id="preview-estimate-date">-</span>
+              </div>
+            </div>
+            <div class="meta-contact-grid">
+              <div class="meta-contact-block">
+                <h3>From</h3>
+                <div class="stack" id="preview-seller-card"></div>
+              </div>
+              <div class="meta-contact-block">
+                <h3>For</h3>
+                <div class="stack" id="preview-customer-card"></div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <table class="line-table">
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th class="numeric">Qty</th>
+              <th class="numeric">Unit</th>
+              <th class="numeric">Unit Price</th>
+              <th class="numeric">Amount</th>
+            </tr>
+          </thead>
+          <tbody id="preview-line-items"></tbody>
+        </table>
+
+        <section class="notes-and-totals">
+          <div>
+            <div class="notes-card">
+              <h3>Notes</h3>
+              <p id="preview-notes"></p>
+            </div>
+            <div class="terms-card">
+              <h3>Terms</h3>
+              <p id="preview-terms"></p>
+            </div>
+          </div>
+          <div class="totals-card">
+            <h3>Totals</h3>
+            <dl>
+              <dt id="subtotal-label">Subtotal</dt>
+              <dd id="preview-subtotal">$0.00</dd>
+              <dt id="discount-label">Discount</dt>
+              <dd id="preview-discount">$0.00</dd>
+              <dt id="tax-label">Tax</dt>
+              <dd id="preview-tax">$0.00</dd>
+              <dt id="deposit-label">Deposit Requested</dt>
+              <dd id="preview-deposit">$0.00</dd>
+              <dt class="grand">Total</dt>
+              <dd class="grand" id="preview-total">$0.00</dd>
+              <dt id="balance-label">Balance After Deposit</dt>
+              <dd id="preview-balance">$0.00</dd>
+            </dl>
+          </div>
+        </section>
+
+        <p class="footer-note">Generated locally from your browser. Export the editable draft (.json) to keep editing, or use Print / Save PDF to share.</p>
+      </article>
+
+      <article class="sheet hidden-sheet" id="shopping-sheet">
+        <header class="sheet-header">
+          <div>
+            <p class="doc-tag">Shopping List</p>
+            <h2 id="shopping-project-title">Project Title</h2>
+            <p class="sheet-subtitle" id="shopping-project-location">Project location</p>
+            <div class="contact-block" id="shopping-seller-block"></div>
+          </div>
+          <div class="meta-card">
+            <dl>
+              <dt>Estimate No.</dt>
+              <dd id="shopping-estimate-number">-</dd>
+              <dt>Customer</dt>
+              <dd id="shopping-customer-name">-</dd>
+              <dt>Generated</dt>
+              <dd id="shopping-generated-date">-</dd>
+            </dl>
+          </div>
+        </header>
+
+        <table class="line-table">
+          <thead>
+            <tr>
+              <th class="check-col">Done</th>
+              <th>Description</th>
+              <th class="numeric">Qty</th>
+              <th class="numeric">Unit</th>
+              <th class="numeric">Unit Price</th>
+              <th class="numeric">Amount</th>
+            </tr>
+          </thead>
+          <tbody id="shopping-line-items"></tbody>
+        </table>
+
+        <section class="notes-and-totals shopping-layout">
+          <div class="notes-card">
+            <h3>Personal Notes</h3>
+            <p id="shopping-notes"></p>
+          </div>
+          <div class="totals-card">
+            <h3>Shopping Totals</h3>
+            <dl>
+              <dt>Items</dt>
+              <dd id="shopping-item-count">0</dd>
+              <dt>Material Total</dt>
+              <dd id="shopping-total">$0.00</dd>
+            </dl>
+          </div>
+        </section>
+
+        <p class="footer-note">Internal shopping list generated from the same editable draft.</p>
+      </article>
+    </main>
+  </div>
+
+  <script src="estimate-builder.js"></script>
+</body>
+</html>

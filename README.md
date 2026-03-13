@@ -101,3 +101,25 @@ python -m http.server 8080
 ```
 
 Then open `http://localhost:8080`.
+
+## Estimate Builder On GitHub Pages
+
+This repo now also includes a phone-friendly estimate builder at:
+- `estimate-builder/`
+
+If you publish this repo with GitHub Pages from the repository root, the builder will be available at:
+- `https://<your-github-username>.github.io/<your-repo-name>/estimate-builder/`
+
+Recommended free workflow:
+- use the hosted builder on desktop or phone
+- use `Export Editable Draft (.json)` to move an estimate through Google Drive
+- use `Open Editable Draft (.json)` on the other device to continue editing
+- use `Print / Save PDF` only for the final shareable copy
+
+GitHub Pages setup:
+1. Push the repo to GitHub.
+2. Open the repo on GitHub.
+3. Go to `Settings` -> `Pages`.
+4. Set `Source` to `Deploy from a branch`.
+5. Select your main branch and the `/ (root)` folder.
+6. Save, then wait for GitHub Pages to publish.
