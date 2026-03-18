@@ -102,6 +102,28 @@ python -m http.server 8080
 
 Then open `http://localhost:8080`.
 
+## Codex Context Setup
+
+This repo includes both repo-level and installable global Codex context for contractor work.
+
+Repo-scoped context:
+- `AGENTS.md`
+- `docs/`
+
+Global installable context:
+- `codex/global/AGENTS.md`
+
+To install the global Codex context on a Windows machine:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\install-codex-global-context.ps1
+```
+
+That command copies the repo-tracked global context into:
+- `%USERPROFILE%\.codex\AGENTS.md`
+
+If a global `AGENTS.md` already exists, the script creates a timestamped backup first.
+
 ## Estimate Builder On GitHub Pages
 
 This repo now also includes a phone-friendly estimate builder at:
