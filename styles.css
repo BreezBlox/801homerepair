@@ -337,8 +337,8 @@ summary:focus-visible {
 }
 
 .hero-headshot {
-  width: clamp(72px, 12vw, 110px);
-  height: clamp(72px, 12vw, 110px);
+  width: clamp(144px, 24vw, 220px);
+  height: clamp(144px, 24vw, 220px);
   display: block;
   border-radius: 50%;
   object-fit: cover;
@@ -537,25 +537,25 @@ summary:focus-visible {
   border-radius: 1.3rem;
   background: rgba(255, 255, 255, 0.98);
   box-shadow: var(--shadow-sm);
-  padding: 1.4rem 1.35rem 1.35rem;
+  padding: 1.15rem 1.2rem;
   display: grid;
-  gap: 0.95rem;
-  justify-items: start;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.9rem;
   text-align: left;
-  align-content: start;
-  min-height: 150px;
+  min-height: 0;
 }
 
 .service-card h3 {
   margin: 0;
   line-height: 1.2;
   font-size: clamp(1.02rem, 1.65vw, 1.35rem);
-  max-width: 20ch;
+  max-width: none;
 }
 
 .service-icon {
-  width: 3.2rem;
-  height: 3.2rem;
+  width: 3rem;
+  height: 3rem;
   border-radius: 1rem;
   background: rgba(29, 78, 216, 0.12);
   display: grid;
