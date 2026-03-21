@@ -307,14 +307,21 @@ summary:focus-visible {
   animation: rise-in 0.55s ease both;
 }
 
+.hero-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: clamp(0.9rem, 2vw, 1.5rem);
+}
+
 .hero-title-wrap {
-  margin-top: 0.35rem;
-  text-align: center;
+  margin-top: 0.15rem;
+  text-align: left;
 }
 
 .hero-title-wrap h1 {
   margin: 0;
-  margin-inline: auto;
+  margin-inline: 0;
   max-width: none;
   font-family: var(--font-heading);
   font-size: clamp(2.25rem, 7vw, 4.35rem);
@@ -324,10 +331,36 @@ summary:focus-visible {
   text-transform: none;
 }
 
+.hero-portrait {
+  width: clamp(112px, 24vw, 170px);
+  height: clamp(112px, 24vw, 170px);
+  margin: 0;
+  padding: 4px;
+  border-radius: 50%;
+  background: #ffffff;
+  align-self: start;
+  justify-self: end;
+  box-shadow:
+    0 0 0 3px #2f5cff,
+    0 0 0 10px rgba(47, 92, 255, 0.1),
+    0 10px 24px rgba(15, 23, 42, 0.1);
+}
+
+.hero-portrait img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center 18%;
+  filter: grayscale(100%);
+  background: #ffffff;
+}
+
 .hero-lead {
-  max-width: 60ch;
-  margin: 1.1rem auto 0;
-  text-align: center;
+  max-width: none;
+  margin: 1rem 0 0;
+  text-align: left;
   font-size: 1.02rem;
 }
 
@@ -1013,8 +1046,16 @@ summary:focus-visible {
     display: flex;
   }
 
+  .hero-header {
+    gap: 0.85rem;
+  }
+
   .hero-title-wrap {
     margin-top: 0.2rem;
+  }
+
+  .hero-title-wrap h1 {
+    max-width: 6ch;
   }
 
   .hero-strip {
@@ -1033,6 +1074,14 @@ summary:focus-visible {
 @media (min-width: 901px) {
   body {
     padding-bottom: 0;
+  }
+
+  .hero-header {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .hero-title-wrap h1 {
+    max-width: 9ch;
   }
 
   .nav-toggle {
