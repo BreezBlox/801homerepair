@@ -429,9 +429,18 @@ summary:focus-visible {
 
 .hero-actions {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  justify-content: flex-end;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.45rem;
+  justify-content: center;
+}
+
+.hero-call-label {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #2f3f56;
 }
 
 .hero-actions .btn-primary {
@@ -1061,7 +1070,7 @@ summary:focus-visible {
   }
 
   .hero-actions {
-    justify-content: flex-start;
+    align-items: flex-start;
   }
 }
 
