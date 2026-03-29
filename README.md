@@ -13,7 +13,6 @@ Production-ready static landing page for **801 Home Repair** with:
 - `index.html` main landing page
 - `styles.css` site styles and responsive layout
 - `script.js` business placeholders + light UI behavior
-- `side-yard-labor-pricing-tool.html` local side-yard labor calculator with save/export/print support
 - `card/index.html` production digital card page (`/card/`)
 - `card/card.css` digital card styles
 - `card/card.js` tracked link handling for card page
