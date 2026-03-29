@@ -1,0 +1,1294 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Side Yard Labor Pricing Tool | 801 Home Repair</title>
+  <style>
+    :root {
+      --bg: #eef2ef;
+      --card: #ffffff;
+      --ink: #1d252b;
+      --muted: #5b6672;
+      --line: #d8e0e4;
+      --accent: #215f4d;
+      --accent-dark: #184637;
+      --accent-soft: #eef7f2;
+      --gold-soft: #faf4e7;
+      --warn-soft: #fff4e8;
+      --warn-ink: #8a4e10;
+      --danger-ink: #9f3131;
+      --shadow: 0 18px 40px rgba(14, 25, 37, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background:
+        linear-gradient(135deg, rgba(33, 95, 77, 0.08) 0%, rgba(33, 95, 77, 0) 42%),
+        linear-gradient(310deg, rgba(48, 92, 137, 0.08) 0%, rgba(48, 92, 137, 0) 48%),
+        var(--bg);
+    }
+
+    .shell {
+      max-width: 1460px;
+      margin: 28px auto 72px;
+      padding: 0 18px;
+    }
+
+    .app-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .topbar,
+    .toolbar,
+    .panel-head,
+    .summary-head {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topbar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 20px;
+      background: linear-gradient(180deg, #f8fbf9 0%, #f3f8f5 100%);
+    }
+
+    .eyebrow,
+    .field label,
+    .section-title {
+      margin: 0 0 6px;
+      font-size: 0.76rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { margin-bottom: 0; font-size: 1.4rem; }
+
+    .subhead,
+    .panel-note,
+    .summary-note,
+    .inline-note {
+      color: #4f5c68;
+      line-height: 1.5;
+    }
+
+    .subhead { max-width: 760px; margin: 8px 0 0; }
+
+    .status-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-end;
+      font-size: 0.85rem;
+      color: #486173;
+    }
+
+    .status-pill {
+      border: 1px solid #c8d8cf;
+      background: #f3faf6;
+      color: #20503f;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-weight: 600;
+    }
+
+    .toolbar {
+      padding: 14px 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      background: #fcfefd;
+    }
+
+    .btn {
+      border: 1px solid #bdd1c7;
+      background: #f2faf6;
+      color: #184f3d;
+      border-radius: 9px;
+      padding: 8px 12px;
+      font: inherit;
+      font-size: 0.9rem;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn:hover { background: #e7f5ed; }
+    .btn.primary { border-color: var(--accent); background: var(--accent); color: #fff; }
+    .btn.primary:hover { background: var(--accent-dark); }
+    .btn.danger { border-color: #e6c3c3; background: #fff6f6; color: var(--danger-ink); }
+    .btn.danger:hover { background: #ffecec; }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(320px, 0.85fr);
+      gap: 18px;
+      padding: 18px;
+    }
+
+    .stack,
+    .summary-column,
+    .summary-grid,
+    .addon-list {
+      display: grid;
+      gap: 16px;
+    }
+
+    .panel,
+    .summary-panel {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .panel-head,
+    .summary-head,
+    .panel-body,
+    .summary-body {
+      padding: 16px;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(140px, 1fr));
+      gap: 12px;
+    }
+
+    .field-grid.two { grid-template-columns: repeat(2, minmax(180px, 1fr)); }
+    .field-grid.single { grid-template-columns: 1fr; }
+
+    input[type="text"],
+    input[type="number"],
+    textarea,
+    select {
+      width: 100%;
+      border: 1px solid #c7d2da;
+      border-radius: 10px;
+      padding: 9px 11px;
+      font: inherit;
+      color: inherit;
+      background: #fff;
+    }
+
+    textarea { resize: vertical; min-height: 120px; }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: 2px solid rgba(33, 95, 77, 0.2);
+      border-color: #8eb3a2;
+    }
+
+    .notice,
+    .callout {
+      padding: 12px 14px;
+      border-radius: 12px;
+      line-height: 1.5;
+      font-size: 0.9rem;
+    }
+
+    .notice {
+      margin-top: 12px;
+      background: var(--gold-soft);
+      border: 1px solid #ecdcae;
+      color: #614d16;
+    }
+
+    .callout {
+      background: var(--accent-soft);
+      border: 1px solid #cfe2d9;
+      color: #244a3d;
+    }
+
+    .callout.warn {
+      background: var(--warn-soft);
+      border-color: #f0d1ae;
+      color: var(--warn-ink);
+    }
+
+    .chip-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(220px, 1fr));
+      gap: 10px;
+    }
+
+    .chip {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      padding: 11px 12px;
+      border: 1px solid #d8e3e8;
+      border-radius: 12px;
+      background: #fbfcfd;
+      line-height: 1.35;
+    }
+
+    .chip input,
+    .addon-row input[type="checkbox"] {
+      margin-top: 2px;
+      accent-color: var(--accent);
+    }
+
+    .addon-section + .addon-section {
+      border-top: 1px solid #e6ebef;
+      padding-top: 16px;
+      margin-top: 16px;
+    }
+
+    .addon-row {
+      display: grid;
+      grid-template-columns: 24px minmax(0, 1.4fr) minmax(160px, 0.8fr) 110px;
+      gap: 12px;
+      align-items: start;
+      padding: 12px;
+      border: 1px solid #dce4ea;
+      border-radius: 12px;
+      background: #fcfdfe;
+    }
+
+    .addon-row.is-active { border-color: #bdd4c8; background: #f9fcfa; }
+    .addon-row.is-invalid { border-color: #efc8c8; background: #fff8f8; }
+
+    .addon-title { font-weight: 700; line-height: 1.35; }
+    .addon-rate, .addon-help { margin: 4px 0 0; font-size: 0.84rem; color: #526170; line-height: 1.45; }
+    .addon-controls { display: grid; gap: 8px; }
+    .addon-controls label { display: block; color: var(--muted); font-size: 0.73rem; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 700; }
+    .addon-controls input { margin-top: 6px; }
+    .addon-controls input:disabled { background: #f2f4f6; color: #77818a; cursor: not-allowed; }
+    .addon-total { text-align: right; font-weight: 700; white-space: nowrap; padding-top: 2px; color: #173f31; }
+
+    .sticky { position: sticky; top: 18px; }
+    .sum-row { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px dashed #d9e3ea; font-size: 0.94rem; }
+    .sum-row.total { padding-top: 14px; border-top: 1px solid #d9e3ea; border-bottom: none; font-size: 1.08rem; }
+    .sum-label { color: #4d5d6a; }
+    .sum-value { font-weight: 700; white-space: nowrap; }
+    .sum-row.total .sum-value { color: #173f31; font-size: 1.14rem; }
+
+    .mini-list,
+    .breakdown-list { margin: 0; padding-left: 18px; display: grid; gap: 8px; color: #445260; line-height: 1.45; font-size: 0.9rem; }
+
+    .empty-state { margin: 0; color: #5a6874; font-size: 0.9rem; line-height: 1.5; }
+
+    .range-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(120px, 1fr));
+      gap: 10px;
+    }
+
+    .range-card {
+      border: 1px solid #dee6eb;
+      border-radius: 12px;
+      padding: 12px;
+      background: #fbfcfd;
+    }
+
+    .range-card strong {
+      display: block;
+      margin-bottom: 5px;
+      color: #1e374c;
+    }
+
+    .summary-text {
+      min-height: 260px;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 0.88rem;
+      line-height: 1.45;
+    }
+
+    .print-note { display: none; padding: 0 18px 16px; color: #526170; font-size: 0.84rem; }
+
+    @media (max-width: 1180px) {
+      .layout { grid-template-columns: 1fr; }
+      .sticky { position: static; }
+    }
+
+    @media (max-width: 860px) {
+      .field-grid,
+      .field-grid.two,
+      .chip-grid,
+      .range-grid { grid-template-columns: 1fr; }
+
+      .addon-row { grid-template-columns: 24px 1fr; }
+      .addon-controls, .addon-total { grid-column: 2 / -1; }
+      .addon-total { text-align: left; padding-top: 0; }
+      .status-wrap { align-items: flex-start; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .shell { max-width: none; margin: 0; padding: 0; }
+      .app-card { border: none; border-radius: 0; box-shadow: none; }
+      .toolbar, .screen-only { display: none !important; }
+      .layout { grid-template-columns: 1fr; padding: 14px; }
+      .print-note { display: block; }
+      input, textarea, select { border: none !important; background: transparent !important; padding: 0 !important; }
+      .chip, .panel, .summary-panel, .addon-row, .range-card { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="app-card">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Local Tool</p>
+          <h1>Side Yard Labor Pricing Tool</h1>
+          <p class="subhead">Labor total = MAX(base minimum, total sq ft x base labor rate) + checked add-ons. Labor only. Materials, dump fees, delivery, and equipment can stay separate.</p>
+        </div>
+        <div class="status-wrap">
+          <span class="status-pill" id="statusText">Ready</span>
+          <span id="savedAtText">Not saved yet</span>
+        </div>
+      </header>
+
+      <div class="toolbar screen-only">
+        <button class="btn primary" type="button" id="saveBtn">Save Draft</button>
+        <button class="btn" type="button" id="loadBtn">Load Draft</button>
+        <button class="btn" type="button" id="downloadBtn">Export JSON</button>
+        <label class="btn" for="importFile">Import JSON</label>
+        <input id="importFile" type="file" accept=".json,application/json" hidden>
+        <button class="btn" type="button" id="copyBtn">Copy Summary</button>
+        <button class="btn" type="button" id="printBtn">Print / Save PDF</button>
+        <button class="btn danger" type="button" id="clearBtn">Clear</button>
+      </div>
+
+      <div class="print-note">Printed from local side yard labor pricing tool. Last saved: <span id="printSavedAt">Never</span></div>
+
+      <div class="layout" id="formRoot">
+        <div class="stack">
+          <section class="panel">
+            <div class="panel-head">
+              <h2>Base Settings</h2>
+              <p class="panel-note">Use the greater of the base minimum or the square-foot total.</p>
+            </div>
+            <div class="panel-body">
+              <div class="field-grid two">
+                <div class="field">
+                  <label for="baseMinimum">Base minimum charge ($)</label>
+                  <input id="baseMinimum" type="number" min="0" step="0.01" value="900">
+                </div>
+                <div class="field">
+                  <label for="baseRate">Base labor rate ($ / sq ft)</label>
+                  <input id="baseRate" type="number" min="0" step="0.01" value="3.50">
+                </div>
+              </div>
+              <div class="notice">Small-job rule: do not drop below the base minimum just because the square footage is low.</div>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-head">
+              <h2>Job Inputs</h2>
+              <p class="panel-note">These fields document the job. Add-ons stay manual below so the tool does not double-charge.</p>
+            </div>
+            <div class="panel-body">
+              <div class="field-grid">
+                <div class="field">
+                  <label for="totalSqFt">Total square feet</label>
+                  <input id="totalSqFt" type="number" min="0" step="0.1" placeholder="0">
+                </div>
+                <div class="field">
+                  <label for="totalCuFt">Total cubic feet (optional)</label>
+                  <input id="totalCuFt" type="number" min="0" step="0.1" placeholder="0">
+                </div>
+                <div class="field">
+                  <label for="installDepth">Total install depth (inches)</label>
+                  <input id="installDepth" type="number" min="0" step="0.1" placeholder="0">
+                </div>
+                <div class="field">
+                  <label for="accessType">Access type</label>
+                  <select id="accessType">
+                    <option value="normal">normal</option>
+                    <option value="tight">tight side yard</option>
+                    <option value="wheelbarrow">wheelbarrow only</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="spoilsPlan">Spoils stay onsite or haul off?</label>
+                  <select id="spoilsPlan">
+                    <option value="onsite">onsite</option>
+                    <option value="haul">haul off</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="jobLabel">Job label (optional)</label>
+                  <input id="jobLabel" type="text" placeholder="Peaches side yard">
+                </div>
+              </div>
+              <p class="inline-note">If the job involves digging, do not treat it as routine until utility locate, irrigation risk, drainage away from the house, and finish-height clearance are checked.</p>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-head">
+              <h2>Base Scope Included</h2>
+              <p class="panel-note">Check these only if they are already included in your normal base labor price.</p>
+            </div>
+            <div class="panel-body">
+              <div class="chip-grid" id="baseScopeList"></div>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-head">
+              <h2>Add-Ons / Conditions</h2>
+              <p class="panel-note">Range-based lines stay manual on purpose. If the amount could swing, enter the actual number instead of letting the tool make one up.</p>
+            </div>
+            <div class="panel-body">
+              <div id="addOnSections"></div>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-head">
+              <h2>Verification Checks</h2>
+              <p class="panel-note">These do not change the math, but they keep excavation and access risk visible.</p>
+            </div>
+            <div class="panel-body">
+              <div class="chip-grid" id="verificationList"></div>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-head">
+              <h2>Notes / Assumptions</h2>
+              <p class="panel-note">Use this for exclusions, disposal assumptions, or missing confirmations.</p>
+            </div>
+            <div class="panel-body">
+              <div class="field-grid single">
+                <div class="field">
+                  <label for="notesText">Notes</label>
+                  <textarea id="notesText" placeholder="Example: labor only, materials separate, utility marks visible on work day, no major irrigation reroute included."></textarea>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <aside class="summary-column">
+          <section class="summary-panel sticky">
+            <div class="summary-head">
+              <h2>Labor Summary</h2>
+              <p class="summary-note">Live formula breakdown with add-ons listed below.</p>
+            </div>
+            <div class="summary-body">
+              <div class="summary-grid">
+                <div class="sum-row"><span class="sum-label">Sq ft x base rate</span><strong class="sum-value" id="baseAreaCalcText">$0.00</strong></div>
+                <div class="sum-row"><span class="sum-label">Applied base</span><strong class="sum-value" id="appliedBaseText">$0.00</strong></div>
+                <div class="sum-row"><span class="sum-label">Checked add-ons</span><strong class="sum-value" id="checkedAddOnsText">0</strong></div>
+                <div class="sum-row"><span class="sum-label">Add-ons total</span><strong class="sum-value" id="addOnsTotalText">$0.00</strong></div>
+                <div class="sum-row total"><span class="sum-label">Labor total</span><strong class="sum-value" id="laborTotalText">$0.00</strong></div>
+                <div class="sum-row"><span class="sum-label">Labor per sq ft</span><strong class="sum-value" id="laborPerSqFtText">-</strong></div>
+              </div>
+
+              <div class="callout" id="baseCallout">Straightforward job formula: MAX(base minimum, sq ft x base rate).</div>
+
+              <h3 class="section-title" style="margin-top: 18px;">Selected Add-Ons</h3>
+              <p class="empty-state" id="addOnEmptyText">No add-ons checked yet.</p>
+              <ul class="breakdown-list" id="addOnBreakdownList"></ul>
+            </div>
+          </section>
+
+          <section class="summary-panel">
+            <div class="summary-head">
+              <h2>Warnings / Reminders</h2>
+              <p class="summary-note">Unconfirmed digging and access items stay here so they do not get buried.</p>
+            </div>
+            <div class="summary-body">
+              <div class="callout warn" id="warningEmptyText">No active warnings beyond the standing digging-risk reminders.</div>
+              <ul class="mini-list" id="warningList"></ul>
+            </div>
+          </section>
+
+          <section class="summary-panel">
+            <div class="summary-head">
+              <h2>Quick Pricing Rules</h2>
+              <p class="summary-note">Static reference pulled from your sheet.</p>
+            </div>
+            <div class="summary-body">
+              <ul class="mini-list">
+                <li>Small job rule: do not go below the base minimum.</li>
+                <li>Straightforward job: labor = MAX(base minimum, sq ft x base rate).</li>
+                <li>Annoying job: use the base formula plus whichever add-ons actually apply.</li>
+              </ul>
+              <div class="range-grid" style="margin-top: 14px;">
+                <div class="range-card"><strong>Very straightforward</strong><span>$900</span></div>
+                <div class="range-card"><strong>Normal with annoyances</strong><span>$1,050 to $1,250</span></div>
+                <div class="range-card"><strong>Pain in the ass job</strong><span>$1,300+</span></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="summary-panel">
+            <div class="summary-head">
+              <h2>Copy-Ready Summary</h2>
+              <p class="summary-note">This updates live and is meant for quick paste into notes or estimate drafts.</p>
+            </div>
+            <div class="summary-body">
+              <textarea class="summary-text" id="summaryText" readonly></textarea>
+            </div>
+          </section>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const STORAGE_KEY = "801homeRepair.sideYardLaborPricing.v1";
+
+    const BASE_SCOPE_ITEMS = [
+      { id: "grassRemoval", label: "Basic grass/sod removal" },
+      { id: "standardDig", label: "Standard dig-down" },
+      { id: "roadBase", label: "Standard road base install" },
+      { id: "compaction", label: "Standard compaction" },
+      { id: "fabric", label: "Fabric install" },
+      { id: "topRock", label: "Top rock spread" },
+      { id: "cleanup", label: "Basic cleanup" }
+    ];
+
+    const VERIFICATION_ITEMS = [
+      { id: "utilityLocate", label: "811 / utility locate handled" },
+      { id: "irrigationClear", label: "Irrigation / drip / sprinkler lines confirmed clear" },
+      { id: "drainageConfirmed", label: "Drainage away from house/foundation confirmed" },
+      { id: "finishHeightConfirmed", label: "Finish-height clearance at house/concrete confirmed" },
+      { id: "accessPlanConfirmed", label: "Access plan for compactor, staging, and haul route confirmed" }
+    ];
+
+    const ADDON_SECTIONS = [
+      {
+        title: "Access / Difficulty",
+        items: [
+          { id: "tightAccess", label: "Tight side-yard / wheelbarrow-only access", type: "fixed", amount: 150, rateText: "+$150 fixed" },
+          { id: "handHaulSpoils", label: "Hand haul spoils / extra spoil movement", type: "fixed", amount: 125, rateText: "+$125 fixed" },
+          { id: "limitedStaging", label: "Very limited staging area / multiple small loads", type: "fixed", amount: 100, rateText: "+$100 fixed" }
+        ]
+      },
+      {
+        title: "Excavation / Prep",
+        items: [
+          {
+            id: "extraExcavation",
+            label: "Extra excavation depth beyond standard",
+            type: "perSqFtPerInch",
+            amount: 0.40,
+            rateText: "+$0.40 per sq ft per extra inch",
+            helper: "Uses total sq ft x $0.40 x extra inches."
+          },
+          { id: "hardGround", label: "Hard ground / compacted soil / heavy clay", type: "fixed", amount: 100, rateText: "+$100 fixed" },
+          { id: "rootCleanup", label: "Root cutting / root cleanup", type: "fixed", amount: 100, rateText: "+$100 fixed" },
+          {
+            id: "hiddenJunk",
+            label: "Old fabric / buried debris / hidden junk removal",
+            type: "range",
+            min: 75,
+            max: 150,
+            rateText: "+$75 to $150 fixed",
+            helper: "Enter the actual number if this line applies."
+          }
+        ]
+      },
+      {
+        title: "Irrigation / Utilities / Obstacles",
+        items: [
+          { id: "sprinklerRepair", label: "Sprinkler cap / minor repair", type: "count", amount: 75, rateText: "+$75 each", quantityLabel: "Qty" },
+          { id: "obstacleDetail", label: "Utility box / AC / meter / awkward obstacle detailing", type: "count", amount: 50, rateText: "+$50 each", quantityLabel: "Qty" },
+          { id: "plantingDetail", label: "Tree / shrub / existing planting detail work", type: "count", amount: 50, rateText: "+$50 each", quantityLabel: "Qty" }
+        ]
+      },
+      {
+        title: "Install Extras",
+        items: [
+          { id: "edgeRestraint", label: "Edge restraint install", type: "linear", amount: 2.5, rateText: "+$2.50 per linear ft", quantityLabel: "Lin ft" },
+          { id: "extraCompaction", label: "Extra compaction passes / difficult base", type: "fixed", amount: 100, rateText: "+$100 fixed" },
+          {
+            id: "finishGrading",
+            label: "Finish grading / drainage shaping beyond normal",
+            type: "range",
+            min: 100,
+            max: 200,
+            rateText: "+$100 to $200 fixed",
+            helper: "Enter the actual number if this line applies."
+          }
+        ]
+      },
+      {
+        title: "Trips / Cleanup / Admin",
+        items: [
+          { id: "haulOffLabor", label: "Haul-off / dump-run labor", type: "fixed", amount: 125, rateText: "+$125 fixed" },
+          { id: "extraTrip", label: "Extra trip / remobilization", type: "count", amount: 100, rateText: "+$100 each", quantityLabel: "Qty" },
+          { id: "premiumCleanup", label: "Premium cleanup / hose-down / blow-off", type: "fixed", amount: 40, rateText: "+$40 fixed" },
+          { id: "hoaAdmin", label: "HOA / client coordination / admin time", type: "fixed", amount: 60, rateText: "+$60 fixed" }
+        ]
+      }
+    ];
+
+    const ADDON_LOOKUP = Object.fromEntries(
+      ADDON_SECTIONS.flatMap((section) => section.items.map((item) => [item.id, item]))
+    );
+
+    const refs = {
+      formRoot: document.getElementById("formRoot"),
+      statusText: document.getElementById("statusText"),
+      savedAtText: document.getElementById("savedAtText"),
+      printSavedAt: document.getElementById("printSavedAt"),
+      baseScopeList: document.getElementById("baseScopeList"),
+      verificationList: document.getElementById("verificationList"),
+      addOnSections: document.getElementById("addOnSections"),
+      baseMinimum: document.getElementById("baseMinimum"),
+      baseRate: document.getElementById("baseRate"),
+      totalSqFt: document.getElementById("totalSqFt"),
+      totalCuFt: document.getElementById("totalCuFt"),
+      installDepth: document.getElementById("installDepth"),
+      accessType: document.getElementById("accessType"),
+      spoilsPlan: document.getElementById("spoilsPlan"),
+      jobLabel: document.getElementById("jobLabel"),
+      notesText: document.getElementById("notesText"),
+      saveBtn: document.getElementById("saveBtn"),
+      loadBtn: document.getElementById("loadBtn"),
+      downloadBtn: document.getElementById("downloadBtn"),
+      importFile: document.getElementById("importFile"),
+      copyBtn: document.getElementById("copyBtn"),
+      printBtn: document.getElementById("printBtn"),
+      clearBtn: document.getElementById("clearBtn"),
+      baseAreaCalcText: document.getElementById("baseAreaCalcText"),
+      appliedBaseText: document.getElementById("appliedBaseText"),
+      checkedAddOnsText: document.getElementById("checkedAddOnsText"),
+      addOnsTotalText: document.getElementById("addOnsTotalText"),
+      laborTotalText: document.getElementById("laborTotalText"),
+      laborPerSqFtText: document.getElementById("laborPerSqFtText"),
+      baseCallout: document.getElementById("baseCallout"),
+      addOnEmptyText: document.getElementById("addOnEmptyText"),
+      addOnBreakdownList: document.getElementById("addOnBreakdownList"),
+      warningEmptyText: document.getElementById("warningEmptyText"),
+      warningList: document.getElementById("warningList"),
+      summaryText: document.getElementById("summaryText")
+    };
+
+    function formatMoney(value) {
+      return `$${Number(value || 0).toFixed(2)}`;
+    }
+
+    function formatNumber(value) {
+      const num = Number(value || 0);
+      if (!Number.isFinite(num)) return "0";
+      return num % 1 === 0 ? String(num) : num.toFixed(2).replace(/0+$/, "").replace(/\.$/, "");
+    }
+
+    function parseNumber(value) {
+      if (value === "" || value === null || value === undefined) return null;
+      const num = Number(value);
+      return Number.isFinite(num) ? num : null;
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function nowLabel() {
+      return new Date().toLocaleString();
+    }
+
+    function todayStamp() {
+      return new Date().toISOString().slice(0, 10);
+    }
+
+    function createDefaultState() {
+      return {
+        version: 1,
+        baseMinimum: 900,
+        baseRate: 3.5,
+        totalSqFt: null,
+        totalCuFt: null,
+        installDepth: null,
+        accessType: "normal",
+        spoilsPlan: "onsite",
+        jobLabel: "",
+        notes: "",
+        baseScope: Object.fromEntries(BASE_SCOPE_ITEMS.map((item) => [item.id, false])),
+        verification: Object.fromEntries(VERIFICATION_ITEMS.map((item) => [item.id, false])),
+        addOns: Object.fromEntries(Object.keys(ADDON_LOOKUP).map((id) => [id, { enabled: false, quantity: null, amount: null, extraInches: null }])),
+        savedAt: ""
+      };
+    }
+
+    function renderChipList(container, items, groupName) {
+      container.innerHTML = items.map((item) => `
+        <label class="chip">
+          <input type="checkbox" data-group="${groupName}" data-id="${item.id}">
+          <span>${escapeHtml(item.label)}</span>
+        </label>
+      `).join("");
+    }
+
+    function addonControlsMarkup(item) {
+      if (item.type === "fixed") {
+        return `<p class="addon-help">Use the checkbox if this applies.</p>`;
+      }
+
+      if (item.type === "count" || item.type === "linear") {
+        return `
+          <label>
+            ${escapeHtml(item.quantityLabel || "Qty")}
+            <input type="number" min="0" step="${item.type === "linear" ? "0.1" : "1"}" placeholder="${item.type === "linear" ? "0" : "1"}" data-addon-field="${item.id}" data-field-kind="quantity">
+          </label>
+        `;
+      }
+
+      if (item.type === "range") {
+        return `
+          <label>
+            Amount ($)
+            <input type="number" min="${item.min}" max="${item.max}" step="1" placeholder="${item.min}-${item.max}" data-addon-field="${item.id}" data-field-kind="amount">
+          </label>
+          <p class="addon-help">${escapeHtml(item.helper || "")}</p>
+        `;
+      }
+
+      return `
+        <label>
+          Extra inches
+          <input type="number" min="0" step="0.1" placeholder="0" data-addon-field="${item.id}" data-field-kind="extraInches">
+        </label>
+        <p class="addon-help">${escapeHtml(item.helper || "")}</p>
+      `;
+    }
+
+    function renderAddOns() {
+      refs.addOnSections.innerHTML = ADDON_SECTIONS.map((section) => `
+        <section class="addon-section">
+          <h3>${escapeHtml(section.title)}</h3>
+          <div class="addon-list">
+            ${section.items.map((item) => `
+              <div class="addon-row" data-addon-row="${item.id}">
+                <input type="checkbox" id="addon-toggle-${item.id}" data-addon-toggle="${item.id}">
+                <div>
+                  <label class="addon-title" for="addon-toggle-${item.id}">${escapeHtml(item.label)}</label>
+                  <p class="addon-rate">${escapeHtml(item.rateText)}</p>
+                </div>
+                <div class="addon-controls">${addonControlsMarkup(item)}</div>
+                <div class="addon-total" id="addon-total-${item.id}">$0.00</div>
+              </div>
+            `).join("")}
+          </div>
+        </section>
+      `).join("");
+    }
+
+    function normalizeState(input) {
+      const defaults = createDefaultState();
+      const state = createDefaultState();
+      const source = input && typeof input === "object" ? input : {};
+
+      state.baseMinimum = parseNumber(source.baseMinimum) ?? defaults.baseMinimum;
+      state.baseRate = parseNumber(source.baseRate) ?? defaults.baseRate;
+      state.totalSqFt = parseNumber(source.totalSqFt);
+      state.totalCuFt = parseNumber(source.totalCuFt);
+      state.installDepth = parseNumber(source.installDepth);
+      state.accessType = ["normal", "tight", "wheelbarrow"].includes(source.accessType) ? source.accessType : defaults.accessType;
+      state.spoilsPlan = ["onsite", "haul"].includes(source.spoilsPlan) ? source.spoilsPlan : defaults.spoilsPlan;
+      state.jobLabel = String(source.jobLabel || "");
+      state.notes = String(source.notes || source.notesText || "");
+      state.savedAt = String(source.savedAt || "");
+
+      BASE_SCOPE_ITEMS.forEach((item) => {
+        state.baseScope[item.id] = Boolean(source.baseScope && source.baseScope[item.id]);
+      });
+
+      VERIFICATION_ITEMS.forEach((item) => {
+        state.verification[item.id] = Boolean(source.verification && source.verification[item.id]);
+      });
+
+      Object.keys(ADDON_LOOKUP).forEach((id) => {
+        const raw = source.addOns && source.addOns[id] ? source.addOns[id] : {};
+        state.addOns[id] = {
+          enabled: Boolean(raw.enabled),
+          quantity: parseNumber(raw.quantity),
+          amount: parseNumber(raw.amount),
+          extraInches: parseNumber(raw.extraInches)
+        };
+      });
+
+      return state;
+    }
+
+    function fillForm(state) {
+      refs.baseMinimum.value = formatNumber(state.baseMinimum);
+      refs.baseRate.value = Number(state.baseRate).toFixed(2);
+      refs.totalSqFt.value = state.totalSqFt ?? "";
+      refs.totalCuFt.value = state.totalCuFt ?? "";
+      refs.installDepth.value = state.installDepth ?? "";
+      refs.accessType.value = state.accessType;
+      refs.spoilsPlan.value = state.spoilsPlan;
+      refs.jobLabel.value = state.jobLabel;
+      refs.notesText.value = state.notes;
+
+      BASE_SCOPE_ITEMS.forEach((item) => {
+        const checkbox = refs.baseScopeList.querySelector(`[data-group="baseScope"][data-id="${item.id}"]`);
+        if (checkbox) checkbox.checked = Boolean(state.baseScope[item.id]);
+      });
+
+      VERIFICATION_ITEMS.forEach((item) => {
+        const checkbox = refs.verificationList.querySelector(`[data-group="verification"][data-id="${item.id}"]`);
+        if (checkbox) checkbox.checked = Boolean(state.verification[item.id]);
+      });
+
+      Object.keys(ADDON_LOOKUP).forEach((id) => {
+        const rowState = state.addOns[id];
+        const toggle = document.querySelector(`[data-addon-toggle="${id}"]`);
+        const qty = document.querySelector(`[data-addon-field="${id}"][data-field-kind="quantity"]`);
+        const amount = document.querySelector(`[data-addon-field="${id}"][data-field-kind="amount"]`);
+        const extra = document.querySelector(`[data-addon-field="${id}"][data-field-kind="extraInches"]`);
+
+        if (toggle) toggle.checked = Boolean(rowState.enabled);
+        if (qty) qty.value = rowState.quantity ?? "";
+        if (amount) amount.value = rowState.amount ?? "";
+        if (extra) extra.value = rowState.extraInches ?? "";
+      });
+
+      setSavedAt(state.savedAt || "Never");
+      updateView();
+    }
+
+    function collectState() {
+      const state = createDefaultState();
+
+      state.baseMinimum = parseNumber(refs.baseMinimum.value) ?? 0;
+      state.baseRate = parseNumber(refs.baseRate.value) ?? 0;
+      state.totalSqFt = parseNumber(refs.totalSqFt.value);
+      state.totalCuFt = parseNumber(refs.totalCuFt.value);
+      state.installDepth = parseNumber(refs.installDepth.value);
+      state.accessType = refs.accessType.value;
+      state.spoilsPlan = refs.spoilsPlan.value;
+      state.jobLabel = refs.jobLabel.value.trim();
+      state.notes = refs.notesText.value.trim();
+
+      BASE_SCOPE_ITEMS.forEach((item) => {
+        const checkbox = refs.baseScopeList.querySelector(`[data-group="baseScope"][data-id="${item.id}"]`);
+        state.baseScope[item.id] = Boolean(checkbox && checkbox.checked);
+      });
+
+      VERIFICATION_ITEMS.forEach((item) => {
+        const checkbox = refs.verificationList.querySelector(`[data-group="verification"][data-id="${item.id}"]`);
+        state.verification[item.id] = Boolean(checkbox && checkbox.checked);
+      });
+
+      Object.keys(ADDON_LOOKUP).forEach((id) => {
+        const toggle = document.querySelector(`[data-addon-toggle="${id}"]`);
+        const qty = document.querySelector(`[data-addon-field="${id}"][data-field-kind="quantity"]`);
+        const amount = document.querySelector(`[data-addon-field="${id}"][data-field-kind="amount"]`);
+        const extra = document.querySelector(`[data-addon-field="${id}"][data-field-kind="extraInches"]`);
+
+        state.addOns[id] = {
+          enabled: Boolean(toggle && toggle.checked),
+          quantity: parseNumber(qty && qty.value),
+          amount: parseNumber(amount && amount.value),
+          extraInches: parseNumber(extra && extra.value)
+        };
+      });
+
+      return state;
+    }
+
+    function evaluateAddOn(item, rowState, totalSqFt) {
+      const result = {
+        id: item.id,
+        label: item.label,
+        enabled: Boolean(rowState.enabled),
+        total: 0,
+        problems: [],
+        detail: ""
+      };
+
+      if (!result.enabled) {
+        return result;
+      }
+
+      if (item.type === "fixed") {
+        result.total = item.amount;
+        result.detail = `${item.label}: ${formatMoney(result.total)}`;
+        return result;
+      }
+
+      if (item.type === "count" || item.type === "linear") {
+        const qty = rowState.quantity;
+        if (qty === null || qty <= 0) {
+          result.problems.push(`${item.label} is checked but ${item.quantityLabel || "quantity"} is blank.`);
+          return result;
+        }
+        result.total = qty * item.amount;
+        result.detail = `${item.label}: ${formatNumber(qty)} x ${formatMoney(item.amount)} = ${formatMoney(result.total)}`;
+        return result;
+      }
+
+      if (item.type === "range") {
+        const amount = rowState.amount;
+        if (amount === null) {
+          result.problems.push(`${item.label} is checked but the amount is blank.`);
+          return result;
+        }
+        if (amount < item.min || amount > item.max) {
+          result.problems.push(`${item.label} should stay between ${formatMoney(item.min)} and ${formatMoney(item.max)}.`);
+        }
+        result.total = amount;
+        result.detail = `${item.label}: ${formatMoney(result.total)}`;
+        return result;
+      }
+
+      if (!totalSqFt || totalSqFt <= 0) {
+        result.problems.push(`${item.label} needs total square feet before it can be priced.`);
+        return result;
+      }
+
+      if (rowState.extraInches === null || rowState.extraInches <= 0) {
+        result.problems.push(`${item.label} is checked but extra inches is blank.`);
+        return result;
+      }
+
+      result.total = totalSqFt * item.amount * rowState.extraInches;
+      result.detail = `${item.label}: ${formatNumber(totalSqFt)} sq ft x ${formatMoney(item.amount)} x ${formatNumber(rowState.extraInches)} in = ${formatMoney(result.total)}`;
+      return result;
+    }
+
+    function calculate(state) {
+      const totalSqFt = state.totalSqFt ?? 0;
+      const baseArea = totalSqFt * state.baseRate;
+      const appliedBase = Math.max(state.baseMinimum, baseArea);
+      const addOnResults = Object.keys(ADDON_LOOKUP).map((id) => evaluateAddOn(ADDON_LOOKUP[id], state.addOns[id], totalSqFt));
+      const enabledAddOns = addOnResults.filter((item) => item.enabled);
+
+      return {
+        totalSqFt,
+        baseArea,
+        appliedBase,
+        addOnResults,
+        enabledAddOns,
+        addOnsTotal: enabledAddOns.reduce((sum, item) => sum + item.total, 0)
+      };
+    }
+
+    function buildWarnings(state, calc) {
+      const warnings = [];
+
+      if (!state.totalSqFt || state.totalSqFt <= 0) {
+        warnings.push("Total square feet is blank. The area-based part of the formula cannot be checked yet.");
+      }
+
+      if (state.accessType !== "normal" && !state.addOns.tightAccess.enabled) {
+        warnings.push("Access is marked as tight or wheelbarrow-only, but the tight-access add-on is not checked.");
+      }
+
+      if (state.accessType === "wheelbarrow" && !state.addOns.handHaulSpoils.enabled) {
+        warnings.push("Wheelbarrow-only access often means extra spoil movement. Confirm whether hand-haul labor should be added.");
+      }
+
+      if (state.spoilsPlan === "haul" && !state.addOns.haulOffLabor.enabled) {
+        warnings.push("Spoils are marked for haul-off, but haul-off labor is not checked.");
+      }
+
+      if (!state.verification.utilityLocate) warnings.push("Call 811 / confirm utility marks before digging.");
+      if (!state.verification.irrigationClear) warnings.push("Irrigation / drip / sprinkler lines are not confirmed clear.");
+      if (!state.verification.drainageConfirmed) warnings.push("Drainage away from the house/foundation is not confirmed.");
+      if (!state.verification.finishHeightConfirmed) warnings.push("Finish height at the house and concrete edges is not confirmed.");
+      if (!state.verification.accessPlanConfirmed) warnings.push("Compactor access, staging, or haul route is not confirmed.");
+
+      calc.addOnResults.forEach((result) => {
+        result.problems.forEach((problem) => warnings.push(problem));
+      });
+
+      return warnings;
+    }
+
+    function listCheckedLabels(sourceMap, items) {
+      return items.filter((item) => sourceMap[item.id]).map((item) => item.label);
+    }
+
+    function accessLabel(value) {
+      if (value === "tight") return "tight side yard";
+      if (value === "wheelbarrow") return "wheelbarrow only";
+      return "normal";
+    }
+
+    function spoilsLabel(value) {
+      return value === "haul" ? "haul off" : "onsite";
+    }
+
+    function buildSummaryText(state, calc, warnings) {
+      const total = calc.appliedBase + calc.addOnsTotal;
+      const laborPerSqFt = calc.totalSqFt > 0 ? total / calc.totalSqFt : null;
+      const baseScope = listCheckedLabels(state.baseScope, BASE_SCOPE_ITEMS);
+      const verificationDone = listCheckedLabels(state.verification, VERIFICATION_ITEMS);
+      const lines = [];
+
+      lines.push("SIDE YARD LABOR PRICING TOOL");
+      if (state.jobLabel) lines.push(`Job: ${state.jobLabel}`);
+      lines.push(`Base minimum: ${formatMoney(state.baseMinimum)}`);
+      lines.push(`Base labor rate: ${formatMoney(state.baseRate)} / sq ft`);
+      lines.push("");
+      lines.push("JOB INPUTS");
+      lines.push(`- Total sq ft: ${state.totalSqFt !== null ? formatNumber(state.totalSqFt) : "blank"}`);
+      lines.push(`- Total cu ft: ${state.totalCuFt !== null ? formatNumber(state.totalCuFt) : "blank"}`);
+      lines.push(`- Install depth: ${state.installDepth !== null ? `${formatNumber(state.installDepth)} in` : "blank"}`);
+      lines.push(`- Access type: ${accessLabel(state.accessType)}`);
+      lines.push(`- Spoils plan: ${spoilsLabel(state.spoilsPlan)}`);
+      lines.push("");
+      lines.push("BASE CALC");
+      lines.push(`- Sq ft x base rate: ${formatMoney(calc.baseArea)}`);
+      lines.push(`- Applied base: ${formatMoney(calc.appliedBase)}`);
+      lines.push("");
+      lines.push("ADD-ONS");
+
+      if (!calc.enabledAddOns.length) {
+        lines.push("- None checked");
+      } else {
+        calc.enabledAddOns.forEach((item) => {
+          lines.push(`- ${item.detail || `${item.label}: ${formatMoney(item.total)}`}`);
+        });
+      }
+
+      lines.push(`- Add-ons total: ${formatMoney(calc.addOnsTotal)}`);
+      lines.push("");
+      lines.push(`LABOR TOTAL: ${formatMoney(total)}`);
+      lines.push(`Labor per sq ft: ${laborPerSqFt !== null ? formatMoney(laborPerSqFt) : "-"}`);
+      lines.push("");
+      lines.push("BASE SCOPE INCLUDED");
+      if (!baseScope.length) lines.push("- None checked");
+      baseScope.forEach((label) => lines.push(`- ${label}`));
+      lines.push("");
+      lines.push("VERIFICATION DONE");
+      if (!verificationDone.length) lines.push("- None checked");
+      verificationDone.forEach((label) => lines.push(`- ${label}`));
+
+      if (warnings.length) {
+        lines.push("");
+        lines.push("STILL VERIFY / WATCH");
+        warnings.forEach((warning) => lines.push(`- ${warning}`));
+      }
+
+      if (state.notes) {
+        lines.push("");
+        lines.push("NOTES");
+        lines.push(state.notes);
+      }
+
+      lines.push("");
+      lines.push("Reminder: labor only. Materials, dump fees, delivery, and equipment can stay separate.");
+      return lines.join("\n");
+    }
+
+    function updateAddonUi(calc) {
+      calc.addOnResults.forEach((result) => {
+        const row = document.querySelector(`[data-addon-row="${result.id}"]`);
+        const total = document.getElementById(`addon-total-${result.id}`);
+        if (!row || !total) return;
+
+        row.classList.toggle("is-active", result.enabled);
+        row.classList.toggle("is-invalid", result.enabled && result.problems.length > 0);
+        row.querySelectorAll("[data-addon-field]").forEach((input) => {
+          input.disabled = !result.enabled;
+        });
+        total.textContent = formatMoney(result.total);
+      });
+    }
+
+    function updateView() {
+      const state = collectState();
+      const calc = calculate(state);
+      const warnings = buildWarnings(state, calc);
+      const total = calc.appliedBase + calc.addOnsTotal;
+      const laborPerSqFt = calc.totalSqFt > 0 ? total / calc.totalSqFt : null;
+
+      updateAddonUi(calc);
+
+      refs.baseAreaCalcText.textContent = formatMoney(calc.baseArea);
+      refs.appliedBaseText.textContent = formatMoney(calc.appliedBase);
+      refs.checkedAddOnsText.textContent = String(calc.enabledAddOns.length);
+      refs.addOnsTotalText.textContent = formatMoney(calc.addOnsTotal);
+      refs.laborTotalText.textContent = formatMoney(total);
+      refs.laborPerSqFtText.textContent = laborPerSqFt !== null ? `${formatMoney(laborPerSqFt)} / sq ft` : "-";
+
+      if (calc.baseArea > state.baseMinimum) {
+        refs.baseCallout.textContent = "Square-foot pricing is carrying this job right now.";
+        refs.baseCallout.classList.remove("warn");
+      } else if (state.totalSqFt && state.totalSqFt > 0) {
+        refs.baseCallout.textContent = "Base minimum is carrying this job right now.";
+        refs.baseCallout.classList.remove("warn");
+      } else {
+        refs.baseCallout.textContent = "Enter square footage to compare the area calc against the base minimum.";
+        refs.baseCallout.classList.add("warn");
+      }
+
+      refs.addOnBreakdownList.innerHTML = "";
+      refs.addOnEmptyText.style.display = calc.enabledAddOns.length ? "none" : "";
+      calc.enabledAddOns.forEach((item) => {
+        const li = document.createElement("li");
+        li.textContent = item.detail || `${item.label}: ${formatMoney(item.total)}`;
+        refs.addOnBreakdownList.appendChild(li);
+      });
+
+      refs.warningList.innerHTML = "";
+      refs.warningEmptyText.style.display = warnings.length ? "none" : "";
+      warnings.forEach((warning) => {
+        const li = document.createElement("li");
+        li.textContent = warning;
+        refs.warningList.appendChild(li);
+      });
+
+      refs.summaryText.value = buildSummaryText(state, calc, warnings);
+    }
+
+    function setStatus(message) {
+      refs.statusText.textContent = message;
+    }
+
+    function setSavedAt(value) {
+      const label = value || "Never";
+      refs.savedAtText.textContent = `Last saved: ${label}`;
+      refs.printSavedAt.textContent = label;
+    }
+
+    function saveDraft() {
+      const payload = collectState();
+      payload.savedAt = nowLabel();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+      setSavedAt(payload.savedAt);
+      setStatus("Saved locally");
+      updateView();
+    }
+
+    function loadDraft() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) {
+        alert("No saved draft found yet.");
+        return;
+      }
+
+      try {
+        fillForm(normalizeState(JSON.parse(raw)));
+        setStatus("Loaded from saved draft");
+      } catch {
+        alert("Saved draft could not be read.");
+      }
+    }
+
+    function downloadDraft() {
+      const payload = collectState();
+      payload.savedAt = nowLabel();
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      const label = (payload.jobLabel || "side-yard-labor-pricing").replace(/[^\w-]+/g, "-");
+      link.href = url;
+      link.download = `${label}-${todayStamp()}.json`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      setStatus("Exported JSON");
+    }
+
+    function importDraft(file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          fillForm(normalizeState(JSON.parse(String(reader.result || "{}"))));
+          setStatus("Imported draft");
+        } catch {
+          alert("File is not valid JSON.");
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    async function copySummary() {
+      const text = refs.summaryText.value;
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          refs.summaryText.removeAttribute("readonly");
+          refs.summaryText.select();
+          document.execCommand("copy");
+          refs.summaryText.setAttribute("readonly", "readonly");
+          refs.summaryText.blur();
+        }
+        setStatus("Summary copied");
+      } catch {
+        alert("Could not copy automatically. You can still select the summary and copy it manually.");
+      }
+    }
+
+    function clearForm() {
+      if (!confirm("Clear the current draft on this page?")) return;
+      fillForm(createDefaultState());
+      setStatus("Cleared (not saved)");
+    }
+
+    function handleFormChange(event) {
+      const target = event.target;
+      if (!refs.formRoot.contains(target)) return;
+      if (target === refs.summaryText || target === refs.importFile) return;
+      if (!target.matches("input, select, textarea")) return;
+      updateView();
+      setStatus("Unsaved changes");
+    }
+
+    function wireEvents() {
+      refs.formRoot.addEventListener("input", handleFormChange);
+      refs.formRoot.addEventListener("change", handleFormChange);
+      refs.saveBtn.addEventListener("click", saveDraft);
+      refs.loadBtn.addEventListener("click", loadDraft);
+      refs.downloadBtn.addEventListener("click", downloadDraft);
+      refs.importFile.addEventListener("change", (event) => {
+        const file = event.target.files && event.target.files[0];
+        if (file) importDraft(file);
+        event.target.value = "";
+      });
+      refs.copyBtn.addEventListener("click", copySummary);
+      refs.printBtn.addEventListener("click", () => window.print());
+      refs.clearBtn.addEventListener("click", clearForm);
+    }
+
+    function boot() {
+      renderChipList(refs.baseScopeList, BASE_SCOPE_ITEMS, "baseScope");
+      renderChipList(refs.verificationList, VERIFICATION_ITEMS, "verification");
+      renderAddOns();
+      wireEvents();
+
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) {
+        fillForm(createDefaultState());
+        setStatus("Ready");
+        return;
+      }
+
+      try {
+        fillForm(normalizeState(JSON.parse(raw)));
+        setStatus("Loaded from saved draft");
+      } catch {
+        fillForm(createDefaultState());
+        setStatus("Ready");
+      }
+    }
+
+    boot();
+  </script>
+</body>
+</html>
