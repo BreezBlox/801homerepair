@@ -4,8 +4,9 @@ Production-ready static landing page for **801 Home Repair** with:
 - No build step
 - Mobile-first responsive design
 - Netlify Forms support
+- Google Calendar Appointment Schedule booking link
 - Local SEO metadata and schema
-- Sticky mobile call/text/get-quote CTA
+- Sticky mobile call/text/book CTA
 - Shareable digital business card with 1-2 tap actions
 
 ## File Structure
@@ -13,6 +14,7 @@ Production-ready static landing page for **801 Home Repair** with:
 - `index.html` main landing page
 - `styles.css` site styles and responsive layout
 - `script.js` business placeholders + light UI behavior
+- `docs/BOOKING_SETUP.md` Google Appointment Schedule setup notes
 - `card/index.html` production digital card page (`/card/`)
 - `card/card.css` digital card styles
 - `card/card.js` tracked link handling for card page
@@ -52,6 +54,18 @@ The quote form is already configured for Netlify Forms:
 - includes hidden source field: `source`
 
 After first deploy, submit one test form on production so Netlify detects the form.
+
+## Booking Setup
+
+The landing page links to a Google Calendar Appointment Schedule.
+
+Read:
+- `docs/BOOKING_SETUP.md`
+
+High-level flow:
+- customer clicks `Book a time`
+- Google Calendar opens the appointment schedule
+- Google handles available times and calendar booking
 
 ## Digital Card + Tracked Links
 

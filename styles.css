@@ -287,6 +287,13 @@ summary:focus-visible {
   color: var(--text);
 }
 
+.btn:disabled {
+  opacity: 0.62;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
 .hero {
   padding-top: clamp(1.3rem, 4vw, 2.4rem);
   padding-bottom: clamp(1.1rem, 2.2vw, 1.8rem);
@@ -320,7 +327,7 @@ summary:focus-visible {
   font-size: clamp(2.25rem, 7vw, 4.35rem);
   font-weight: 900;
   line-height: 0.92;
-  letter-spacing: -0.05em;
+  letter-spacing: 0;
   text-transform: none;
 }
 
@@ -441,6 +448,13 @@ summary:focus-visible {
   font-weight: 700;
   letter-spacing: 0.02em;
   color: #2f3f56;
+}
+
+.hero-action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.5rem;
 }
 
 .hero-actions .btn-primary {
@@ -665,6 +679,57 @@ summary:focus-visible {
   flex-wrap: wrap;
   gap: 0.5rem;
   justify-content: center;
+}
+
+.booking-section {
+  padding-top: clamp(2rem, 4vw, 3rem);
+  padding-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.booking-shell {
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+  box-shadow: var(--shadow-sm);
+  padding: clamp(1rem, 2.6vw, 1.4rem);
+  display: grid;
+  gap: 1.1rem;
+}
+
+.booking-intro h2 {
+  margin: 0 0 0.6rem;
+  line-height: 1.16;
+}
+
+.booking-intro p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.booking-card {
+  border: 1px solid var(--border);
+  background: #ffffff;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: 1rem;
+  display: grid;
+  gap: 0.8rem;
+}
+
+.booking-card h3,
+.booking-card p {
+  margin: 0;
+}
+
+.booking-card p {
+  color: var(--muted);
+}
+
+.booking-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  align-items: center;
 }
 
 .pricing-grid {
@@ -952,7 +1017,7 @@ summary:focus-visible {
   border-top: 1px solid var(--border);
   background: rgba(255, 255, 255, 0.98);
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.5rem;
   padding: 0.5rem;
 }
@@ -1072,6 +1137,10 @@ summary:focus-visible {
   .hero-actions {
     align-items: flex-start;
   }
+
+  .hero-action-buttons {
+    justify-content: flex-start;
+  }
 }
 
 @media (min-width: 901px) {
@@ -1135,6 +1204,11 @@ summary:focus-visible {
     grid-template-columns: 0.9fr 1.1fr;
   }
 
+  .booking-shell {
+    grid-template-columns: 0.84fr 1.16fr;
+    align-items: start;
+  }
+
   .contact-shell {
     grid-template-columns: 1.1fr auto;
     align-items: center;
@@ -1166,8 +1240,16 @@ summary:focus-visible {
 }
 
 @media (max-width: 560px) {
+  .hero-action-buttons {
+    width: 100%;
+  }
+
   .hero-actions .btn,
   .contact-actions .btn {
+    width: 100%;
+  }
+
+  .booking-actions .btn {
     width: 100%;
   }
 }

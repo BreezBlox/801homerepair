@@ -33,7 +33,8 @@ const CONFIG = {
   LICENSED_INSURED_TOGGLE: false,
   PRIMARY_ACCENT: "#1d4ed8",
   SECONDARY_ACCENT: "#f97316",
-  SITE_URL: "https://www.homerepairslc.com"
+  SITE_URL: "https://www.homerepairslc.com",
+  BOOKING_URL: "https://calendar.google.com/calendar/appointments/schedules/AcZssZ2kxKBCtIGk3HBPc0VSZe5BjGvlK819vF8KRAuwKWNYpcS-7WZ2igdROIKwA_lW9Uwu9VHWwHHD?gv=true"
 };
 
 function normalizeDigits(value) {
@@ -201,6 +202,18 @@ function applyLeadSource() {
   }
 }
 
+function applyBookingLinks() {
+  if (!CONFIG.BOOKING_URL) {
+    return;
+  }
+
+  document.querySelectorAll("[data-booking-link]").forEach((node) => {
+    node.setAttribute("href", CONFIG.BOOKING_URL);
+    node.setAttribute("target", "_blank");
+    node.setAttribute("rel", "noopener");
+  });
+}
+
 function setupNavToggle() {
   const navToggle = document.querySelector(".nav-toggle");
   const nav = document.getElementById("primary-nav");
@@ -284,6 +297,7 @@ applyThemeColors();
 applyBusinessContent();
 updateSeoTags();
 applyLeadSource();
+applyBookingLinks();
 setupNavToggle();
 setupCopyPhoneButton();
 setupFormUX();
