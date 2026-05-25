@@ -5,6 +5,7 @@ Production-ready static landing page for **801 Home Repair** with:
 - Mobile-first responsive design
 - Netlify Forms support
 - Google Calendar Appointment Schedule booking link
+- Square deposit payment link support
 - Local SEO metadata and schema
 - Sticky mobile call/text/book CTA
 - Shareable digital business card with 1-2 tap actions
@@ -15,6 +16,7 @@ Production-ready static landing page for **801 Home Repair** with:
 - `styles.css` site styles and responsive layout
 - `script.js` business placeholders + light UI behavior
 - `docs/BOOKING_SETUP.md` Google Appointment Schedule setup notes
+- `docs/SQUARE_PAYMENTS_SETUP.md` Square deposit payment setup notes
 - `card/index.html` production digital card page (`/card/`)
 - `card/card.css` digital card styles
 - `card/card.js` tracked link handling for card page
@@ -39,6 +41,8 @@ Update placeholders at the top of `script.js`:
 - `PRIMARY_ACCENT`
 - `SECONDARY_ACCENT`
 - `SITE_URL`
+- `BOOKING_URL`
+- `SQUARE_PAYMENT_URL`
 
 `LICENSED_INSURED_TOGGLE` defaults to `false`.  
 Set to `true` only when you want licensed/insured language displayed.
@@ -66,6 +70,18 @@ High-level flow:
 - customer clicks `Book a time`
 - Google Calendar opens the appointment schedule
 - Google handles available times and calendar booking
+
+## Square Deposit Payment Setup
+
+The landing page includes a `Pay a job deposit` section and a mobile `Pay` button.
+
+Read:
+- `docs/SQUARE_PAYMENTS_SETUP.md`
+
+High-level flow:
+- create a Square invoice or deposit payment link
+- paste the public Square URL into `SQUARE_PAYMENT_URL` in `script.js`
+- customers use the button only after receiving a written estimate, invoice, or deposit request
 
 ## Digital Card + Tracked Links
 

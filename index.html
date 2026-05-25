@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles.css?v=20260519b">
+  <link rel="stylesheet" href="./styles.css?v=20260525a">
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="Home Repair Services in Salt Lake City">
@@ -140,6 +140,38 @@
       </div>
     </section>
 
+    <section class="section payment-section" id="payment">
+      <div class="container">
+        <div class="payment-shell">
+          <div class="payment-intro">
+            <p class="eyebrow">Deposits</p>
+            <h2>Pay a job deposit</h2>
+            <p>
+              Use this after Rob sends a written estimate, invoice, or deposit request.
+              Final balance is due when the work is complete unless the estimate says otherwise.
+            </p>
+          </div>
+
+          <div class="payment-card">
+            <h3>Square secure payment</h3>
+            <p>
+              Enter the deposit amount from your estimate or invoice. Include the estimate
+              or invoice number in the payment note when available.
+            </p>
+            <ul class="payment-list">
+              <li>Do not pay before the job scope and deposit amount are confirmed.</li>
+              <li>Extra approved materials or changes may be added to the final balance.</li>
+            </ul>
+            <div class="payment-actions">
+              <a class="btn btn-primary" data-payment-link data-payment-default-label="Pay deposit" data-payment-fallback-label="Text for payment link" href="sms:+18018109948?body=Hi%20Rob%2C%20I%20am%20ready%20to%20pay%20my%20deposit.%20Estimate%2Finvoice%20%23%3A%20">Text for payment link</a>
+              <a class="btn btn-outline" data-sms-link href="sms:+18018109948">Ask a question</a>
+            </div>
+            <p class="form-note" data-payment-config-note>Online payment setup is in progress. Text Rob for the current payment link.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="section" id="services">
       <div class="container">
         <div class="section-head">
@@ -206,16 +238,17 @@
     </section>
   </main>
 
-  <div class="mobile-cta" aria-label="Quick mobile contact">
+  <div class="mobile-cta" data-mobile-cta aria-label="Quick mobile contact">
     <a class="btn-cta" data-phone-link href="tel:+18018109948">Call</a>
     <a class="btn-cta" data-sms-link href="sms:+18018109948">Text</a>
     <a class="btn-cta btn-cta-accent" data-booking-link href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2kxKBCtIGk3HBPc0VSZe5BjGvlK819vF8KRAuwKWNYpcS-7WZ2igdROIKwA_lW9Uwu9VHWwHHD?gv=true" target="_blank" rel="noopener">Book</a>
+    <a class="btn-cta btn-cta-pay is-hidden" data-payment-link data-payment-hide-until-configured data-payment-default-label="Pay" data-payment-fallback-label="Pay" href="#payment">Pay</a>
   </div>
 
   <noscript>
     <div class="noscript-note">JavaScript is disabled. You can still call or text.</div>
   </noscript>
 
-  <script src="./script.js?v=20260519b" defer></script>
+  <script src="./script.js?v=20260525a" defer></script>
 </body>
 </html>
