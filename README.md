@@ -5,7 +5,6 @@ Production-ready static landing page for **801 Home Repair** with:
 - Mobile-first responsive design
 - Netlify Forms support
 - Google Calendar Appointment Schedule booking link
-- Square deposit payment link support
 - Local SEO metadata and schema
 - Sticky mobile call/text/book CTA
 - Shareable digital business card with 1-2 tap actions
@@ -16,7 +15,7 @@ Production-ready static landing page for **801 Home Repair** with:
 - `styles.css` site styles and responsive layout
 - `script.js` business placeholders + light UI behavior
 - `docs/BOOKING_SETUP.md` Google Appointment Schedule setup notes
-- `docs/SQUARE_PAYMENTS_SETUP.md` Square deposit payment setup notes
+- `docs/STRIPE_PAYMENT_LINKS.md` private per-job Stripe Payment Links workflow
 - `card/index.html` production digital card page (`/card/`)
 - `card/card.css` digital card styles
 - `card/card.js` tracked link handling for card page
@@ -42,7 +41,6 @@ Update placeholders at the top of `script.js`:
 - `SECONDARY_ACCENT`
 - `SITE_URL`
 - `BOOKING_URL`
-- `SQUARE_PAYMENT_URL`
 
 `LICENSED_INSURED_TOGGLE` defaults to `false`.  
 Set to `true` only when you want licensed/insured language displayed.
@@ -71,17 +69,16 @@ High-level flow:
 - Google Calendar opens the appointment schedule
 - Google handles available times and calendar booking
 
-## Square Deposit Payment Setup
-
-The landing page includes a `Pay a job deposit` section and a mobile `Pay` button.
+## Stripe Payment Links Workflow
 
 Read:
-- `docs/SQUARE_PAYMENTS_SETUP.md`
+- `docs/STRIPE_PAYMENT_LINKS.md`
 
 High-level flow:
-- create a Square invoice or deposit payment link
-- paste the public Square URL into `SQUARE_PAYMENT_URL` in `script.js`
-- customers use the button only after receiving a written estimate, invoice, or deposit request
+- keep payment links off the public website
+- create a customer-specific Stripe Payment Link for the exact job deposit
+- include the job or estimate number in the Stripe link title or description
+- enable saved payment details for future use if the remaining balance will be charged later from Stripe Dashboard
 
 ## Digital Card + Tracked Links
 
