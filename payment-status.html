@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Payment Status | 801 Home Repair</title>
+  <meta name="description" content="Payment status for 801 Home Repair.">
+  <meta name="robots" content="noindex,follow">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body class="simple-page">
+  <main class="simple-card" aria-labelledby="payment-status-heading">
+    <p class="eyebrow" id="payment-eyebrow">Payment</p>
+    <h1 id="payment-status-heading">Payment status</h1>
+    <p id="payment-message">
+      Checking payment status.
+    </p>
+    <p>
+      For questions, call or text
+      <a data-phone-link href="tel:+18015550123"><span data-phone-display>(801) 555-0123</span></a>.
+    </p>
+    <div class="simple-actions">
+      <a class="btn btn-primary" href="/">Back to Home</a>
+      <a class="btn btn-outline" data-phone-link href="tel:+18015550123">Call</a>
+      <a class="btn btn-ghost" data-sms-link href="sms:+18015550123">Text</a>
+    </div>
+  </main>
+  <script src="./script.js" defer></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const status = params.get("status");
+    const estimate = params.get("estimate");
+    const heading = document.getElementById("payment-status-heading");
+    const eyebrow = document.getElementById("payment-eyebrow");
+    const message = document.getElementById("payment-message");
+    const estimateText = estimate ? " for estimate " + estimate : "";
+
+    if (status === "success") {
+      eyebrow.textContent = "Deposit received";
+      heading.textContent = "Thanks, your deposit was received.";
+      message.textContent = "801 Home Repair received your deposit" + estimateText + ". A receipt will be sent by the payment processor.";
+    } else if (status === "cancelled") {
+      eyebrow.textContent = "Payment not completed";
+      heading.textContent = "The payment was not completed.";
+      message.textContent = "No payment was processed" + estimateText + ". Use the deposit link again or contact Rob if you need a new link.";
+    } else {
+      eyebrow.textContent = "Payment";
+      heading.textContent = "Payment status unavailable.";
+      message.textContent = "Contact 801 Home Repair if you need help confirming this payment.";
+    }
+  </script>
+</body>
+</html>

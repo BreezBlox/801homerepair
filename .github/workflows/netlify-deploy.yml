@@ -26,8 +26,11 @@ jobs:
       - name: Install Netlify CLI
         run: npm install -g netlify-cli
 
+      - name: Install project dependencies
+        run: npm ci
+
       - name: Deploy Production Site
-        run: netlify deploy --dir . --prod --message "GitHub Actions deploy from getit" --site "$NETLIFY_SITE_ID" --auth "$NETLIFY_AUTH_TOKEN"
+        run: netlify deploy --dir . --functions netlify/functions --prod --message "GitHub Actions deploy from getit" --site "$NETLIFY_SITE_ID" --auth "$NETLIFY_AUTH_TOKEN"
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}

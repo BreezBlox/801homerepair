@@ -1,0 +1,13 @@
+{
+  "name": "801-home-repair-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npx netlify-cli dev",
+    "check:functions": "node --check netlify/functions/create-deposit-session.mjs && node --check netlify/functions/charge-final-balance.mjs"
+  },
+  "dependencies": {
+    "stripe": "^22.2.0"
+  }
+}

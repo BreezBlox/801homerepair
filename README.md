@@ -17,6 +17,7 @@ Production-ready static landing page for **801 Home Repair** with:
 - `script.js` business placeholders + light UI behavior
 - `docs/BOOKING_SETUP.md` Google Appointment Schedule setup notes
 - `docs/SQUARE_PAYMENTS_SETUP.md` Square payment setup notes
+- `docs/STRIPE_NETLIFY_OPTION_A.md` private Stripe deposit/final-balance setup
 - `card/index.html` production digital card page (`/card/`)
 - `card/card.css` digital card styles
 - `card/card.js` tracked link handling for card page
@@ -81,6 +82,19 @@ High-level flow:
 - configure the public Square URL in `SQUARE_PAYMENT_URL` in `script.js`
 - ask customers to include the job, estimate, or invoice number in the payment note when available
 - use Square Invoices for structured deposit and balance schedules
+
+## Private Stripe Deposit + Final Balance Setup
+
+Read:
+- `docs/STRIPE_NETLIFY_OPTION_A.md`
+
+High-level flow:
+- create and send the estimate/PDF first
+- use `/admin/payments.html` to create a private Stripe deposit link for the approved estimate
+- customer pays the deposit through Stripe Checkout
+- use the same admin page to charge the saved payment method for the remaining approved balance after completion
+
+This is not a generic public payment button. Stripe secret keys must stay in Netlify environment variables.
 
 ## Digital Card + Tracked Links
 

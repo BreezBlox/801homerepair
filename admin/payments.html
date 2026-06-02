@@ -1,0 +1,800 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Payment Admin | 801 Home Repair</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #17211c;
+      --muted: #5c6761;
+      --line: #d8ddd8;
+      --panel: #ffffff;
+      --page: #f6f4ef;
+      --primary: #1b5e4a;
+      --primary-strong: #134232;
+      --warn: #946200;
+      --danger: #b42318;
+      --ok: #126b3f;
+      --focus: #ef8d32;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--page);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.45;
+    }
+
+    a {
+      color: var(--primary);
+    }
+
+    .shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 48px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .eyebrow {
+      margin: 0 0 6px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      margin-bottom: 8px;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      margin-bottom: 12px;
+      font-size: 22px;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin-bottom: 6px;
+      font-size: 17px;
+      letter-spacing: 0;
+    }
+
+    .lede {
+      max-width: 700px;
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+      gap: 18px;
+      margin-top: 22px;
+      align-items: start;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+      box-shadow: 0 8px 22px rgba(23, 33, 28, 0.06);
+    }
+
+    .stack {
+      display: grid;
+      gap: 18px;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    label {
+      display: grid;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .wide {
+      grid-column: 1 / -1;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      min-height: 42px;
+      border: 1px solid #bfc8c0;
+      border-radius: 6px;
+      padding: 10px 11px;
+      color: var(--ink);
+      background: #fff;
+      font: inherit;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 76px;
+    }
+
+    input:focus,
+    textarea:focus,
+    button:focus {
+      outline: 3px solid rgba(239, 141, 50, 0.32);
+      outline-offset: 2px;
+      border-color: var(--focus);
+    }
+
+    .checkline {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 400;
+    }
+
+    .checkline input {
+      width: 18px;
+      min-height: 18px;
+      margin-top: 2px;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    button,
+    .button-link {
+      min-height: 42px;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      padding: 10px 14px;
+      cursor: pointer;
+      font: inherit;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    button.primary,
+    .button-link.primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    button.primary:hover,
+    .button-link.primary:hover {
+      background: var(--primary-strong);
+    }
+
+    button.secondary,
+    .button-link.secondary {
+      background: #fff;
+      border-color: #aab5ad;
+      color: var(--ink);
+    }
+
+    button.danger {
+      background: var(--danger);
+      color: #fff;
+    }
+
+    button:disabled {
+      opacity: 0.62;
+      cursor: not-allowed;
+    }
+
+    .note,
+    .small {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .note {
+      margin-bottom: 14px;
+    }
+
+    .status {
+      display: none;
+      margin-top: 14px;
+      border-radius: 6px;
+      padding: 12px;
+      background: #f3f5f1;
+      border: 1px solid var(--line);
+      overflow-wrap: anywhere;
+    }
+
+    .status.show {
+      display: block;
+    }
+
+    .status.ok {
+      background: #edf8f1;
+      border-color: #b9dfc9;
+      color: var(--ok);
+    }
+
+    .status.warn {
+      background: #fff7e8;
+      border-color: #f1cf8a;
+      color: var(--warn);
+    }
+
+    .status.error {
+      background: #fff0ee;
+      border-color: #f1b4ad;
+      color: var(--danger);
+    }
+
+    .record-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .record {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 12px;
+      background: #fbfcfa;
+    }
+
+    .record p {
+      margin-bottom: 8px;
+    }
+
+    .record-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .totals {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .metric {
+      background: #fbfcfa;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 10px;
+    }
+
+    .metric span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    .metric strong {
+      display: block;
+      margin-top: 4px;
+      font-size: 18px;
+    }
+
+    @media (max-width: 860px) {
+      .topbar,
+      .grid {
+        display: block;
+      }
+
+      .grid,
+      .stack {
+        margin-top: 18px;
+      }
+
+      .panel + .panel,
+      .stack + .stack {
+        margin-top: 18px;
+      }
+
+      .field-grid,
+      .totals {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Private tool</p>
+        <h1>Stripe Payment Admin</h1>
+        <p class="lede">
+          Create deposit checkout links from an approved estimate, then charge the saved payment method for the final approved balance when the job is complete.
+        </p>
+      </div>
+      <a class="button-link secondary" href="/">Back to Site</a>
+    </header>
+
+    <section class="grid" aria-label="Payment workflow">
+      <div class="stack">
+        <form class="panel" id="deposit-form">
+          <h2>Create Deposit Link</h2>
+          <p class="note">
+            Use the estimate PDF as the source of truth. This tool only creates the Stripe payment link.
+          </p>
+
+          <div class="field-grid">
+            <label class="wide">
+              Admin Token
+              <input id="admin-token" type="password" autocomplete="off" required>
+            </label>
+            <label>
+              Estimate Number
+              <input id="estimate-number" type="text" placeholder="EST-20260602-001" required>
+            </label>
+            <label>
+              Customer Email
+              <input id="customer-email" type="email" placeholder="customer@example.com" required>
+            </label>
+            <label>
+              Customer Name
+              <input id="customer-name" type="text" placeholder="Customer name">
+            </label>
+            <label>
+              Project Title
+              <input id="project-title" type="text" placeholder="Flooring install">
+            </label>
+            <label>
+              Total Amount
+              <input id="total-amount" type="number" min="0.01" step="0.01" placeholder="300.00" required>
+            </label>
+            <label>
+              Deposit Amount
+              <input id="deposit-amount" type="number" min="0.01" step="0.01" placeholder="150.00" required>
+            </label>
+          </div>
+
+          <div class="totals" aria-label="Calculated amounts">
+            <div class="metric">
+              <span>Total</span>
+              <strong id="metric-total">$0.00</strong>
+            </div>
+            <div class="metric">
+              <span>Deposit</span>
+              <strong id="metric-deposit">$0.00</strong>
+            </div>
+            <div class="metric">
+              <span>Balance</span>
+              <strong id="metric-balance">$0.00</strong>
+            </div>
+          </div>
+
+          <label class="checkline wide">
+            <input id="authorization-accepted" type="checkbox" required>
+            <span>The estimate/payment terms already tell the customer the payment method will be saved with Stripe and charged for the remaining approved balance when the job is complete.</span>
+          </label>
+
+          <div class="button-row">
+            <button class="primary" id="create-link-button" type="submit">Create Deposit Link</button>
+            <button class="secondary" id="reset-deposit-button" type="button">Clear Form</button>
+          </div>
+          <div class="status" id="deposit-status" role="status"></div>
+        </form>
+
+        <form class="panel" id="final-form">
+          <h2>Charge Final Balance</h2>
+          <p class="note">
+            Charge only after the job is complete and the balance amount is approved.
+          </p>
+
+          <div class="field-grid">
+            <label>
+              Deposit Checkout Session ID
+              <input id="final-session-id" type="text" placeholder="cs_test_..." required>
+            </label>
+            <label>
+              Estimate Number
+              <input id="final-estimate-number" type="text" placeholder="EST-20260602-001">
+            </label>
+            <label>
+              Final Balance Amount
+              <input id="final-amount" type="number" min="0.01" step="0.01" placeholder="150.00" required>
+            </label>
+            <label>
+              Type CHARGE
+              <input id="charge-confirmation" type="text" autocomplete="off" placeholder="CHARGE" required>
+            </label>
+            <label class="wide">
+              Completion Note
+              <textarea id="completion-note" placeholder="Job completed per approved scope."></textarea>
+            </label>
+          </div>
+
+          <div class="button-row">
+            <button class="danger" id="charge-button" type="submit">Charge Final Balance</button>
+          </div>
+          <div class="status" id="final-status" role="status"></div>
+        </form>
+      </div>
+
+      <aside class="stack">
+        <section class="panel">
+          <h2>Latest Deposit Link</h2>
+          <div class="status show" id="latest-link-box">
+            Create a deposit link to see it here.
+          </div>
+          <div class="button-row">
+            <button class="secondary" id="copy-link-button" type="button" disabled>Copy Link</button>
+            <a class="button-link primary" id="open-link-button" href="#" target="_blank" rel="noopener" aria-disabled="true">Open Link</a>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>Saved Local Records</h2>
+          <p class="note">
+            These records stay in this browser only. Stripe remains the payment source of truth.
+          </p>
+          <div class="record-list" id="record-list"></div>
+        </section>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    const STORAGE_KEY = "stripe-payment-admin-records-v1";
+
+    const fields = {
+      adminToken: document.getElementById("admin-token"),
+      estimateNumber: document.getElementById("estimate-number"),
+      customerEmail: document.getElementById("customer-email"),
+      customerName: document.getElementById("customer-name"),
+      projectTitle: document.getElementById("project-title"),
+      totalAmount: document.getElementById("total-amount"),
+      depositAmount: document.getElementById("deposit-amount"),
+      authorizationAccepted: document.getElementById("authorization-accepted"),
+      finalSessionId: document.getElementById("final-session-id"),
+      finalEstimateNumber: document.getElementById("final-estimate-number"),
+      finalAmount: document.getElementById("final-amount"),
+      chargeConfirmation: document.getElementById("charge-confirmation"),
+      completionNote: document.getElementById("completion-note")
+    };
+
+    const nodes = {
+      depositForm: document.getElementById("deposit-form"),
+      finalForm: document.getElementById("final-form"),
+      depositStatus: document.getElementById("deposit-status"),
+      finalStatus: document.getElementById("final-status"),
+      latestLinkBox: document.getElementById("latest-link-box"),
+      copyLinkButton: document.getElementById("copy-link-button"),
+      openLinkButton: document.getElementById("open-link-button"),
+      resetDepositButton: document.getElementById("reset-deposit-button"),
+      recordList: document.getElementById("record-list"),
+      metricTotal: document.getElementById("metric-total"),
+      metricDeposit: document.getElementById("metric-deposit"),
+      metricBalance: document.getElementById("metric-balance")
+    };
+
+    let latestCheckoutUrl = "";
+
+    function money(value) {
+      const amount = Number(value || 0);
+      return amount.toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD"
+      });
+    }
+
+    function numericValue(input) {
+      return Number(String(input.value || "").replace(/[$,\s]/g, "")) || 0;
+    }
+
+    function centsToDollars(cents) {
+      return Number(cents || 0) / 100;
+    }
+
+    function setStatus(node, type, message) {
+      node.className = "status show " + type;
+      node.textContent = message;
+    }
+
+    function clearStatus(node) {
+      node.className = "status";
+      node.textContent = "";
+    }
+
+    function loadRecords() {
+      try {
+        const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+        return Array.isArray(parsed) ? parsed : [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function saveRecords(records) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(records.slice(0, 50)));
+    }
+
+    function upsertRecord(record) {
+      const records = loadRecords();
+      const existingIndex = records.findIndex((item) => item.checkoutSessionId === record.checkoutSessionId);
+      const nextRecord = {
+        ...record,
+        updatedAt: new Date().toISOString()
+      };
+
+      if (existingIndex >= 0) {
+        records[existingIndex] = {
+          ...records[existingIndex],
+          ...nextRecord
+        };
+      } else {
+        records.unshift(nextRecord);
+      }
+
+      saveRecords(records);
+      renderRecords();
+    }
+
+    function updateMetrics() {
+      const total = numericValue(fields.totalAmount);
+      const deposit = numericValue(fields.depositAmount);
+      const balance = Math.max(0, total - deposit);
+
+      nodes.metricTotal.textContent = money(total);
+      nodes.metricDeposit.textContent = money(deposit);
+      nodes.metricBalance.textContent = money(balance);
+    }
+
+    function fillFinalForm(record) {
+      fields.finalSessionId.value = record.checkoutSessionId || "";
+      fields.finalEstimateNumber.value = record.estimateNumber || "";
+      fields.finalAmount.value = centsToDollars(record.balanceAmountCents || 0).toFixed(2);
+      fields.completionNote.value = "Job completed per approved scope.";
+      fields.chargeConfirmation.value = "";
+      fields.chargeConfirmation.focus();
+    }
+
+    function renderRecords() {
+      const records = loadRecords();
+      nodes.recordList.innerHTML = "";
+
+      if (!records.length) {
+        const empty = document.createElement("p");
+        empty.className = "small";
+        empty.textContent = "No local payment records yet.";
+        nodes.recordList.appendChild(empty);
+        return;
+      }
+
+      records.forEach((record) => {
+        const item = document.createElement("article");
+        item.className = "record";
+
+        const title = document.createElement("h3");
+        title.textContent = record.estimateNumber || "Estimate";
+        item.appendChild(title);
+
+        const details = document.createElement("p");
+        details.className = "small";
+        details.textContent = [
+          record.customerEmail || "",
+          "Deposit " + money(centsToDollars(record.depositAmountCents)),
+          "Balance " + money(centsToDollars(record.balanceAmountCents)),
+          record.finalPaymentIntentId ? "Final charged" : "Final pending"
+        ].filter(Boolean).join(" | ");
+        item.appendChild(details);
+
+        const session = document.createElement("p");
+        session.className = "small";
+        session.textContent = record.checkoutSessionId || "";
+        item.appendChild(session);
+
+        const actions = document.createElement("div");
+        actions.className = "record-actions";
+
+        const useButton = document.createElement("button");
+        useButton.className = "secondary";
+        useButton.type = "button";
+        useButton.textContent = "Use for Final";
+        useButton.addEventListener("click", () => fillFinalForm(record));
+        actions.appendChild(useButton);
+
+        if (record.checkoutUrl) {
+          const open = document.createElement("a");
+          open.className = "button-link secondary";
+          open.href = record.checkoutUrl;
+          open.target = "_blank";
+          open.rel = "noopener";
+          open.textContent = "Open Deposit Link";
+          actions.appendChild(open);
+        }
+
+        item.appendChild(actions);
+        nodes.recordList.appendChild(item);
+      });
+    }
+
+    async function postJson(url, payload) {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(data.error || data.detail || "Request failed.");
+      }
+
+      return data;
+    }
+
+    function setLatestLink(url, sessionId) {
+      latestCheckoutUrl = url || "";
+      if (!latestCheckoutUrl) {
+        nodes.latestLinkBox.textContent = "Create a deposit link to see it here.";
+        nodes.copyLinkButton.disabled = true;
+        nodes.openLinkButton.href = "#";
+        nodes.openLinkButton.setAttribute("aria-disabled", "true");
+        return;
+      }
+
+      nodes.latestLinkBox.textContent = `${url}\n\nCheckout Session ID: ${sessionId}`;
+      nodes.copyLinkButton.disabled = false;
+      nodes.openLinkButton.href = url;
+      nodes.openLinkButton.removeAttribute("aria-disabled");
+    }
+
+    nodes.depositForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      clearStatus(nodes.depositStatus);
+
+      const payload = {
+        adminToken: fields.adminToken.value,
+        estimateNumber: fields.estimateNumber.value,
+        customerEmail: fields.customerEmail.value,
+        customerName: fields.customerName.value,
+        projectTitle: fields.projectTitle.value,
+        totalAmount: fields.totalAmount.value,
+        depositAmount: fields.depositAmount.value,
+        authorizationAccepted: fields.authorizationAccepted.checked
+      };
+
+      const button = document.getElementById("create-link-button");
+      button.disabled = true;
+      button.textContent = "Creating...";
+
+      try {
+        const data = await postJson("/.netlify/functions/create-deposit-session", payload);
+        setStatus(nodes.depositStatus, "ok", "Deposit link created. Send the link to the customer after confirming the estimate is approved.");
+        setLatestLink(data.checkoutUrl, data.checkoutSessionId);
+        upsertRecord({
+          checkoutSessionId: data.checkoutSessionId,
+          checkoutUrl: data.checkoutUrl,
+          estimateNumber: data.estimateNumber,
+          customerEmail: data.customerEmail,
+          totalAmountCents: data.totalAmountCents,
+          depositAmountCents: data.depositAmountCents,
+          balanceAmountCents: data.balanceAmountCents
+        });
+        fillFinalForm({
+          checkoutSessionId: data.checkoutSessionId,
+          estimateNumber: data.estimateNumber,
+          balanceAmountCents: data.balanceAmountCents
+        });
+      } catch (error) {
+        setStatus(nodes.depositStatus, "error", error.message);
+      } finally {
+        button.disabled = false;
+        button.textContent = "Create Deposit Link";
+      }
+    });
+
+    nodes.finalForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      clearStatus(nodes.finalStatus);
+
+      const payload = {
+        adminToken: fields.adminToken.value,
+        checkoutSessionId: fields.finalSessionId.value,
+        estimateNumber: fields.finalEstimateNumber.value,
+        finalAmount: fields.finalAmount.value,
+        chargeConfirmation: fields.chargeConfirmation.value,
+        completionNote: fields.completionNote.value
+      };
+
+      const button = document.getElementById("charge-button");
+      button.disabled = true;
+      button.textContent = "Charging...";
+
+      try {
+        const data = await postJson("/.netlify/functions/charge-final-balance", payload);
+        const receiptText = data.receiptUrl ? ` Receipt: ${data.receiptUrl}` : "";
+        setStatus(nodes.finalStatus, "ok", `Final balance charged. Stripe status: ${data.status}. PaymentIntent: ${data.paymentIntentId}.${receiptText}`);
+        upsertRecord({
+          checkoutSessionId: payload.checkoutSessionId,
+          estimateNumber: data.estimateNumber || payload.estimateNumber,
+          balanceAmountCents: data.amountCents,
+          finalPaymentIntentId: data.paymentIntentId,
+          finalStatus: data.status,
+          finalReceiptUrl: data.receiptUrl
+        });
+      } catch (error) {
+        setStatus(nodes.finalStatus, "error", error.message);
+      } finally {
+        button.disabled = false;
+        button.textContent = "Charge Final Balance";
+      }
+    });
+
+    nodes.copyLinkButton.addEventListener("click", async () => {
+      if (!latestCheckoutUrl) {
+        return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(latestCheckoutUrl);
+        nodes.copyLinkButton.textContent = "Copied";
+        window.setTimeout(() => {
+          nodes.copyLinkButton.textContent = "Copy Link";
+        }, 1400);
+      } catch (error) {
+        setStatus(nodes.depositStatus, "warn", "Could not copy automatically. Select and copy the link manually.");
+      }
+    });
+
+    nodes.resetDepositButton.addEventListener("click", () => {
+      nodes.depositForm.reset();
+      updateMetrics();
+      clearStatus(nodes.depositStatus);
+    });
+
+    [fields.totalAmount, fields.depositAmount].forEach((input) => {
+      input.addEventListener("input", updateMetrics);
+    });
+
+    updateMetrics();
+    renderRecords();
+  </script>
+</body>
+</html>
