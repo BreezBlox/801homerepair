@@ -365,6 +365,10 @@
               Admin Token
               <input id="admin-token" type="password" autocomplete="off" required>
             </label>
+            <label class="checkline wide">
+              <input id="remember-token" type="checkbox">
+              <span>Remember admin token on this device</span>
+            </label>
             <label>
               Estimate Number
               <input id="estimate-number" type="text" placeholder="EST-20260602-001" required>
@@ -414,6 +418,7 @@
           <div class="button-row">
             <button class="primary" id="create-link-button" type="submit">Create Deposit Link</button>
             <button class="secondary" id="reset-deposit-button" type="button">Clear Form</button>
+            <button class="secondary" id="clear-token-button" type="button">Clear Saved Token</button>
           </div>
           <div class="status" id="deposit-status" role="status"></div>
         </form>
@@ -483,10 +488,12 @@
 
   <script>
     const STORAGE_KEY = "stripe-payment-admin-records-v1";
+    const TOKEN_STORAGE_KEY = "stripe-payment-admin-token-v1";
 
     const fields = {
       adminToken: document.getElementById("admin-token"),
       finalAdminToken: document.getElementById("final-admin-token"),
+      rememberToken: document.getElementById("remember-token"),
       estimateNumber: document.getElementById("estimate-number"),
       customerEmail: document.getElementById("customer-email"),
       customerName: document.getElementById("customer-name"),
@@ -510,6 +517,7 @@
       copyLinkButton: document.getElementById("copy-link-button"),
       openLinkButton: document.getElementById("open-link-button"),
       resetDepositButton: document.getElementById("reset-deposit-button"),
+      clearTokenButton: document.getElementById("clear-token-button"),
       recordList: document.getElementById("record-list"),
       metricTotal: document.getElementById("metric-total"),
       metricDeposit: document.getElementById("metric-deposit"),
@@ -557,6 +565,42 @@
       localStorage.setItem(STORAGE_KEY, JSON.stringify(records.slice(0, 50)));
     }
 
+    function loadSavedToken() {
+      try {
+        return localStorage.getItem(TOKEN_STORAGE_KEY) || "";
+      } catch (error) {
+        return "";
+      }
+    }
+
+    function saveToken(value) {
+      try {
+        const token = String(value || "").trim();
+        if (token) {
+          localStorage.setItem(TOKEN_STORAGE_KEY, token);
+        }
+      } catch (error) {
+        setStatus(nodes.depositStatus, "warn", "This browser would not save the admin token locally.");
+      }
+    }
+
+    function clearSavedToken() {
+      try {
+        localStorage.removeItem(TOKEN_STORAGE_KEY);
+      } catch (error) {
+        // Keep the UI usable even if browser storage is blocked.
+      }
+    }
+
+    function persistTokenIfRemembered() {
+      const token = fields.adminToken.value || fields.finalAdminToken.value;
+      if (fields.rememberToken.checked) {
+        saveToken(token);
+      } else {
+        clearSavedToken();
+      }
+    }
+
     function upsertRecord(record) {
       const records = loadRecords();
       const existingIndex = records.findIndex((item) => item.checkoutSessionId === record.checkoutSessionId);
@@ -590,6 +634,7 @@
 
     function syncAdminTokens(source, target) {
       target.value = source.value;
+      persistTokenIfRemembered();
     }
 
     function fillFinalForm(record) {
@@ -714,6 +759,7 @@
       button.textContent = "Creating...";
 
       try {
+        persistTokenIfRemembered();
         const data = await postJson("/.netlify/functions/create-deposit-session", payload);
         setStatus(nodes.depositStatus, "ok", "Deposit link created. Send the link to the customer after confirming the estimate is approved.");
         setLatestLink(data.checkoutUrl, data.checkoutSessionId);
@@ -757,6 +803,7 @@
       button.textContent = "Charging...";
 
       try {
+        persistTokenIfRemembered();
         const data = await postJson("/.netlify/functions/charge-final-balance", payload);
         const receiptText = data.receiptUrl ? ` Receipt: ${data.receiptUrl}` : "";
         setStatus(nodes.finalStatus, "ok", `Final balance charged. Stripe status: ${data.status}. PaymentIntent: ${data.paymentIntentId}.${receiptText}`);
@@ -794,14 +841,33 @@
 
     nodes.resetDepositButton.addEventListener("click", () => {
       const token = fields.adminToken.value;
+      const rememberToken = fields.rememberToken.checked;
       nodes.depositForm.reset();
       fields.adminToken.value = token;
+      fields.finalAdminToken.value = token;
+      fields.rememberToken.checked = rememberToken;
       updateMetrics();
       clearStatus(nodes.depositStatus);
     });
 
+    nodes.clearTokenButton.addEventListener("click", () => {
+      clearSavedToken();
+      fields.adminToken.value = "";
+      fields.finalAdminToken.value = "";
+      fields.rememberToken.checked = false;
+      setStatus(nodes.depositStatus, "ok", "Saved admin token cleared from this browser.");
+    });
+
     fields.adminToken.addEventListener("input", () => syncAdminTokens(fields.adminToken, fields.finalAdminToken));
     fields.finalAdminToken.addEventListener("input", () => syncAdminTokens(fields.finalAdminToken, fields.adminToken));
+    fields.rememberToken.addEventListener("change", persistTokenIfRemembered);
+
+    const savedToken = loadSavedToken();
+    if (savedToken) {
+      fields.adminToken.value = savedToken;
+      fields.finalAdminToken.value = savedToken;
+      fields.rememberToken.checked = true;
+    }
 
     [fields.totalAmount, fields.depositAmount].forEach((input) => {
       input.addEventListener("input", updateMetrics);
