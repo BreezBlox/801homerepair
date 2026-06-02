@@ -425,6 +425,10 @@
           </p>
 
           <div class="field-grid">
+            <label class="wide">
+              Admin Token
+              <input id="final-admin-token" type="password" autocomplete="off" required>
+            </label>
             <label>
               Deposit Checkout Session ID
               <input id="final-session-id" type="text" placeholder="cs_test_..." required>
@@ -482,6 +486,7 @@
 
     const fields = {
       adminToken: document.getElementById("admin-token"),
+      finalAdminToken: document.getElementById("final-admin-token"),
       estimateNumber: document.getElementById("estimate-number"),
       customerEmail: document.getElementById("customer-email"),
       customerName: document.getElementById("customer-name"),
@@ -581,6 +586,10 @@
       nodes.metricTotal.textContent = money(total);
       nodes.metricDeposit.textContent = money(deposit);
       nodes.metricBalance.textContent = money(balance);
+    }
+
+    function syncAdminTokens(source, target) {
+      target.value = source.value;
     }
 
     function fillFinalForm(record) {
@@ -690,7 +699,7 @@
       clearStatus(nodes.depositStatus);
 
       const payload = {
-        adminToken: fields.adminToken.value,
+        adminToken: fields.adminToken.value || fields.finalAdminToken.value,
         estimateNumber: fields.estimateNumber.value,
         customerEmail: fields.customerEmail.value,
         customerName: fields.customerName.value,
@@ -735,7 +744,7 @@
       clearStatus(nodes.finalStatus);
 
       const payload = {
-        adminToken: fields.adminToken.value,
+        adminToken: fields.finalAdminToken.value || fields.adminToken.value,
         checkoutSessionId: fields.finalSessionId.value,
         estimateNumber: fields.finalEstimateNumber.value,
         finalAmount: fields.finalAmount.value,
@@ -784,10 +793,15 @@
     });
 
     nodes.resetDepositButton.addEventListener("click", () => {
+      const token = fields.adminToken.value;
       nodes.depositForm.reset();
+      fields.adminToken.value = token;
       updateMetrics();
       clearStatus(nodes.depositStatus);
     });
+
+    fields.adminToken.addEventListener("input", () => syncAdminTokens(fields.adminToken, fields.finalAdminToken));
+    fields.finalAdminToken.addEventListener("input", () => syncAdminTokens(fields.finalAdminToken, fields.adminToken));
 
     [fields.totalAmount, fields.depositAmount].forEach((input) => {
       input.addEventListener("input", updateMetrics);
