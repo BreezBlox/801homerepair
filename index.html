@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles.css?v=20260529b">
+  <link rel="stylesheet" href="./styles.css?v=20260627a">
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="Home Repair Services in Salt Lake City">
@@ -36,8 +36,8 @@
     "name": "801 Home Repair",
     "alternateName": "801TechniCA",
     "url": "https://www.homerepairslc.com",
-    "telephone": "+18018109948",
-    "email": "hello@example.com",
+    "telephone": "+13854399031",
+    "email": "rob@homerepairslc.com",
     "priceRange": "$$",
     "founder": {
       "@type": "Person",
@@ -102,10 +102,10 @@
             <div class="hero-actions">
               <p class="hero-call-label">Call Rob</p>
               <div class="hero-action-buttons">
-                <a class="btn btn-primary" data-phone-link href="tel:+18018109948">
-                  <span data-phone-display>(801) 810-9948</span>
+                <a class="btn btn-primary" data-phone-link href="tel:+13854399031">
+                  <span data-phone-display>(385) 439-9031</span>
                 </a>
-                <a class="btn btn-outline" data-booking-link href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2kxKBCtIGk3HBPc0VSZe5BjGvlK819vF8KRAuwKWNYpcS-7WZ2igdROIKwA_lW9Uwu9VHWwHHD?gv=true" target="_blank" rel="noopener">Book a time</a>
+                <a class="btn btn-outline" href="#project-request">Request a time</a>
               </div>
             </div>
           </div>
@@ -120,23 +120,102 @@
         <div class="booking-shell">
           <div class="booking-intro">
             <p class="eyebrow">Book online</p>
-            <h2>Pick a one-hour window</h2>
+            <h2>Send the job details first</h2>
             <p>
-              Choose an open time from Rob's Google Calendar booking page. If the work looks bigger
-              than a quick visit, he may text or call to adjust the plan before the appointment.
+              Add the project description, photos, address area, and preferred deadline before choosing
+              a calendar window. If the scope needs more detail, Rob may text or call before confirming.
             </p>
           </div>
 
           <div class="booking-card">
-            <h3>Google Calendar booking</h3>
-            <p>Customers pick from the available times on the booking page, and busy calendar events block those times automatically.</p>
+            <h3>Start with a project request</h3>
+            <p>Photos and a clear deadline help catch material, access, and hidden-scope issues before the visit.</p>
             <div class="booking-actions">
-              <a class="btn btn-primary" data-booking-link href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2kxKBCtIGk3HBPc0VSZe5BjGvlK819vF8KRAuwKWNYpcS-7WZ2igdROIKwA_lW9Uwu9VHWwHHD?gv=true" target="_blank" rel="noopener">Book an appointment</a>
-              <a class="btn btn-outline" data-sms-link href="sms:+18018109948">Text first</a>
+              <a class="btn btn-primary" href="#project-request">Send project details</a>
+              <a class="btn btn-outline" data-booking-link href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2kxKBCtIGk3HBPc0VSZe5BjGvlK819vF8KRAuwKWNYpcS-7WZ2igdROIKwA_lW9Uwu9VHWwHHD?gv=true" target="_blank" rel="noopener">Pick a calendar time</a>
+              <a class="btn btn-outline" data-sms-link href="sms:+13854399031">Text first</a>
             </div>
-            <p class="form-note">This holds a one-hour window. Final scope and price still depend on the actual job details.</p>
+            <p class="form-note">A calendar window is not a final price. Final scope and price still depend on the actual job details.</p>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section class="section project-request-section" id="project-request">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Project request</p>
+          <h2>Tell me what you need done</h2>
+          <p>Send enough detail to screen the job, spot missing materials, and plan the right tools before the visit.</p>
+        </div>
+
+        <form class="contact-form project-request-form" id="quoteForm" name="quote-request" method="POST" action="/thank-you.html" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data">
+          <input type="hidden" name="form-name" value="quote-request">
+          <input type="hidden" id="leadSource" name="source" value="direct">
+          <p class="hidden-honeypot">
+            <label>Do not fill this out: <input name="bot-field"></label>
+          </p>
+
+          <div class="form-grid">
+            <div class="form-row">
+              <label for="customerName">Name</label>
+              <input id="customerName" name="name" type="text" autocomplete="name" required>
+            </div>
+
+            <div class="form-row">
+              <label for="customerPhone">Phone</label>
+              <input id="customerPhone" name="phone" type="tel" autocomplete="tel" required>
+            </div>
+
+            <div class="form-row">
+              <label for="customerEmail">Email</label>
+              <input id="customerEmail" name="email" type="email" autocomplete="email">
+            </div>
+
+            <div class="form-row">
+              <label for="projectArea">Job address or city</label>
+              <input id="projectArea" name="job_address_or_city" type="text" autocomplete="street-address" placeholder="Midvale, Sandy, Salt Lake City, etc." required>
+            </div>
+
+            <div class="form-row">
+              <label for="preferredDeadline">Preferred deadline</label>
+              <input id="preferredDeadline" name="preferred_deadline" type="date" required>
+            </div>
+
+            <div class="form-row">
+              <label for="materialsStatus">Materials</label>
+              <select id="materialsStatus" name="materials_status" required>
+                <option value="">Choose one</option>
+                <option value="I already have materials">I already have materials</option>
+                <option value="I need Rob to supply materials">I need Rob to supply materials</option>
+                <option value="Not sure yet">Not sure yet</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label for="projectDescription">Project description</label>
+            <textarea id="projectDescription" name="project_description" rows="6" placeholder="What needs to be repaired or installed? Include rough measurements, room/location, and anything that might affect access or cleanup." required></textarea>
+          </div>
+
+          <div class="form-row">
+            <label for="projectPhotos">Photos</label>
+            <input id="projectPhotos" name="project_photos" type="file" accept="image/*" multiple>
+            <p class="form-note">Upload photos here, or text them to (385) 439-9031 or email them to rob@homerepairslc.com.</p>
+          </div>
+
+          <div class="form-row">
+            <label for="accessNotes">Access, power, disposal, or safety notes</label>
+            <textarea id="accessNotes" name="access_power_disposal_notes" rows="4" placeholder="Parking, stairs, gate code, pets, outlet access, haul-off needs, digging, water damage, wall opening, etc."></textarea>
+          </div>
+
+          <div class="form-submit-row">
+            <button class="btn btn-primary" type="submit">Send project request</button>
+            <a class="btn btn-outline" data-booking-link href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2kxKBCtIGk3HBPc0VSZe5BjGvlK819vF8KRAuwKWNYpcS-7WZ2igdROIKwA_lW9Uwu9VHWwHHD?gv=true" target="_blank" rel="noopener">Pick a calendar time</a>
+          </div>
+
+          <p class="form-note">Submitting this request does not lock in price or scope. Rob will confirm details before the job is treated as booked.</p>
+        </form>
       </div>
     </section>
 
@@ -160,7 +239,7 @@
             </p>
             <div class="payment-actions">
               <a class="btn btn-primary" data-payment-link href="https://square.link/u/EYHEzZMt" target="_blank" rel="noopener">Make a payment</a>
-              <a class="btn btn-outline" data-sms-link href="sms:+18018109948">Ask a question</a>
+              <a class="btn btn-outline" data-sms-link href="sms:+13854399031">Ask a question</a>
             </div>
             <p class="form-note">Do not pay until the amount has been confirmed.</p>
           </div>
@@ -226,17 +305,27 @@
         </div>
 
         <div class="section-cta section-cta-centered services-cta">
-          <a class="btn btn-primary" data-sms-link href="sms:+18018109948">Contact Rob</a>
-          <a class="btn btn-ghost" data-booking-link href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2kxKBCtIGk3HBPc0VSZe5BjGvlK819vF8KRAuwKWNYpcS-7WZ2igdROIKwA_lW9Uwu9VHWwHHD?gv=true" target="_blank" rel="noopener">Book a time</a>
+          <a class="btn btn-primary" href="#project-request">Request a job</a>
+          <a class="btn btn-ghost" data-booking-link href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2kxKBCtIGk3HBPc0VSZe5BjGvlK819vF8KRAuwKWNYpcS-7WZ2igdROIKwA_lW9Uwu9VHWwHHD?gv=true" target="_blank" rel="noopener">Pick a time</a>
           <a class="btn btn-outline" data-payment-link href="https://square.link/u/EYHEzZMt" target="_blank" rel="noopener">Make a payment</a>
         </div>
       </div>
     </section>
   </main>
 
+  <footer class="site-footer">
+    <div class="container site-footer-inner">
+      <p>&copy; 801 Home Repair</p>
+      <nav aria-label="Legal links">
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms.html">Terms</a>
+      </nav>
+    </div>
+  </footer>
+
   <div class="mobile-cta" data-mobile-cta aria-label="Quick mobile contact">
-    <a class="btn-cta" data-sms-link href="sms:+18018109948">Contact</a>
-    <a class="btn-cta btn-cta-accent" data-booking-link href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2kxKBCtIGk3HBPc0VSZe5BjGvlK819vF8KRAuwKWNYpcS-7WZ2igdROIKwA_lW9Uwu9VHWwHHD?gv=true" target="_blank" rel="noopener">Book</a>
+    <a class="btn-cta" data-sms-link href="sms:+13854399031">Contact</a>
+    <a class="btn-cta btn-cta-accent" href="#project-request">Request</a>
     <a class="btn-cta btn-cta-pay" data-payment-link href="https://square.link/u/EYHEzZMt" target="_blank" rel="noopener">Pay</a>
   </div>
 
@@ -244,6 +333,6 @@
     <div class="noscript-note">JavaScript is disabled. You can still call or text.</div>
   </noscript>
 
-  <script src="./script.js?v=20260529b" defer></script>
+  <script src="./script.js?v=20260627b" defer></script>
 </body>
 </html>
