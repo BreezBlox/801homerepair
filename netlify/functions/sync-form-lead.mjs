@@ -1,52 +1,95 @@
 import { createHash } from "node:crypto";
 
 const FORM_NAME = "quote-request";
-const EXTERNAL_SOURCE = "netlify_form";
+const NETLIFY_FORM_SOURCE = "netlify_form";
+const WEBSITE_FUNCTION_SOURCE = "website_function";
 const WEBSITE_LEAD_TAG = "website_lead";
 
 export default {
+  async fetch(request) {
+    if (request.method !== "POST") {
+      return Response.json({ error: "Method not allowed" }, {
+        status: 405,
+        headers: { Allow: "POST" },
+      });
+    }
+
+    if (!sameSiteOrigin(request)) {
+      return Response.json({ error: "Cross-site requests are not accepted." }, { status: 403 });
+    }
+
+    const data = await requestData(request);
+    if (cleanText(data["bot-field"])) {
+      return new Response(null, { status: 204 });
+    }
+    if (cleanText(data["form-name"]) !== FORM_NAME) {
+      return Response.json({ error: "Unknown form." }, { status: 404 });
+    }
+
+    const lead = extractLead(data);
+    if (!lead.name || !lead.phone || !lead.scope) {
+      return Response.json({ error: "Name, phone, and project details are required." }, { status: 400 });
+    }
+
+    await syncWebsiteLead(data, {}, WEBSITE_FUNCTION_SOURCE);
+    return new Response(null, {
+      status: 303,
+      headers: {
+        Location: "/thank-you.html",
+        "Cache-Control": "no-store",
+      },
+    });
+  },
+
   async formSubmitted(event) {
     const data = event?.data ?? {};
     const formName = cleanText(data["form-name"] || data.form_name || data.formName);
     if (formName && formName !== FORM_NAME) return;
-
-    const lead = extractLead(data, event);
-    if (!lead.name || !lead.phone || !lead.scope) {
-      console.warn("Verified form submission skipped because required lead fields were missing.");
-      return;
-    }
-
-    const supabaseUrl = requiredEnv("SUPABASE_URL");
-    const serviceRoleKey = requiredEnv("SUPABASE_SERVICE_ROLE_KEY");
-    const userId = requiredEnv("MARKETING_SYNC_USER_ID");
-
-    const existing = await findJobByExternalId({
-      supabaseUrl,
-      serviceRoleKey,
-      userId,
-      externalId: lead.externalId,
-    });
-    if (existing) {
-      console.log("Website lead already synced", { externalId: lead.externalId, jobId: existing.id });
-      return;
-    }
-
-    const customer = await findOrCreateCustomer({ supabaseUrl, serviceRoleKey, userId, lead });
-    const job = await createLeadJob({
-      supabaseUrl,
-      serviceRoleKey,
-      userId,
-      lead,
-      customerId: customer?.id ?? null,
-    });
-
-    console.log("Verified website lead synced", {
-      externalId: lead.externalId,
-      jobId: job?.id ?? null,
-      source: lead.source,
-    });
+    await syncWebsiteLead(data, event, NETLIFY_FORM_SOURCE);
   },
 };
+
+async function syncWebsiteLead(data, event, externalSource) {
+  const lead = extractLead(data, event);
+  if (!lead.name || !lead.phone || !lead.scope) {
+    console.warn("Website lead skipped because required lead fields were missing.");
+    return { status: "skipped" };
+  }
+
+  const supabaseUrl = requiredEnv("SUPABASE_URL");
+  const serviceRoleKey = requiredEnv("SUPABASE_SERVICE_ROLE_KEY");
+  const userId = requiredEnv("MARKETING_SYNC_USER_ID");
+
+  const existing = await findJobByExternalId({
+    supabaseUrl,
+    serviceRoleKey,
+    userId,
+    externalId: lead.externalId,
+    externalSource,
+  });
+  if (existing) {
+    console.log("Website lead already synced", { externalId: lead.externalId, jobId: existing.id });
+    return { status: "duplicate", job: existing };
+  }
+
+  const customer = await findOrCreateCustomer({ supabaseUrl, serviceRoleKey, userId, lead });
+  const job = await createLeadJob({
+    supabaseUrl,
+    serviceRoleKey,
+    userId,
+    lead,
+    customerId: customer?.id ?? null,
+    externalSource,
+  });
+
+  console.log("Website lead synced", {
+    externalId: lead.externalId,
+    jobId: job?.id ?? null,
+    source: lead.source,
+    externalSource,
+  });
+  return { status: "created", job };
+}
 
 export function extractLead(data, event = {}) {
   const name = cleanText(data.name, 160);
@@ -127,14 +170,14 @@ async function findCustomer({ supabaseUrl, serviceRoleKey, userId, lead }) {
   return null;
 }
 
-async function findJobByExternalId({ supabaseUrl, serviceRoleKey, userId, externalId }) {
+async function findJobByExternalId({ supabaseUrl, serviceRoleKey, userId, externalId, externalSource }) {
   const rows = await supabaseGet({
     supabaseUrl,
     serviceRoleKey,
     table: "jobs",
     filters: {
       user_id: `eq.${userId}`,
-      external_source: `eq.${EXTERNAL_SOURCE}`,
+      external_source: `eq.${externalSource}`,
       external_id: `eq.${externalId}`,
     },
     limit: 1,
@@ -142,7 +185,7 @@ async function findJobByExternalId({ supabaseUrl, serviceRoleKey, userId, extern
   return rows[0] ?? null;
 }
 
-async function createLeadJob({ supabaseUrl, serviceRoleKey, userId, lead, customerId }) {
+async function createLeadJob({ supabaseUrl, serviceRoleKey, userId, lead, customerId, externalSource }) {
   const notes = [
     "Created from a verified HomeRepairSLC.com quote request.",
     lead.materialsStatus ? `Materials: ${lead.materialsStatus}.` : "",
@@ -182,7 +225,7 @@ async function createLeadJob({ supabaseUrl, serviceRoleKey, userId, lead, custom
       estimate_status: "not_started",
       deposit_status: "not_needed",
       invoice_status: "not_started",
-      external_source: EXTERNAL_SOURCE,
+      external_source: externalSource,
       external_id: lead.externalId,
       external_updated_at: lead.submittedAt || new Date().toISOString(),
       booking_status: "lead_received",
@@ -196,6 +239,24 @@ async function createLeadJob({ supabaseUrl, serviceRoleKey, userId, lead, custom
     prefer: "return=representation",
   });
   return rows[0] ?? null;
+}
+
+async function requestData(request) {
+  const contentType = request.headers.get("content-type") || "";
+  if (contentType.includes("application/json")) {
+    const body = await request.json();
+    return body && typeof body === "object" ? body : {};
+  }
+  return Object.fromEntries(new URLSearchParams(await request.text()).entries());
+}
+
+function sameSiteOrigin(request) {
+  const origin = request.headers.get("origin");
+  if (!origin) return true;
+  const requestOrigin = new URL(request.url).origin;
+  return origin === requestOrigin
+    || origin === "https://www.homerepairslc.com"
+    || origin === "https://homerepairslc.com";
 }
 
 function denverDate(date = new Date()) {

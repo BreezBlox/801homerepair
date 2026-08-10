@@ -142,7 +142,7 @@
           <p>Send enough detail to screen the job, spot missing materials, and plan the right tools before the visit.</p>
         </div>
 
-        <form class="contact-form project-request-form" id="quoteForm" name="quote-request" method="POST" action="/thank-you.html" data-netlify="true" netlify-honeypot="bot-field">
+        <form class="contact-form project-request-form" id="quoteForm" name="quote-request" method="POST" action="/.netlify/functions/sync-form-lead">
           <input type="hidden" name="form-name" value="quote-request">
           <input type="hidden" id="leadSource" name="source" value="direct">
           <input type="hidden" id="leadFirstTouchSource" name="first_touch_source" value="direct">
@@ -206,6 +206,7 @@
             <a class="btn btn-outline" data-booking-link href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2kxKBCtIGk3HBPc0VSZe5BjGvlK819vF8KRAuwKWNYpcS-7WZ2igdROIKwA_lW9Uwu9VHWwHHD?gv=true" target="_blank" rel="noopener">Pick a calendar time</a>
           </div>
 
+          <p id="quoteFormStatus" class="form-note" role="status" aria-live="polite"></p>
           <p class="form-note">Submitting this request does not lock in price or scope. Rob will confirm details before the job is treated as booked.</p>
         </form>
       </div>

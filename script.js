@@ -360,13 +360,35 @@ function setupFormUX() {
   }
 
   const submitButton = form.querySelector("button[type='submit']");
-  form.addEventListener("submit", () => {
+  const status = document.getElementById("quoteFormStatus");
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
     setInputValue("leadSubmittedAt", new Date().toISOString());
-    if (!submitButton) {
-      return;
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = "Sending...";
     }
-    submitButton.disabled = true;
-    submitButton.textContent = "Sending...";
+    if (status) status.textContent = "Sending your project request...";
+
+    try {
+      const response = await fetch(form.action, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(new FormData(form)).toString(),
+      });
+      if (!response.ok && response.status !== 303) {
+        throw new Error(`Request failed with status ${response.status}`);
+      }
+      window.location.assign("/thank-you.html");
+    } catch (error) {
+      if (status) {
+        status.textContent = "Your request did not send. Please call or text Rob at (385) 439-9031.";
+      }
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = "Send project request";
+      }
+    }
   });
 }
 
