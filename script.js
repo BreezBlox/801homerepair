@@ -20,17 +20,15 @@
   - SQUARE_PAYMENT_URL
 */
 const CONFIG = {
-  BUSINESS_NAME: "801 Home Repair",
-  SECONDARY_NAME: "801TechniCA",
+  BUSINESS_NAME: "Home Repair SLC",
+  SECONDARY_NAME: "",
   OWNER_NAME: "Rob K.",
-  PHONE: "+18018109948",
-  SMS: "+18018109948",
-  EMAIL: "hello@example.com",
+  PHONE: "+13854399031",
+  SMS: "+13854399031",
+  EMAIL: "rob@homerepairslc.com",
   SERVICE_AREAS: [
     "Midvale",
-    "Salt Lake County",
-    "Park City",
-    "Utah County"
+    "Salt Lake County"
   ],
   LICENSED_INSURED_TOGGLE: false,
   PRIMARY_ACCENT: "#1d4ed8",
@@ -80,7 +78,21 @@ function sanitizeSource(value) {
   return String(value || "")
     .toLowerCase()
     .replace(/[^a-z0-9_-]/g, "")
-    .slice(0, 40);
+    .slice(0, 80);
+}
+
+function sanitizeAttributionValue(value) {
+  return String(value || "")
+    .trim()
+    .replace(/[\r\n\t]/g, " ")
+    .slice(0, 160);
+}
+
+function setInputValue(id, value) {
+  const input = document.getElementById(id);
+  if (input) {
+    input.value = sanitizeAttributionValue(value);
+  }
 }
 
 function isSafeUrl(value) {
@@ -197,25 +209,61 @@ function updateSeoTags() {
   }
 }
 
-function getLeadSource() {
-  const params = new URLSearchParams(window.location.search);
-  const fromQuery = sanitizeSource(params.get("src"));
-
-  if (fromQuery) {
-    window.localStorage.setItem("lead_source", fromQuery);
-    return fromQuery;
+function getReferrerHost() {
+  if (!document.referrer) {
+    return "";
   }
 
-  const fromStorage = sanitizeSource(window.localStorage.getItem("lead_source"));
-  return fromStorage || "direct";
+  try {
+    const referrer = new URL(document.referrer);
+    return referrer.hostname === window.location.hostname ? "" : referrer.hostname;
+  } catch (error) {
+    return "";
+  }
+}
+
+function getLeadAttribution() {
+  const params = new URLSearchParams(window.location.search);
+  const utmSource = sanitizeSource(params.get("utm_source"));
+  const referrerHost = getReferrerHost();
+  const fromQuery = sanitizeSource(params.get("src")) || utmSource;
+  const source = fromQuery || sanitizeSource(referrerHost.replace(/^www\./, "")) || "direct";
+  const firstTouchSource = sanitizeSource(window.localStorage.getItem("lead_first_touch_source"));
+  const firstTouchAt = sanitizeAttributionValue(window.localStorage.getItem("lead_first_touch_at"));
+
+  if (!firstTouchSource) {
+    window.localStorage.setItem("lead_first_touch_source", source);
+    window.localStorage.setItem("lead_first_touch_at", new Date().toISOString());
+  }
+
+  window.localStorage.setItem("lead_source", source);
+
+  return {
+    source,
+    firstTouchSource: firstTouchSource || source,
+    firstTouchAt: firstTouchAt || window.localStorage.getItem("lead_first_touch_at") || "",
+    utmSource,
+    utmMedium: sanitizeAttributionValue(params.get("utm_medium")),
+    utmCampaign: sanitizeAttributionValue(params.get("utm_campaign")),
+    utmContent: sanitizeAttributionValue(params.get("utm_content")),
+    utmTerm: sanitizeAttributionValue(params.get("utm_term")),
+    referrerHost,
+    landingPath: `${window.location.pathname || "/"}`.slice(0, 160)
+  };
 }
 
 function applyLeadSource() {
-  const source = getLeadSource();
-  const sourceInput = document.getElementById("leadSource");
-  if (sourceInput) {
-    sourceInput.value = source;
-  }
+  const attribution = getLeadAttribution();
+  setInputValue("leadSource", attribution.source);
+  setInputValue("leadFirstTouchSource", attribution.firstTouchSource);
+  setInputValue("leadFirstTouchAt", attribution.firstTouchAt);
+  setInputValue("leadUtmSource", attribution.utmSource);
+  setInputValue("leadUtmMedium", attribution.utmMedium);
+  setInputValue("leadUtmCampaign", attribution.utmCampaign);
+  setInputValue("leadUtmContent", attribution.utmContent);
+  setInputValue("leadUtmTerm", attribution.utmTerm);
+  setInputValue("leadReferrerHost", attribution.referrerHost);
+  setInputValue("leadLandingPath", attribution.landingPath);
 }
 
 function applyBookingLinks() {
@@ -313,6 +361,7 @@ function setupFormUX() {
 
   const submitButton = form.querySelector("button[type='submit']");
   form.addEventListener("submit", () => {
+    setInputValue("leadSubmittedAt", new Date().toISOString());
     if (!submitButton) {
       return;
     }

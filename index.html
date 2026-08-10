@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Home Repair Services in SLC | 801 Home Repair</title>
+  <title>Home Repair Services in SLC | Home Repair SLC</title>
   <meta name="description" content="Home repair services in Salt Lake City with clear estimates, clean work, and fast response for flooring, doors, drywall and paint, fence work, decks, stairs, turnovers, and handyman repairs.">
-  <meta name="keywords" content="Handyman Midvale, Salt Lake County handyman, Park City handyman, Utah County handyman, flooring install, door replacement, tenant turnover, drywall patch, deck repair">
+  <meta name="keywords" content="Handyman Midvale, Salt Lake County handyman, flooring install, door replacement, tenant turnover, drywall patch, deck repair">
   <meta name="robots" content="index,follow">
   <meta name="theme-color" content="#1d4ed8">
   <link rel="canonical" href="https://www.homerepairslc.com/">
@@ -18,7 +18,7 @@
   <meta property="og:title" content="Home Repair Services in Salt Lake City">
   <meta property="og:description" content="Flooring, doors, drywall and paint, fence repairs, deck and stair repairs, and dependable handyman work across Salt Lake City.">
   <meta property="og:url" content="https://www.homerepairslc.com/">
-  <meta property="og:site_name" content="801 Home Repair">
+  <meta property="og:site_name" content="Home Repair SLC">
   <meta property="og:image" content="https://www.homerepairslc.com/og-home-repair-slc-v2.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -33,8 +33,7 @@
   {
     "@context": "https://schema.org",
     "@type": "HomeAndConstructionBusiness",
-    "name": "801 Home Repair",
-    "alternateName": "801TechniCA",
+    "name": "Home Repair SLC",
     "url": "https://www.homerepairslc.com",
     "telephone": "+13854399031",
     "email": "rob@homerepairslc.com",
@@ -44,10 +43,8 @@
       "name": "Rob K."
     },
     "areaServed": [
-      { "@type": "AdministrativeArea", "name": "Midvale" },
-      { "@type": "AdministrativeArea", "name": "Salt Lake County" },
-      { "@type": "AdministrativeArea", "name": "Park City" },
-      { "@type": "AdministrativeArea", "name": "Utah County" }
+      { "@type": "City", "name": "Midvale" },
+      { "@type": "AdministrativeArea", "name": "Salt Lake County" }
     ],
     "serviceType": [
       "Vinyl plank flooring install",
@@ -57,10 +54,6 @@
       "Fence repair and gate adjustments",
       "Tenant turnover punch-list",
       "General handyman fixes"
-    ],
-    "sameAs": [
-      "https://www.facebook.com/your-page",
-      "https://www.instagram.com/your-handle"
     ]
   }
   </script>
@@ -71,11 +64,11 @@
   <main id="main">
     <section class="hero section">
       <div class="container">
-        <article class="hero-stage" aria-label="801 Home Repair highlights">
+        <article class="hero-stage" aria-label="Home Repair SLC highlights">
           <div class="hero-title-wrap">
             <div class="hero-title-row">
               <h1>Home Repair Services<br>in SLC</h1>
-              <img class="hero-headshot" src="./assets/rob-headshot.webp?v=20260321j" alt="Rob K., owner of 801 Home Repair" width="900" height="1200" loading="eager" decoding="async">
+              <img class="hero-headshot" src="./assets/rob-headshot.webp?v=20260321j" alt="Rob K., owner of Home Repair SLC" width="900" height="1200" loading="eager" decoding="async">
             </div>
           </div>
 
@@ -149,9 +142,19 @@
           <p>Send enough detail to screen the job, spot missing materials, and plan the right tools before the visit.</p>
         </div>
 
-        <form class="contact-form project-request-form" id="quoteForm" name="quote-request" method="POST" action="/thank-you.html" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data">
+        <form class="contact-form project-request-form" id="quoteForm" name="quote-request" method="POST" action="/thank-you.html" data-netlify="true" netlify-honeypot="bot-field">
           <input type="hidden" name="form-name" value="quote-request">
           <input type="hidden" id="leadSource" name="source" value="direct">
+          <input type="hidden" id="leadFirstTouchSource" name="first_touch_source" value="direct">
+          <input type="hidden" id="leadFirstTouchAt" name="first_touch_at" value="">
+          <input type="hidden" id="leadUtmSource" name="utm_source" value="">
+          <input type="hidden" id="leadUtmMedium" name="utm_medium" value="">
+          <input type="hidden" id="leadUtmCampaign" name="utm_campaign" value="">
+          <input type="hidden" id="leadUtmContent" name="utm_content" value="">
+          <input type="hidden" id="leadUtmTerm" name="utm_term" value="">
+          <input type="hidden" id="leadReferrerHost" name="referrer_host" value="">
+          <input type="hidden" id="leadLandingPath" name="landing_path" value="/">
+          <input type="hidden" id="leadSubmittedAt" name="submitted_at" value="">
           <p class="hidden-honeypot">
             <label>Do not fill this out: <input name="bot-field"></label>
           </p>
@@ -196,12 +199,6 @@
           <div class="form-row">
             <label for="projectDescription">Project description</label>
             <textarea id="projectDescription" name="project_description" rows="6" placeholder="What needs to be repaired or installed? Include rough measurements, room/location, and anything that might affect access or cleanup." required></textarea>
-          </div>
-
-          <div class="form-row">
-            <label for="projectPhotos">Photos</label>
-            <input id="projectPhotos" name="project_photos" type="file" accept="image/*" multiple>
-            <p class="form-note">Upload photos here, or text them to (385) 439-9031 or email them to rob@homerepairslc.com.</p>
           </div>
 
           <div class="form-submit-row">
