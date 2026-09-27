@@ -5,9 +5,9 @@ Production-ready static landing page for **801 Home Repair** with:
 - Mobile-first responsive design
 - Netlify Forms support
 - Google Calendar Appointment Schedule booking link
-- General Square payment link support
+- Estimate-specific customer payment links through the private payment workflow
 - Local SEO metadata and schema
-- Sticky mobile contact/book/pay CTA
+- Sticky mobile contact/request CTA
 - Shareable digital business card with 1-2 tap actions
 
 ## File Structure
@@ -43,7 +43,6 @@ Update placeholders at the top of `script.js`:
 - `SECONDARY_ACCENT`
 - `SITE_URL`
 - `BOOKING_URL`
-- `SQUARE_PAYMENT_URL`
 
 `LICENSED_INSURED_TOGGLE` defaults to `false`.  
 Set to `true` only when you want licensed/insured language displayed.
@@ -72,16 +71,12 @@ High-level flow:
 - Google Calendar opens the appointment schedule
 - Google handles available times and calendar booking
 
-## Square Payment Setup
+## Customer Payments
 
 Read:
 - `docs/SQUARE_PAYMENTS_SETUP.md`
 
-High-level flow:
-- use the public `Make a payment` link only after the amount is confirmed
-- configure the public Square URL in `SQUARE_PAYMENT_URL` in `script.js`
-- ask customers to include the job, estimate, or invoice number in the payment note when available
-- use Square Invoices for structured deposit and balance schedules
+The public Square payment section and all homepage Pay buttons have been removed. Use the private Stripe workflow below for estimate-specific deposit and balance payments, or send a customer-specific Square Invoice directly from Square.
 
 ## Private Stripe Deposit + Final Balance Setup
 

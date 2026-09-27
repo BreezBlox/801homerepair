@@ -17,7 +17,6 @@
   - SECONDARY_ACCENT
   - SITE_URL
   - BOOKING_URL
-  - SQUARE_PAYMENT_URL
 */
 const CONFIG = {
   BUSINESS_NAME: "Home Repair SLC",
@@ -34,8 +33,7 @@ const CONFIG = {
   PRIMARY_ACCENT: "#1d4ed8",
   SECONDARY_ACCENT: "#f97316",
   SITE_URL: "https://www.homerepairslc.com",
-  BOOKING_URL: "https://calendar.google.com/calendar/appointments/schedules/AcZssZ2kxKBCtIGk3HBPc0VSZe5BjGvlK819vF8KRAuwKWNYpcS-7WZ2igdROIKwA_lW9Uwu9VHWwHHD?gv=true",
-  SQUARE_PAYMENT_URL: "https://square.link/u/EYHEzZMt"
+  BOOKING_URL: "https://calendar.google.com/calendar/appointments/schedules/AcZssZ2kxKBCtIGk3HBPc0VSZe5BjGvlK819vF8KRAuwKWNYpcS-7WZ2igdROIKwA_lW9Uwu9VHWwHHD?gv=true"
 };
 
 function normalizeDigits(value) {
@@ -92,19 +90,6 @@ function setInputValue(id, value) {
   const input = document.getElementById(id);
   if (input) {
     input.value = sanitizeAttributionValue(value);
-  }
-}
-
-function isSafeUrl(value) {
-  if (!value) {
-    return false;
-  }
-
-  try {
-    const url = new URL(String(value).trim());
-    return url.protocol === "https:";
-  } catch (error) {
-    return false;
   }
 }
 
@@ -278,18 +263,6 @@ function applyBookingLinks() {
   });
 }
 
-function applyPaymentLinks() {
-  if (!isSafeUrl(CONFIG.SQUARE_PAYMENT_URL)) {
-    return;
-  }
-
-  document.querySelectorAll("[data-payment-link]").forEach((node) => {
-    node.setAttribute("href", String(CONFIG.SQUARE_PAYMENT_URL).trim());
-    node.setAttribute("target", "_blank");
-    node.setAttribute("rel", "noopener");
-  });
-}
-
 function setupNavToggle() {
   const navToggle = document.querySelector(".nav-toggle");
   const nav = document.getElementById("primary-nav");
@@ -397,7 +370,6 @@ applyBusinessContent();
 updateSeoTags();
 applyLeadSource();
 applyBookingLinks();
-applyPaymentLinks();
 setupNavToggle();
 setupCopyPhoneButton();
 setupFormUX();
