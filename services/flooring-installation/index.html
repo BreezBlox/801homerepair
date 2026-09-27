@@ -65,7 +65,12 @@
     .flooring-hero .lead { max-width: 720px; font-size:clamp(1.03rem, 2vw, 1.25rem); color:var(--muted); margin:0 0 1.2rem; }
     .flooring-hero-actions { display:flex; flex-wrap:wrap; gap:.55rem; }
     .flooring-proof { margin:0; border:1px solid var(--border); border-radius:var(--radius-lg); overflow:hidden; background:#fff; box-shadow:var(--shadow-md); }
-    .flooring-proof img { width:100%; aspect-ratio: 4 / 3; object-fit:cover; }
+    .flooring-proof-combined { display:block; width:100%; aspect-ratio:4 / 3; object-fit:cover; }
+    .flooring-proof-mobile { display:none; }
+    .flooring-proof-mobile-panel img { display:block; width:100%; height:auto; aspect-ratio:2 / 3; object-fit:cover; }
+    .flooring-proof-mobile-panel:first-child img { object-position:left center; }
+    .flooring-proof-mobile-panel:last-child img { object-position:right center; }
+    .flooring-proof-mobile-panel p { margin:0; padding:.65rem .85rem; color:var(--text); font-size:.9rem; font-weight:800; }
     .flooring-proof figcaption { padding:.8rem 1rem .95rem; color:var(--muted); font-size:.88rem; }
     .flooring-section { margin-top:2.7rem; }
     .flooring-section-head { max-width:760px; margin-bottom:1.15rem; }
@@ -75,10 +80,11 @@
     .flooring-card { border:1px solid var(--border); border-radius:var(--radius-md); background:#fff; box-shadow:var(--shadow-sm); padding:1rem; }
     .flooring-card h3 { margin:0 0 .35rem; font-size:1.05rem; }
     .flooring-card p { margin:0; color:var(--muted); font-size:.93rem; }
-    .flooring-gallery { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.8rem; }
+    .flooring-gallery { display:grid; grid-template-columns:minmax(0,1fr); gap:1rem; }
     .flooring-gallery figure { margin:0; border:1px solid var(--border); border-radius:var(--radius-md); overflow:hidden; background:#fff; box-shadow:var(--shadow-sm); }
-    .flooring-gallery img { width:100%; aspect-ratio:4 / 3; object-fit:cover; }
-    .flooring-gallery figcaption { padding:.65rem .7rem .75rem; color:var(--muted); font-size:.78rem; line-height:1.35; }
+    .flooring-gallery figure:first-child { display:none; }
+    .flooring-gallery img { display:block; width:100%; height:auto; aspect-ratio:auto; object-fit:contain; }
+    .flooring-gallery figcaption { padding:.8rem .9rem; color:var(--muted); font-size:.92rem; line-height:1.4; }
     .flooring-request { background:#eaf2ff; border:1px solid #cfe0fb; border-radius:var(--radius-lg); padding:1.15rem; }
     .flooring-request h2 { margin:0 0 .65rem; }
     .flooring-request ul { margin:0 0 1rem; padding-left:1.2rem; color:var(--muted); }
@@ -97,6 +103,11 @@
     .flooring-note { margin:1rem 0 0; color:var(--muted); font-size:.78rem; }
     .flooring-mobile-cta { position:fixed; left:0; right:0; bottom:0; z-index:120; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.45rem; padding:.5rem; border-top:1px solid var(--border); background:rgba(255,255,255,.98); box-shadow:0 -5px 18px rgba(15,23,42,.08); }
     .flooring-mobile-cta .btn-cta { min-width:0; font-size:.82rem; }
+    @media (max-width:719px) {
+      .flooring-proof-combined { display:none; }
+      .flooring-proof-mobile { display:grid; gap:.7rem; padding:.7rem; }
+      .flooring-proof-mobile-panel { overflow:hidden; border:1px solid var(--border); border-radius:var(--radius-md); background:#fff; }
+    }
     .flooring-page { padding-bottom:4.7rem; }
     @media (min-width:720px) {
       .flooring-page { padding-bottom:0; }
@@ -105,7 +116,8 @@
       .flooring-hero { grid-template-columns:minmax(0,1fr) minmax(360px,.86fr); gap:2.4rem; }
       .flooring-cards { grid-template-columns:repeat(3,minmax(0,1fr)); }
       .flooring-gallery { grid-template-columns:repeat(4,minmax(0,1fr)); }
-      .flooring-gallery figure:first-child { grid-column:span 2; }
+      .flooring-gallery figure:first-child { display:block; grid-column:span 2; }
+      .flooring-gallery img { height:auto; aspect-ratio:4 / 3; object-fit:cover; }
       .flooring-gallery figure:first-child img { aspect-ratio:16 / 9; }
       .flooring-request { padding:1.5rem; }
       .flooring-bottom { padding:1.6rem 1.8rem; }
@@ -138,7 +150,17 @@
           </div>
         </div>
         <figure class="flooring-proof">
-          <img src="../../selected_pics/flooring-install-before-after.jpg" alt="Before and after flooring installation in a living area" width="1280" height="960" loading="eager" decoding="async">
+          <img class="flooring-proof-combined" src="../../selected_pics/flooring-install-before-after.jpg" alt="Before and after flooring installation in a living area" width="1280" height="960" loading="eager" decoding="async">
+          <div class="flooring-proof-mobile" role="group" aria-label="Before and after flooring photos">
+            <div class="flooring-proof-mobile-panel">
+              <img src="../../selected_pics/flooring-install-before-after.jpg" alt="Living area before the flooring installation" width="1280" height="960" loading="eager" decoding="async">
+              <p>Before</p>
+            </div>
+            <div class="flooring-proof-mobile-panel">
+              <img src="../../selected_pics/flooring-install-before-after.jpg" alt="Living area after the new plank flooring installation" width="1280" height="960" loading="eager" decoding="async">
+              <p>After</p>
+            </div>
+          </div>
           <figcaption>Real project: room refresh with new plank flooring.</figcaption>
         </figure>
       </section>
