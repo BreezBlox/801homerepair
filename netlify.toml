@@ -15,6 +15,12 @@
   to = "/card/"
   status = 301
 
+[[redirects]]
+  from = "/wallpaper-installation/index.html"
+  to = "/wallpaper-installation/"
+  status = 301
+  force = true
+
 [[headers]]
   for = "/*"
   [headers.values]
